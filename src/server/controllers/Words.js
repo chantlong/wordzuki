@@ -27,26 +27,20 @@ module.exports = {
     if (term.length === 0) {
       res.send({ ERROR: 'Please select a word' });
     }
-    const parseXMLAsyncID = new Promise((resolve, reject) => {
-      module.exports.parseXMLID(term, resolve, reject);
-    });
-    parseXMLAsyncID.then((id) => {
-      const parseXMLDefAsync = new Promise((resolve, reject) => {
-        module.exports.parseXMLDef(id, resolve, reject);
-      });
-      parseXMLDefAsync.then((result) => {
-        if (result) {
-          res.json({ SUCCESS: result });
-        } else {
-          res.json({ ERROR: 'CANNOT BE DEFINED' });
-        }
-      });
+    module.exports.parseXMLID(term)
+    .then(result => module.exports.parseXMLDef(result))
+    .then((result) => {
+      if (result) {
+        res.json({ SUCCESS: result });
+      } else {
+        res.json({ ERROR: 'CANNOT BE DEFINED' });
+      }
     })
     .catch((err) => {
       res.send({ ERROR: err });
     });
   },
-  parseXMLID: (term, resolve, reject) => {
+  parseXMLID: term => new Promise((resolve, reject) => {
     http.get(`http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite?Dic=EJdict&Word=${term}&Scope=HEADWORD&Match=EXACT&Merge=AND&&PageSize=5&PageIndex=0&Prof=XHTML`, (response) => {
       let xml = '';
       response.on('data', (chunk) => {
@@ -68,8 +62,8 @@ module.exports = {
         reject(err);
       });
     });
-  },
-  parseXMLDef: (id, resolve, reject) => {
+  }),
+  parseXMLDef: id => new Promise((resolve, reject) => {
     http.get(`http://public.dejizo.jp/NetDicV09.asmx/GetDicItemLite?Dic=EJdict&Item=${id}&Loc=&Prof=XHTML`, (response) => {
       let xml = '';
       response.on('data', (chunk) => {
@@ -88,5 +82,5 @@ module.exports = {
         reject(err);
       });
     });
-  },
+  }),
 };
