@@ -23,7 +23,10 @@ module.exports = {
     });
   },
   searchWord: (req, res) => {
-    const term = req.body.word;
+    const term = req.body.word.trim();
+    if (term.length === 0) {
+      res.send({ ERROR: 'Please select a word' });
+    }
     const parseXMLAsyncID = new Promise((resolve, reject) => {
       module.exports.parseXMLID(term, resolve, reject);
     });
@@ -38,6 +41,9 @@ module.exports = {
           res.json({ ERROR: 'CANNOT BE DEFINED' });
         }
       });
+    })
+    .catch((err) => {
+      res.send({ ERROR: err });
     });
   },
   parseXMLID: (term, resolve, reject) => {
@@ -51,8 +57,11 @@ module.exports = {
           if (err) {
             reject(err);
           }
+          if (result.SearchDicItemResult.TotalHitCount[0] === '0') {
+            return reject('no definition found');
+          }
           const termID = result.SearchDicItemResult.TitleList[0].DicItemTitle[0].ItemID[0];
-          resolve(termID);
+          return resolve(termID);
         });
       })
       .on('error', (err) => {
