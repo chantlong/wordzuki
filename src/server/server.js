@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -18,9 +20,17 @@ mongoose.connect(config.mongoURI[app.settings.env], (err) => {
 });
 
 // app uses
+app.use(cors({
+  origin: '*',
+  methods: ['GET, POST, OPTIONS'],
+  allowHeaders: 'content-type, accept',
+  credentials: true,
+  maxAge: 10,
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '../../public')));
 app.use(routes);
 app.listen(3000, () => {
   process.stdout.write('\nListening on Port 3000');

@@ -1,3 +1,4 @@
+
 const Word = require('../models/Word');
 const objectid = require('objectid');
 const parseString = require('xml2js').parseString;
@@ -5,17 +6,23 @@ const http = require('http');
 const stemmer = require('porter-stemmer').stemmer;
 
 module.exports = {
+  fetchWords: (req, res) => {
+    Word.find().then((words) => {
+      res
+        .status(200)
+        .json(words);
+    });
+  },
   saveWord: (req, res) => {
-    const newWord = Word({
+    const newWord = new Word({
       _id: objectid(),
       userId: req.body.userId,
       word: req.body.word,
-      def: req.body.def,
+      def: [].concat(req.body.def),
       pron: req.body.pron,
-      examples: [req.body.examples],
+      ex: req.body.ex,
       source: req.body.source,
-    },
-{ timestamps: true });
+    });
     newWord.save((err) => {
       if (err) {
         res.json({ ERROR: err });
@@ -30,7 +37,7 @@ module.exports = {
       res.send({ ERROR: 'Please select a word' });
     }
     term = stemmer(term);
-    console.log('stemed', term);
+    console.log('STEMMED WORD', term);
     module.exports.parseXMLID(term)
     .then(result => module.exports.parseXMLDef(result))
     .then(result => res.json({ SUCCESS: result }))
@@ -39,7 +46,7 @@ module.exports = {
     });
   },
   parseXMLID: term => new Promise((resolve, reject) => {
-    http.get(`http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite?Dic=EJdict&Word=${term}&Scope=HEADWORD&Match=EXACT&Merge=AND&&PageSize=5&PageIndex=0&Prof=XHTML`, (response) => {
+    http.get(`http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite?Dic=EJdict&Word=${term}&Scope=HEADWORD&Match=STARTWITH&Merge=AND&&PageSize=5&PageIndex=0&Prof=XHTML`, (response) => {
       let xml = '';
       response.on('data', (chunk) => {
         xml += chunk;

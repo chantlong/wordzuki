@@ -1,12 +1,14 @@
 const express = require('express');
+const path = require('path');
 const Words = require('./controllers/Words');
 
 const router = new express.Router();
 
+router.get('/api/word', Words.fetchWords);
+router.post('/api/word', Words.saveWord);
+router.post('/api/search', Words.searchWord);
 router.get('*', (req, res) => {
-  res.send('<h1>wordzuki!</h1>');
+  res.sendFile(path.resolve(__dirname, '../../public', 'index.html'));
 });
-router.post('/word', Words.saveWord);
-router.post('/search', Words.searchWord);
 
 module.exports = router;
