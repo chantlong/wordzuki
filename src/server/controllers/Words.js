@@ -29,13 +29,7 @@ module.exports = {
     }
     module.exports.parseXMLID(term)
     .then(result => module.exports.parseXMLDef(result))
-    .then((result) => {
-      if (result) {
-        res.json({ SUCCESS: result });
-      } else {
-        res.json({ ERROR: 'CANNOT BE DEFINED' });
-      }
-    })
+    .then(result => res.json({ SUCCESS: result }))
     .catch((err) => {
       res.send({ ERROR: err });
     });
@@ -52,7 +46,7 @@ module.exports = {
             reject(err);
           }
           if (result.SearchDicItemResult.TotalHitCount[0] === '0') {
-            return reject('no definition found');
+            return reject('No definition found');
           }
           const termID = result.SearchDicItemResult.TitleList[0].DicItemTitle[0].ItemID[0];
           return resolve(termID);
