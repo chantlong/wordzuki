@@ -40,6 +40,7 @@
     "mongoose": "^4.6.8",
     "morgan": "^1.7.0",
     "objectid": "^3.2.1",
+    "porter-stemmer": "^0.9.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "supertest": "^2.0.1",

@@ -2,6 +2,7 @@ const Word = require('../models/Word');
 const objectid = require('objectid');
 const parseString = require('xml2js').parseString;
 const http = require('http');
+const stemmer = require('porter-stemmer').stemmer;
 
 module.exports = {
   saveWord: (req, res) => {
@@ -9,6 +10,7 @@ module.exports = {
       _id: objectid(),
       userId: req.body.userId,
       word: req.body.word,
+      def: req.body.def,
       pron: req.body.pron,
       examples: [req.body.examples],
       source: req.body.source,
@@ -23,10 +25,12 @@ module.exports = {
     });
   },
   searchWord: (req, res) => {
-    const term = req.body.word.trim();
+    let term = req.body.word.trim();
     if (term.length === 0) {
       res.send({ ERROR: 'Please select a word' });
     }
+    term = stemmer(term);
+    console.log('stemed', term);
     module.exports.parseXMLID(term)
     .then(result => module.exports.parseXMLDef(result))
     .then(result => res.json({ SUCCESS: result }))
