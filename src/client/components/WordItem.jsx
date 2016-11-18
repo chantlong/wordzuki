@@ -8,6 +8,7 @@ const WordItem = ({ word }) => (
       </li>
       <ul>
         {JSON.parse(word.def).map((def, i) => <li key={i}>{i + 1}. {def}</li>)}
+        <li>例：{word.ex}</li>
       </ul>
     </ul>
   </div>
