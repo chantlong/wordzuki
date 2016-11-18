@@ -1,11 +1,9 @@
 /* global fetch */
-
 import config from '../config';
 import {
   RETRIEVE_WORDS,
   ERR_FAILED_REQUEST,
 } from '../constants/actionTypes';
-
 
 const url = `${config.api.protocol}://${config.api.host}:${config.api.port}`;
 

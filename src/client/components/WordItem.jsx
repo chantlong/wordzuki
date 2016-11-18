@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 const WordItem = ({ word }) => (
   <div>
     <ul>
-      <li><h5>{word.word}</h5></li>
-      <li>意味: {JSON.parse(word.def).map((def, i) => <li key={i}>{def}</li>)}</li>
+      <li><h3>{word.word}</h3></li>
+      <ul>{JSON.parse(word.def).map((def, i) => <li key={i}>{def}</li>)}</ul>
     </ul>
   </div>
 );

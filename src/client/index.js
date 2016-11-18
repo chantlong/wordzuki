@@ -10,8 +10,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import reducers from './reducers/reducers';
 import App from './components/App';
-import Splash from './components/Splash';
+import SearchHistory from './containers/SearchHistory';
 import fetchWords from './actions/actions';
+import './assets/styles/main.scss';
 
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(thunk)));
@@ -22,7 +23,7 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Splash} />
+        <IndexRoute component={SearchHistory} />
       </Route>
     </Router>
   </Provider>,

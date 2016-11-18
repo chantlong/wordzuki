@@ -10,7 +10,7 @@ module.exports = {
     Word.find().then((words) => {
       res
         .status(200)
-        .json(words);
+        .send(words);
     });
   },
   saveWord: (req, res) => {
@@ -37,7 +37,7 @@ module.exports = {
       res.send({ ERROR: 'Please select a word' });
     }
     term = stemmer(term);
-    console.log('STEMMED WORD', term);
+    // console.log('STEMMED WORD', term);
     module.exports.parseXMLID(term)
     .then(result => module.exports.parseXMLDef(result))
     .then(result => res.json({ SUCCESS: result }))

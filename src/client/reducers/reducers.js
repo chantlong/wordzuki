@@ -5,7 +5,7 @@ import {
   ERR_FAILED_REQUEST,
 } from '../constants/actionTypes';
 
-const searchHistory = (state = [], action) => {
+const words = (state = [], action) => {
   switch (action.type) {
     case RETRIEVE_WORDS:
       return action.payload || state;
@@ -27,7 +27,7 @@ const errorHandle = (state, action) => {
 const routing = routerReducer;
 
 const reducers = combineReducers({
-  searchHistory,
+  words,
   errorHandle,
   routing,
 });
