@@ -3,8 +3,9 @@ import WordItem from './WordItem';
 
 const SearchHistory = ({ words }) => (
   <div>
-    <h2>New Section</h2>
-    {words.map((word, i) => <WordItem key={i} word={word} />)}
+    {words.length < 1 ? <p>単語は保存していません。<br />You have not saved any words.</p> :
+      words.map((word, i) => <WordItem key={i} word={word} />)
+    }
   </div>
 );
 

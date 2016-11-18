@@ -2,3 +2,4 @@ node_modules/
 ideas/
 .DS_Store
 npm-debug.log
+public/

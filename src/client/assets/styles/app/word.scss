@@ -1,0 +1,13 @@
+
+div.word-container:nth-child(odd) {
+  background: #F6F8EE;
+}
+
+.word-container {
+  background: #ECE7E1;
+  box-sizing: border-box;
+  width: 500px;
+  padding: 12px 30px;
+  margin: 10px 30px;
+}
+

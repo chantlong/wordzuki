@@ -1,5 +1,9 @@
 @import "app/reset";
+@import "app/word";
 
-html {
-  font-family: Hiragino, sans-serif;
+body {
+  font-family: 'Avenir', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: .9rem;
+  line-height: 2;
 }
