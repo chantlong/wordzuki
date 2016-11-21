@@ -6,6 +6,7 @@ import {
 } from '../constants/actionTypes';
 
 const url = `${config.api.protocol}://${config.api.host}:${config.api.port}`;
+console.log('that url =======', url);
 
 const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
