@@ -13,6 +13,7 @@ const app = express();
 
 // mongoose setup
 mongoose.Promise = global.Promise;
+process.stdout.write('========== MONGO CONNECt', process.env.PROD_MONGODB);
 mongoose.connect(process.env.PROD_MONGODB, (err) => {
   if (err) {
     process.stdout.write(`\ncannot connect to db. ${err}`);
