@@ -32,7 +32,7 @@ module.exports = {
     });
   },
   searchWord: (req, res) => {
-    let term = req.body.word.trim();
+    var term = req.body.word.trim();
     if (term.length === 0) {
       res.send({ ERROR: 'Please select a word' });
     }
@@ -47,7 +47,7 @@ module.exports = {
   },
   parseXMLID: term => new Promise((resolve, reject) => {
     http.get(`http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite?Dic=EJdict&Word=${term}&Scope=HEADWORD&Match=STARTWITH&Merge=AND&&PageSize=5&PageIndex=0&Prof=XHTML`, (response) => {
-      let xml = '';
+      var xml = '';
       response.on('data', (chunk) => {
         xml += chunk;
       });
@@ -72,7 +72,7 @@ module.exports = {
   }),
   parseXMLDef: id => new Promise((resolve, reject) => {
     http.get(`http://public.dejizo.jp/NetDicV09.asmx/GetDicItemLite?Dic=EJdict&Item=${id}&Loc=&Prof=XHTML`, (response) => {
-      let xml = '';
+      var xml = '';
       response.on('data', (chunk) => {
         xml += chunk;
       });
