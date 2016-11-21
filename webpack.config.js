@@ -8,6 +8,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'PROTOCOL', 'HOST', 'PORT']),
     new webpack.optimize.DedupePlugin(),
   ],
   resolve: {
