@@ -5,7 +5,7 @@ import {
   ERR_FAILED_REQUEST,
 } from '../constants/actionTypes';
 
-const url = `${config.api.protocol}://${config.api.host}:${config.api.port}`;
+const url = `${config.url}`;
 console.log('that url =======', url);
 console.log('that process node env >>>>>>>>>', process.env.NODE_ENV);
 console.log(process.env.PROTOCOL, process.env.HOST, process.env.PORT);
