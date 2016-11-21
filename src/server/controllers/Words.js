@@ -37,7 +37,7 @@ module.exports = {
       res.send({ ERROR: 'Please select a word' });
     }
     term = stemmer(term);
-    // console.log('STEMMED WORD', term);
+    console.log('STEMMED WORD', term);
     module.exports.parseXMLID(term)
     .then(result => module.exports.parseXMLDef(result))
     .then(result => res.json({ SUCCESS: result }))
@@ -60,6 +60,8 @@ module.exports = {
             return reject('No definition found');
           }
           const termID = result.SearchDicItemResult.TitleList[0].DicItemTitle[0].ItemID[0];
+          const termWord = result.SearchDicItemResult.TitleList[0].DicItemTitle[0].Title[0].span[0]._;
+          console.log('term worddddd', termWord);
           return resolve(termID);
         });
       })

@@ -3,24 +3,28 @@
   "version": "0.0.1",
   "name": "wordzuki",
   "description": "Look up an English word with the Japanese definition and save it to the wordzuki app for reference",
-  "icons": { "32" : "wordzuki-logo32.png"},
+  "icons": { "32" : "images/wordzuki-logo32.png"},
 
   "browser_action": {
     // "default_popup": "popup.html"
+    "default_icon": "images/wordzuki-logo32.png"
   },
 
   "background": {
-    "page": "background.html",
+    "scripts": ["background.js"]
   },
 
   "content_scripts": [
-    "matches": ["http://*/*", "https://*/*"],
-    "js" ["content.js"],
-    "all_frames":true
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["lib/jquery-3.1.1.min.js", "scripts/content.js"],
+      "all_frames":true
+    }
   ],
 
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "http://localhost.com"
   ]
 }
