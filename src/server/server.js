@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes');
 const config = require('./_config');
 
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -33,8 +34,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../../public')));
 app.use(routes);
-app.listen(3000, () => {
-  process.stdout.write('\nListening on Port 3000');
+app.listen(port, () => {
+  process.stdout.write(`\nListening on Port${port}`);
 });
 
 module.exports = app;
