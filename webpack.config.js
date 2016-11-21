@@ -1,13 +1,14 @@
+const devMode = process.env.NODE_ENV !== 'production';
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'inline-sourcemap',
+  devtool: devMode ? 'inline-sourcemap' : null,
   entry: './src/client/index.js',
   output: {
     path: './public',
     filename: 'bundle.js',
   },
-  plugins: [
+  plugins: devMode ? [] : [
     new webpack.EnvironmentPlugin(['NODE_ENV', 'PROTOCOL', 'HOST', 'PORT']),
     new webpack.optimize.DedupePlugin(),
   ],
