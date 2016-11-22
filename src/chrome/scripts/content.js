@@ -1,35 +1,25 @@
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.message === 'clicked_browser_action') {
-      // const firstHref = $("a[href^='http']").eq(0).attr('href');
-
-      // console.log('yooo', firstHref);
-      const sel = window.getSelection().toString();
-      console.log('SELC====', sel);
+      const source = request.url;
+      const word = window.getSelection().toString();
+      const daSel = window.getSelection().focusNode.data.split('.');
+      let ex;
+      for (let i = 0; i < daSel.length; i += 1) {
+        if (daSel[i].indexOf(word) > -1) {
+          ex = daSel[i].concat('.');
+        }
+      }
       const url = 'https://desolate-cove-59104.herokuapp.com/api/search';
-      console.log('eyy');
-      $.post(url, { word: sel }, (data, status) => {
-        console.log('first data', data.SUCCESS);
-        const definition = data.SUCCESS;
-        if (definition.length > 0) {
-          $.post('https://desolate-cove-59104.herokuapp.com/api/word', { word: sel, def: definition }, (data, status) => {
-            console.log('posted?', data, status);
-          })
+      $.post(url, { word }, (data1) => {
+        const def = JSON.stringify(data1.SUCCESS);
+        if (def.length > 0) {
+          $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+            { word, def, ex, source },
+            (data2, status2) => { console.log('posted?', data2, status2); });
         }
       });
-      // fetch(url,
-      //   {
-      //     method: 'post',
-      //     mode: 'cors',
-      //     body: {
-      //       word: sel
-      //     }
-      //   })
-      // .then((res) => {
-      //   console.log('the response we got back', res);
-      // })
-      // .catch((err) => { console.log('what err', err); });
-      chrome.runtime.sendMessage({ message: 'search_word', word: sel });
+      chrome.runtime.sendMessage({ message: 'speak_it', word });
     }
   }
 );
