@@ -23,6 +23,7 @@ module.exports = {
       ex: req.body.ex,
       source: req.body.source,
     });
+    console.log('some save WORD====', req.body.def);
     newWord.save((err) => {
       if (err) {
         res.json({ ERROR: err });
