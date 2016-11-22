@@ -24,7 +24,6 @@
 
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/",
-    "http://localhost.com"
+    "https://ajax.googleapis.com/"
   ]
 }

@@ -18,7 +18,7 @@ module.exports = {
       _id: objectid(),
       userId: req.body.userId,
       word: req.body.word,
-      def: [].concat(req.body.def),
+      def: req.body.def,
       pron: req.body.pron,
       ex: req.body.ex,
       source: req.body.source,

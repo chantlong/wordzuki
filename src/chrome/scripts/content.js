@@ -6,11 +6,16 @@ chrome.runtime.onMessage.addListener(
       // console.log('yooo', firstHref);
       const sel = window.getSelection().toString();
       console.log('SELC====', sel);
-      const url = 'http://localhost:3000/api/search';
+      const url = 'https://desolate-cove-59104.herokuapp.com/api/search';
       console.log('eyy');
-      $.post(url, { word: sel }, function(data, status){
-        console.log(status);
-        console.log(data);
+      $.post(url, { word: sel }, (data, status) => {
+        console.log('first data', data.SUCCESS);
+        const definition = data.SUCCESS;
+        if (definition.length > 0) {
+          $.post('https://desolate-cove-59104.herokuapp.com/api/word', { word: sel, def: definition }, (data, status) => {
+            console.log('posted?', data, status);
+          })
+        }
       });
       // fetch(url,
       //   {
