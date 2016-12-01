@@ -1,18 +1,32 @@
 // background.js
+const wz = {
+  enable: false
+};
 
-// Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener((tabs) => {
-  // Send a message to the active tab
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { message: 'clicked_browser_action', url: tabs[0].url });
-  });
-});
+function toggleExt(tabs) {
+  if (wz.enable === false) {
+    wz.enable = true;
+    chrome.browserAction.setBadgeText({ text: 'on' });
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { message: 'enable', url: tabs[0].url });
+    });
+  } else {
+    wz.enable = false;
+    chrome.browserAction.setBadgeText({ text: '' });
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { message: 'disable', url: tabs[0].url });
+    });
+  }
+}
+
+chrome.browserAction.onClicked.addListener(toggleExt);
 
 // This block is new!
 chrome.runtime.onMessage.addListener(
-  (request, sender, sendResponse) => {
+  (request) => {
     if (request.message === 'speak_it') {
       chrome.tts.speak(request.word);
     }
   }
 );
+
