@@ -21,13 +21,14 @@
       "matches": ["http://*/*", "https://*/*"],
       "css": ["assets/styles/popup.css"],
       "js": ["lib/jquery-3.1.1.min.js", "scripts/content.js"],
-      "all_frames":true
+      "all_frames":true,
+      "run_at": "document_end"
     }
   ],
 
   "permissions": [
     "activeTab",
-    // "contextMenus",
+    "tabs",
     "https://ajax.googleapis.com/",
     "tts"
   ],

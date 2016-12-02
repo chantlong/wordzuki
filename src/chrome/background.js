@@ -1,31 +1,47 @@
 // background.js
-const wz = {
+const config = {
   enable: false
 };
 
-function toggleExt(tabs) {
-  if (wz.enable === false) {
-    wz.enable = true;
+function enable(tab) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+    console.log('update tabs', tab);
+    chrome.tabs.sendMessage(tab[0].id, { message: 'enable', url: tab[0].url });
+  });
+}
+
+function disable(tab) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+    chrome.tabs.sendMessage(tab[0].id, { message: 'disable', url: tab[0].url });
+  });
+}
+
+function updateTab(tab) {
+  if (config.enable) {
+    enable(tab);
+  }
+}
+
+function toggleExt(tab) {
+  if (config.enable === false) {
+    config.enable = true;
     chrome.browserAction.setBadgeText({ text: 'on' });
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { message: 'enable', url: tabs[0].url });
-    });
+    enable(tab);
   } else {
-    wz.enable = false;
+    config.enable = false;
     chrome.browserAction.setBadgeText({ text: '' });
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { message: 'disable', url: tabs[0].url });
-    });
+    disable(tab);
   }
 }
 
 chrome.browserAction.onClicked.addListener(toggleExt);
+chrome.tabs.onActivated.addListener(updateTab);
+chrome.tabs.onUpdated.addListener(updateTab);
 
-// This block is new!
 chrome.runtime.onMessage.addListener(
   (request) => {
     if (request.message === 'speak_it') {
-      chrome.tts.speak(request.word);
+      chrome.tts.speak(request.word, { rate: 0.8, lang: 'en-US', gender: 'male' });
     }
   }
 );

@@ -1,71 +1,74 @@
 function speakIt(word) {
-  // console.log('what word in SPEAK IT');
-  // const checkWord = document.getElementById('wz-popup').children[1].childNodes[0];
-  // if (e.target === checkWord) {
-  //   const word = document.getElementById('wz-popup').children[1].childNodes[0].className.split(' ')[0];
   chrome.runtime.sendMessage({ message: 'speak_it', word });
-  // } else {
-  //   console.log('noooo');
-  // }
 }
-function lookup(request) {
+
+function lookUp(request) {
   console.log('検索中...');
   if (document.getElementById('wz-popup')) {
     document.getElementById('wz-popup').remove();
   }
   const source = request.url;
-  const word = window.getSelection().toString();
-  const daSel = window.getSelection().focusNode.data.split('.');
-  let ex;
-  for (let i = 0; i < daSel.length; i += 1) {
-    if (daSel[i].indexOf(word) > -1) {
-      ex = daSel[i].concat('.').trim();
-    }
-  }
-  console.log(word);
-  console.log(ex);
+  const word = window.getSelection().toString().toLowerCase();
   const url = 'https://desolate-cove-59104.herokuapp.com/api/search';
+  const popup = document.createElement('div');
+  popup.setAttribute('id', 'wz-popup');
+  const wContent = document.createElement('div');
+  wContent.setAttribute('class', 'wz-content');
+
   $.post(url, { word }, (data1) => {
     if (!!data1.SUCCESS && data1.SUCCESS.length) {
-      const popup = document.createElement('div');
-      popup.setAttribute('id', 'wz-popup');
-      const wContent = document.createElement('div');
-      wContent.setAttribute('class', 'wz-content');
       const defEl = document.createElement('ol');
       for (let i = 0; i < data1.SUCCESS.length; i += 1) {
-        var item = document.createElement('li');
-        var defItem = document.createTextNode(data1.SUCCESS[i]);
+        const item = document.createElement('li');
+        const defItem = document.createTextNode(data1.SUCCESS[i]);
         item.append(defItem);
         defEl.appendChild(item);
       }
-      defEl.className= 'wz-def';
-      var wordItem = document.createElement('h1');
+      const daSel = window.getSelection().focusNode.data.split('.');
+      let ex;
+      for (let i = 0; i < daSel.length; i += 1) {
+        if (daSel[i].indexOf(word) > -1) {
+          ex = daSel[i].concat('.').trim();
+        }
+      }
+      defEl.className = 'wz-def';
+      const wordItem = document.createElement('h1');
       wordItem.className = 'wz-term';
-      var wordTerm = document.createTextNode(word);
-
-      // var wordPron = document.createElement('a');
-      const wordPron = document.createElement('span');
-      const img = document.createElement('img');
-      img.setAttribute('class', 'wz-pronounce');
-      img.setAttribute('src', chrome.extension.getURL('assets/images/speaker.png'));
-      // wordPron.appendChild(img);
-      wordPron.append(img);
-      wordItem.append(wordTerm);
-      wordItem.append(wordPron);
-      wContent.appendChild(wordItem);
+      const wordTerm = document.createTextNode(word);
+      const wordContainer = document.createElement('div');
+      wordContainer.setAttribute('class', 'wz-word-container');
+      const wordPron = document.createElement('img');
+      wordPron.setAttribute('class', 'wz-pronounce');
+      wordPron.setAttribute('src', chrome.extension.getURL('assets/images/speaker.png'));
+      wordItem.appendChild(wordTerm);
+      wordContainer.appendChild(wordItem);
+      wordContainer.appendChild(wordPron);
+      wContent.appendChild(wordContainer);
       wContent.appendChild(defEl);
       popup.appendChild(wContent);
       document.body.appendChild(popup);
-      console.log('defEl', defEl);
+      $('#wz-popup').fadeIn('fast');
       const def = JSON.stringify(data1.SUCCESS);
       const pronounceListener = document.getElementsByClassName('wz-pronounce')[0];
-      console.log('datttt=====', pronounceListener);
-      pronounceListener.addEventListener('click', () => { speakIt(word); });
+      pronounceListener.addEventListener('click', () => {
+        speakIt(word);
+      });
       // $.post('https://desolate-cove-59104.herokuapp.com/api/word',
       //   { word, def, ex, source },
       //   (data2, status2) => { console.log('posted?', data2, status2); });
     } else {
       console.log('No definition');
+      const noDef = document.createElement('p');
+      noDef.setAttribute('class', 'wz-error');
+      const errMessage = document.createTextNode('cannot be found');
+      noDef.appendChild(errMessage);
+      wContent.appendChild(noDef);
+      popup.appendChild(wContent);
+      document.body.appendChild(popup);
+      $('#wz-popup').fadeIn('fast');
+      setTimeout(() => {
+        $('#wz-popup').fadeOut('fast', () => popup.remove());
+      }, 2000);
     }
   });
 }
@@ -75,22 +78,23 @@ function closePopup(e) {
   if (!popup) {
     return null;
   }
-  console.log('the etarget', e.target);
   if (e.target === popup) {
-    return popup.remove();
+    $('#wz-popup').fadeOut('fast', () => $('wz-popup').remove());
   }
+  return null;
 }
 
 chrome.runtime.onMessage.addListener(
-  (request, sender, sendResponse) => {
+  (request) => {
     if (request.message === 'enable') {
       console.log('wordzuki スタート');
-      window.addEventListener('dblclick', lookup);
+      document.addEventListener('dblclick', lookUp);
       window.addEventListener('click', closePopup);
     }
     if (request.message === 'disable') {
       console.log('wordzuki 終了');
-      window.removeEventListener('dblclick', lookup);
+      document.removeEventListener('dblclick', lookUp);
+      window.removeEventListener('click', closePopup);
     }
   }
 );
