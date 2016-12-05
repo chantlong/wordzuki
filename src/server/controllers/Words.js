@@ -4,6 +4,7 @@ const objectid = require('objectid');
 const parseString = require('xml2js').parseString;
 const http = require('http');
 const stemmer = require('porter-stemmer').stemmer;
+// const lemmer = require('lemmer').lemmatize;
 
 module.exports = {
   fetchWords: (req, res) => {

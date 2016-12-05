@@ -1,10 +1,9 @@
 import React from 'react';
-// import NavBar from './NavBar.jsx';
+import NavBar from './NavBar';
 
 const App = ({ children }) => (
-  <div>
-    <h1>ワードZUKI</h1>
-    <p>調べた単語を自動的にリストに保存し復習しやすくするツールです。</p>
+  <div className="avenir">
+    <NavBar />
     {children}
   </div>
 );

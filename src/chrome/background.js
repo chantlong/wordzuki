@@ -25,16 +25,18 @@ function updateTab(tab) {
 function toggleExt(tab) {
   if (config.enable === false) {
     config.enable = true;
-    chrome.browserAction.setBadgeText({ text: 'on' });
+    chrome.browserAction.setIcon({ path: 'assets/images/wordzuki-logo16.png' });
+    // chrome.browserAction.setBadgeText({ text: 'on' });
     enable(tab);
   } else {
     config.enable = false;
-    chrome.browserAction.setBadgeText({ text: '' });
+    chrome.browserAction.setIcon({ path: 'assets/images/wordzuki-logo16-gs.png' });
     disable(tab);
   }
 }
 
 chrome.browserAction.onClicked.addListener(toggleExt);
+
 chrome.tabs.onActivated.addListener(updateTab);
 chrome.tabs.onUpdated.addListener(updateTab);
 

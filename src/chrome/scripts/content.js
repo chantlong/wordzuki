@@ -9,13 +9,17 @@ function lookUp(request) {
   }
   const source = request.url;
   const word = window.getSelection().toString().toLowerCase();
+  console.log('what word?', word);
+  if (!word) {
+    return null;
+  }
   const url = 'https://desolate-cove-59104.herokuapp.com/api/search';
   const popup = document.createElement('div');
   popup.setAttribute('id', 'wz-popup');
   const wContent = document.createElement('div');
   wContent.setAttribute('class', 'wz-content');
 
-  $.post(url, { word }, (data1) => {
+  return $.post(url, { word }, (data1) => {
     if (!!data1.SUCCESS && data1.SUCCESS.length) {
       const defEl = document.createElement('ol');
       for (let i = 0; i < data1.SUCCESS.length; i += 1) {

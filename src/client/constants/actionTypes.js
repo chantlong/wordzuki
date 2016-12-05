@@ -1,3 +1,3 @@
 export const RETRIEVE_WORDS = 'RETRIEVE_WORDS';
-
+export const SELECT_WORD = 'SELECT_WORD';
 export const ERR_FAILED_REQUEST = 'ERR_FAILED_REQUEST';
