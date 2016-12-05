@@ -20,7 +20,6 @@ module.exports = {
       userId: req.body.userId,
       word: req.body.word,
       def: req.body.def,
-      pron: req.body.pron,
       ex: req.body.ex,
       source: req.body.source,
     });

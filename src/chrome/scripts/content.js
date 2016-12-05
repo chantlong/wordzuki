@@ -9,7 +9,6 @@ function lookUp(request) {
   }
   const source = request.url;
   const word = window.getSelection().toString().toLowerCase();
-  console.log('what word?', word);
   if (!word) {
     return null;
   }
@@ -92,7 +91,7 @@ chrome.runtime.onMessage.addListener(
   (request) => {
     if (request.message === 'enable') {
       console.log('wordzuki スタート');
-      document.addEventListener('dblclick', lookUp);
+      document.addEventListener('dblclick', () => { lookUp(request); });
       window.addEventListener('click', closePopup);
     }
     if (request.message === 'disable') {
