@@ -13,15 +13,17 @@ const Word = ({ word }) => {
   }
   return (
     <div className="measure">
-      <ul className="list">
-        <li className="f5 f3-ns fw7 mid-gray pv3 bb b--black-10 georgia">{word.word}<a
-          onClick={() => {
-            speakIt(word.word);
-          }}
-          className="mh1 mh2-ns"
-        >
-          <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns" />
-        </a></li>
+      <ul className="list dt">
+        <li className="f5 f3-ns fw7 mid-gray pv3 bb b--black-10 georgia">{word.word}
+          <a
+            onClick={() => {
+              speakIt(word.word);
+            }}
+            className="mh1 mh2-ns"
+          >
+            <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
+          </a>
+        </li>
         <li className="f6 f5-ns fw5 mid-gray pv3 bb b--black-10">例：{word.ex}
           <a href={word.source} className="mh1 mh2-ns i">~ 原文</a>
         </li>

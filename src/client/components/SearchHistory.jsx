@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Word from './Word';
 
 const SearchHistory = ({ words, word, onSelect }) => (
-  <div className="dt w-100 border-box pa3-ns ph5-ns">
+  <div className="dt w-100 border-box pa2-ns ph6-ns">
     <div className="dtc w-30">
       <ul className="list ph3-ns ph5-ns pv4">
         {words.map((term, i) =>

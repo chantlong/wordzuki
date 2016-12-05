@@ -57,9 +57,9 @@ function lookUp(request) {
       pronounceListener.addEventListener('click', () => {
         speakIt(word);
       });
-      // $.post('https://desolate-cove-59104.herokuapp.com/api/word',
-      //   { word, def, ex, source },
-      //   (data2, status2) => { console.log('posted?', data2, status2); });
+      $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+        { word, def, ex, source },
+        (data2, status2) => { console.log('posted?', data2, status2); });
     } else {
       console.log('No definition');
       const noDef = document.createElement('p');
