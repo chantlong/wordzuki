@@ -2,16 +2,19 @@ function speakIt(word) {
   chrome.runtime.sendMessage({ message: 'speak_it', word });
 }
 
-function lookUp(request) {
+function lookUp() {
   console.log('検索中...');
   if (document.getElementById('wz-popup')) {
     document.getElementById('wz-popup').remove();
   }
-  const source = request.url;
   const word = window.getSelection().toString().toLowerCase();
   if (!word) {
     return null;
   }
+  let source;
+  chrome.runtime.sendMessage({ message: 'get_url' }, (response) => {
+    source = response.url;
+  });
   const url = 'https://desolate-cove-59104.herokuapp.com/api/search';
   const popup = document.createElement('div');
   popup.setAttribute('id', 'wz-popup');
@@ -56,6 +59,7 @@ function lookUp(request) {
       pronounceListener.addEventListener('click', () => {
         speakIt(word);
       });
+      console.log('hey=====');
       $.post('https://desolate-cove-59104.herokuapp.com/api/word',
         { word, def, ex, source },
         (data2, status2) => { console.log('posted?', data2, status2); });
@@ -88,10 +92,10 @@ function closePopup(e) {
 }
 
 chrome.runtime.onMessage.addListener(
-  (request) => {
+  (request, sender, sendResponse) => {
     if (request.message === 'enable') {
       console.log('wordzuki スタート');
-      document.addEventListener('dblclick', () => { lookUp(request); });
+      document.addEventListener('dblclick', lookUp);
       window.addEventListener('click', closePopup);
     }
     if (request.message === 'disable') {

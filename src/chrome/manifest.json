@@ -13,7 +13,8 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": true
   },
 
   "content_scripts": [
@@ -22,7 +23,7 @@
       "css": ["assets/styles/popup.css"],
       "js": ["lib/jquery-3.1.1.min.js", "scripts/content.js"],
       "all_frames":true,
-      "run_at": "document_start"
+      "run_at": "document_end"
     }
   ],
 

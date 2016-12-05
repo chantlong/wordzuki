@@ -12,6 +12,7 @@ function enable(tab) {
 
 function disable(tab) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+    config.enable = false;
     chrome.tabs.sendMessage(tab[0].id, { message: 'disable', url: tab[0].url });
   });
 }
@@ -26,7 +27,6 @@ function toggleExt(tab) {
   if (config.enable === false) {
     config.enable = true;
     chrome.browserAction.setIcon({ path: 'assets/images/wordzuki-logo16.png' });
-    // chrome.browserAction.setBadgeText({ text: 'on' });
     enable(tab);
   } else {
     config.enable = false;
@@ -36,15 +36,20 @@ function toggleExt(tab) {
 }
 
 chrome.browserAction.onClicked.addListener(toggleExt);
-
-chrome.tabs.onActivated.addListener(updateTab);
 chrome.tabs.onUpdated.addListener(updateTab);
 
 chrome.runtime.onMessage.addListener(
-  (request) => {
+  (request, sender, senderResponse) => {
     if (request.message === 'speak_it') {
       chrome.tts.speak(request.word, { rate: 0.8, lang: 'en-US', gender: 'male' });
     }
+    if (request.message === 'get_url') {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+        console.log('the tab url', tab[0].url);
+        senderResponse({ url: tab[0].url });
+      });
+    }
+    return true;
   }
 );
 
