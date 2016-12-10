@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import logo from '../assets/images/wordzuki-logo128.png';
 
 const NavBar = () => (
@@ -8,8 +9,9 @@ const NavBar = () => (
         <img src={logo} alt="wordzuki" className="dib w2 h2 v-mid mr2 mr3-ns" />
         <span className="dn dib-ns fw5">wordzuki</span></a>
       <div className="dtc v-mid w-50 tr">
-        <a href="/signin" className="near-black link dim f6 dib mr3 mr4-ns">ログイン</a>
+        <Link to="/signin" className="near-black link dim f6 dib mr3 mr4-ns">ログイン</Link>
         <a href="/signup" className="near-black link dim f6 dib mr3 mr4-ns">登録</a>
+        <a href="/api/auth/sign-out" className="near-black link dim f6 dib mr3 mr4-ns">ログアウト</a>
       </div>
     </nav>
   </div>

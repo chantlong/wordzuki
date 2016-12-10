@@ -1,11 +1,16 @@
 const express = require('express');
 const path = require('path');
+const favicon = require('serve-favicon');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const routes = require('./routes');
 const config = require('./_config');
+const passportSetup = require('./passportSetup');
 
 const port = process.env.PORT || 3000;
 
@@ -21,7 +26,17 @@ mongoose.connect(config.mongoURI[app.settings.env], (err) => {
   }
 });
 
+passportSetup();
+// session setup
+
+
+// if (app.get('env') === 'production') {
+//   app.set('trust proxy', 1);
+//   sess.cookie.secure = true;
+// }
 // app uses
+app.use(favicon(path.join(__dirname, '../../public/favicon.ico')));
+app.use(express.static(path.join(__dirname, '../../public')));
 app.use(cors({
   origin: '*',
   methods: ['GET, POST, OPTIONS'],
@@ -30,9 +45,23 @@ app.use(cors({
   maxAge: 10,
 }));
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(bodyParser.json());
+
+const sess = {
+  store: new RedisStore({
+    host: 'localhost',
+    port: 6379,
+  }),
+  resave: false,
+  secret: 'rolling squirrel',
+  saveUninitialized: false,
+  cookie: { secure: false },
+};
+
+app.use(session(sess));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(routes);
 app.listen(port, () => {
   process.stdout.write(`\nListening on Port${port}`);

@@ -4,6 +4,8 @@ import {
   RETRIEVE_WORDS,
   SELECT_WORD,
   ERR_FAILED_REQUEST,
+  USER_LOGIN,
+  USER_LOGOUT,
 } from '../constants/actionTypes';
 
 const words = (state = [], action) => {
@@ -34,12 +36,32 @@ const errorHandle = (state, action) => {
   }
 };
 
+const login = (state = { isAuth: false, user: null }, action) => {
+  switch (action.type) {
+    case USER_LOGIN: {
+      return Object.assign({}, state, {
+        isAuth: true,
+        user: action.user,
+      });
+    }
+    case USER_LOGOUT: {
+      return Object.assign({}, state, {
+        isAuth: false,
+        user: null,
+      });
+    }
+    default:
+      return state;
+  }
+};
+
 const routing = routerReducer;
 
 const reducers = combineReducers({
   words,
   word,
   errorHandle,
+  login,
   routing,
 });
 
