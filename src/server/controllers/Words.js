@@ -91,4 +91,11 @@ module.exports = {
       });
     });
   }),
+  deleteWord: (req, res) => {
+    console.log('in delete =====')
+    Word.findOneAndRemove({ _id: req.body.id })
+      .then((info) => {
+        res.send({ message: `${info.word}を削除しました。` });
+      });
+  },
 };

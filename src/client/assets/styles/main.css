@@ -1,1 +1,22 @@
 @import "tachyons";
+
+.wall-bg {
+  height: calc(100vh - 64px);
+}
+
+.wz-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: 2px inherit #c1c2c3
+}
+
+select:focus {
+  outline: none;
+}

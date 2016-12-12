@@ -27,8 +27,6 @@ mongoose.connect(config.mongoURI[app.settings.env], (err) => {
 });
 
 passportSetup();
-// session setup
-
 
 // if (app.get('env') === 'production') {
 //   app.set('trust proxy', 1);
@@ -39,7 +37,7 @@ app.use(favicon(path.join(__dirname, '../../public/favicon.ico')));
 app.use(express.static(path.join(__dirname, '../../public')));
 app.use(cors({
   origin: '*',
-  methods: ['GET, POST, OPTIONS'],
+  methods: ['GET, POST, OPTIONS, DELETE'],
   allowHeaders: 'content-type, accept',
   credentials: true,
   maxAge: 10,
@@ -48,6 +46,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// session setup
 const sess = {
   store: new RedisStore({
     host: 'localhost',

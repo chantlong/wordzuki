@@ -22,17 +22,40 @@ class SignIn extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { login } = this.props;
-    login(this.state);
+    const { signIn } = this.props;
+    signIn(this.state);
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit} autoComplete="off">
-          <input type="text" placeholder="email" onChange={this.handleUsername} />
-          <input type="password" placeholder="password" onChange={this.handlePassword} />
-          <button type="submit">Sign In</button>
+      <div className="pa4">
+        <form
+          className="measure-narrow center tc"
+          onSubmit={this.handleSubmit}
+          autoComplete="off"
+        >
+          <div className="mt3">
+            <input
+              className="ph2 pt2 pb1 input-reset ba hover-bg-dark-gray hover-white w-75 f6"
+              type="text"
+              placeholder="メールアドレス"
+              onChange={this.handleUsername}
+            />
+          </div>
+          <div className="mt3">
+            <input
+              className="ph2 pt2 pb1 input-reset ba hover-bg-dark-gray hover-white w-75 f6"
+              type="password"
+              placeholder="パスワード"
+              onChange={this.handlePassword}
+            />
+          </div>
+          <div className="mt3">
+            <button
+              className="ph2 pt2 pb1 fw6 ba b--black bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+              type="submit"
+            >ログイン</button>
+          </div>
         </form>
       </div>
     );
@@ -40,7 +63,7 @@ class SignIn extends React.Component {
 }
 
 SignIn.propTypes = {
-  login: PropTypes.func,
+  signIn: PropTypes.func,
 };
 
 export default SignIn;

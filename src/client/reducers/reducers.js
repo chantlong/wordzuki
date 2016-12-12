@@ -3,6 +3,8 @@ import { routerReducer } from 'react-router-redux';
 import {
   RETRIEVE_WORDS,
   SELECT_WORD,
+  DELETE_WORD_FROM_WORDS,
+  DELETE_WORD,
   ERR_FAILED_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
@@ -12,6 +14,8 @@ const words = (state = [], action) => {
   switch (action.type) {
     case RETRIEVE_WORDS:
       return action.payload || state;
+    case DELETE_WORD_FROM_WORDS:
+      return state.filter(word => (word._id !== action.id));
     default:
       return state;
   }
@@ -21,6 +25,8 @@ const word = (state = null, action) => {
   switch (action.type) {
     case SELECT_WORD:
       return action.payload || state;
+    case DELETE_WORD:
+      return null;
     default:
       return state;
   }

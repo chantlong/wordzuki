@@ -1,10 +1,12 @@
 /* global fetch */
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import Auth from '../services/Auth';
 import config from '../config';
 import {
   RETRIEVE_WORDS,
   SELECT_WORD,
+  DELETE_WORD_FROM_WORDS,
+  DELETE_WORD,
   ERR_FAILED_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
@@ -21,13 +23,17 @@ export const fetchWords = () => (
   dispatch => (
     fetch(`${url}/api/word`)
       .then(res => res.json())
-      .then(words => dispatch(receiveWords(words)))
+      .then((words) => {
+        dispatch(receiveWords(words));
+        if (words.length > 0) {
+          dispatch(selectWord(words[0]));
+        }
+      })
       .catch(err => dispatch(failedRequest(err)))
   ));
 
 const receiveLogin = user => ({
   type: USER_LOGIN,
-  isAuth: true,
   user,
 });
 
@@ -38,22 +44,50 @@ export const signIn = (info) => {
     credentials: 'include',
     body: `username=${info.username}&password=${info.password}`,
   };
-  console.log('the info', info);
   return (dispatch) => {
-    fetch('/api/auth/sign-in', userInfo)
+    fetch(`${url}/api/auth/sign-in`, userInfo)
     .then(res => res.json())
-    .then(res => console.log(res))
-    .then(user => dispatch(receiveLogin(user)))
-    .then(() => browserHistory.push('/searchhistory'))
-    .catch(err => dispatch(failedRequest(err)));
+    .then((user) => {
+      if (user && !!user.message) {
+        dispatch(failedRequest(user));
+      } else {
+        dispatch(receiveLogin(user));
+        hashHistory.push('/searchhistory');
+      }
+    })
+    .catch(err => console.log('errrrr', err));
   };
 };
 
-export const signOut = () => ({ type: USER_LOGOUT });
+export const receiveLogout = () => ({ type: USER_LOGOUT });
 
 export const verify = () =>
   (dispatch) => {
     Auth.isAuth()
-      .then(({ user }) => dispatch(receiveLogin(user)))
+      .then((res) => {
+        if (!res.isLoggedIn) {
+          return null;
+        }
+        return dispatch(receiveLogin(res.user));
+      })
       .catch(err => dispatch(failedRequest(err)));
   };
+
+const receiveDeleteWords = id => ({ type: DELETE_WORD_FROM_WORDS, id });
+const receiveDeleteWord = () => ({ type: DELETE_WORD });
+
+export const deleteWord = id => (
+  (dispatch) => {
+    fetch(`${url}/api/delword`, {
+      method: 'DELETE',
+      headers: {
+        'Access-Control-Request-Method': 'DELETE',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `id=${id}`,
+    })
+    .then(res => console.log('what we got', res))
+    .then(() => dispatch(receiveDeleteWords(id)))
+    .then(() => dispatch(receiveDeleteWord()));
+  }
+);

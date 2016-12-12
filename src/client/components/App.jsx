@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './NavBar';
+import NavBar from '../containers/NavBar';
 
 const App = ({ children }) => (
   <div className="avenir">

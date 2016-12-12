@@ -3,7 +3,7 @@ import { signIn } from '../actions/actions';
 import SignIn from '../components/SignIn';
 
 const mapDispatchToProps = dispatch => ({
-  login: (info) => {
+  signIn: (info) => {
     dispatch(signIn(info));
   },
 });
