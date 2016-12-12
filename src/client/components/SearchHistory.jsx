@@ -27,7 +27,8 @@ class SearchHistory extends React.Component {
     // 64 is height of nav bar
     // padding of options will affect the 35
     const height = Math.floor((window.innerHeight - 64) / 35).toString();
-    const remainHeight = ((window.innerHeight - 64) % 35) - Math.floor((window.innerHeight - 64) / 35);
+    const remainHeight = ((window.innerHeight - 64) % 35) -
+    Math.floor((window.innerHeight - 64) / 35);
     this.setState({ height, remainHeight });
   }
 
