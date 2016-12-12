@@ -47,4 +47,4 @@ render(
   </Provider>,
 document.getElementById('app'));
 
-store.dispatch(verify());
+// store.dispatch(verify());

@@ -24,13 +24,15 @@ class SearchHistory extends React.Component {
   }
 
   selectHeight() {
-    const height = Math.floor((window.innerHeight - 64) / 38).toString();
-    const remainHeight = ((window.innerHeight - 64) % 38) - Math.floor((window.innerHeight - 64) / 38);
+    // 64 is height of nav bar
+    // padding of options will affect the 35
+    const height = Math.floor((window.innerHeight - 64) / 35).toString();
+    const remainHeight = ((window.innerHeight - 64) % 35) - Math.floor((window.innerHeight - 64) / 35);
     this.setState({ height, remainHeight });
   }
 
   render() {
-    const { words, word, onSelect } = this.props;
+    const { words, word, onSelect, deleteWord } = this.props;
     if (words.length === 0) {
       return (
         <div className="dt w-100 border-box center">
@@ -53,25 +55,44 @@ class SearchHistory extends React.Component {
     return (
       <div>
         <div className="dt w-100 border-box center">
-          <div className="dtc w-20 fixed wall-bg br b--black-10">
+          <div
+            className="dtc w-30 w-20-ns fixed wall-bg br b--black-10"
+          >
             <select
               className="list pl0 ml0 mt0 justify-right w-100"
               size={this.state.height}
               onChange={(e) => {
+                if (e.target.value === null) {
+                  return null;
+                }
                 const term = JSON.parse(e.target.value);
                 console.log('that term', term);
-                onSelect(term);
+                return onSelect(term);
+              }}
+              onKeyDown={(e) => {
+                if (e.target.value === '') {
+                  return null;
+                }
+                if (e.keyCode === 8) {
+                  const term = JSON.parse(e.target.value);
+                  deleteWord(term._id);
+                }
+                return null;
               }}
             >
-              {words.map((term, i) =>
-                <option
-                  key={i}
-                  onClick={() => { onSelect(term); }}
-                  className="pr3 pv2 f6 f6-ns fw4 link
-                  bb b--black-10 tr hover-bg-dark-gray hover-white"
-                  value={JSON.stringify(term)}
-                >{term.word}
-                </option>)}
+              {words.map((term, i) => {
+                const theTerm = term;
+                theTerm.index = i;
+                return (
+                  <option
+                    key={i}
+                    onClick={() => { onSelect(theTerm); }}
+                    className="pr3 pv2 f6 f6-ns fw4 link
+                    bb b--black-10 tr hover-bg-dark-gray hover-white"
+                    value={JSON.stringify(theTerm)}
+                  >{theTerm.word}
+                  </option>)
+              })}
             </select>
           </div>
           <div className="dtc w-80 border-box">
@@ -96,6 +117,7 @@ SearchHistory.propTypes = {
     PropTypes.any,
   ),
   onSelect: PropTypes.func,
+  deleteWord: PropTypes.func,
   fetchWords: PropTypes.func,
 };
 

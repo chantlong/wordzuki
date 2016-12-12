@@ -13,8 +13,8 @@ const Word = ({ word, deleteWord }) => {
     return null;
   }
   return (
-    <div className="w-70">
-      <ul className="list ml3 mr5 mt4 georgia">
+    <div className="w-100 w-70-ns">
+      <ul className="list ml2 ml3-ns mr3 mr5-ns mt2 mt4-ns georgia">
         <li className="ph3 pv3 f5 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
           <a
             onClick={() => {
