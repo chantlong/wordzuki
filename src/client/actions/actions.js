@@ -78,7 +78,7 @@ const receiveDeleteWord = () => ({ type: DELETE_WORD });
 
 export const deleteWord = id => (
   (dispatch) => {
-    fetch(`${url}/api/delword`, {
+    fetch(`${url}/api/word`, {
       method: 'DELETE',
       headers: {
         'Access-Control-Request-Method': 'DELETE',

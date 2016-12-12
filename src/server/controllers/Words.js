@@ -8,7 +8,7 @@ const stemmer = require('porter-stemmer').stemmer;
 
 module.exports = {
   fetchWords: (req, res) => {
-    Word.find().then((words) => {
+    Word.find().sort('-updatedAt').then((words) => {
       res
         .status(200)
         .send(words);

@@ -41,7 +41,7 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={Splash} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth}/>
+        <Route path="/searchhistory" component={SearchHistory} />
       </Route>
     </Router>
   </Provider>,

@@ -40,7 +40,7 @@ class SearchHistory extends React.Component {
               size={this.state.height}
             >
               <option
-                className="pr3 pv2 f6 f5-ns fw4 link
+                className="pr3 pv2 f6 f6-ns fw4 link
                 bb b--black-10 tc"
               >単語は保存していません。
               </option>
@@ -67,7 +67,7 @@ class SearchHistory extends React.Component {
                 <option
                   key={i}
                   onClick={() => { onSelect(term); }}
-                  className="pr3 pv2 f6 f5-ns fw4 link
+                  className="pr3 pv2 f6 f6-ns fw4 link
                   bb b--black-10 tr hover-bg-dark-gray hover-white"
                   value={JSON.stringify(term)}
                 >{term.word}

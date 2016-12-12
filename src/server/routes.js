@@ -9,7 +9,7 @@ const router = new express.Router();
 router.get('/api/word', Words.fetchWords);
 router.post('/api/word', Words.saveWord);
 router.post('/api/search', Words.searchWord);
-router.delete('/api/delword', Words.deleteWord);
+router.delete('/api/word', Words.deleteWord);
 
 // users
 router.post('/api/create-account', Users.createAccount);
