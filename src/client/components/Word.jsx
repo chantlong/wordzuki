@@ -13,7 +13,7 @@ const Word = ({ word, deleteWord }) => {
     return null;
   }
   return (
-    <div className="w-100 w-70-ns">
+    <div className="w-100-m w-70-ns">
       <ul className="list ml2 ml3-ns mr3 mr5-ns mt2 mt4-ns georgia">
         <li className="ph3 pv3 f5 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
           <a
@@ -25,12 +25,12 @@ const Word = ({ word, deleteWord }) => {
             <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
           </a>
         </li>
-        <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10">例：{word.ex}
+        <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}
           <a href={word.source} className="mh1 mh2-ns i">~ 原文</a>
         </li>
         <ol className="mv2-ns">
           {JSON.parse(word.def)
-            .map((item, i) => (<li key={i} className="f6 f5-ns  fw3 mid-gray pv2">{item}</li>))}
+            .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>))}
         </ol>
         <a
           onClick={() => deleteWord(word._id)}
