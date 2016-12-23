@@ -77,6 +77,8 @@ function lookUp() {
         $('#wz-popup').fadeOut('fast', () => popup.remove());
       }, 2000);
     }
+  }).fail(err => {
+    console.log('we have err', err);
   });
 }
 

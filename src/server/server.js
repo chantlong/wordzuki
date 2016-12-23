@@ -36,7 +36,6 @@ passportSetup();
 // }
 // app uses
 app.use(favicon(path.join(__dirname, '../../public/favicon.ico')));
-app.use(express.static(path.join(__dirname, '../../public')));
 app.use(cors({
   origin: '*',
   methods: ['GET, POST, OPTIONS, DELETE'],
@@ -47,18 +46,8 @@ app.use(cors({
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../../public')));
 
-// session setup
-// const sess = {
-//   store: new RedisStore({
-//     host: 'localhost',
-//     port: 6379,
-//   }),
-//   resave: false,
-//   secret: 'rolling squirrel',
-//   saveUninitialized: false,
-//   cookie: { secure: false },
-// };
 let sess;
 
 if (process.env.REDISTOGO_URL) {

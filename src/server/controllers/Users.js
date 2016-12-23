@@ -28,20 +28,16 @@ module.exports = {
         if (err2) {
           return next(err2);
         }
-        console.log('have a user=======', user);
         return res.status(200).json(user.username);
       });
     })(req, res, next);
   },
   signOut: (req, res) => {
-    console.log('heeyy=====');
     req.session.destroy();
     req.logOut();
     res.redirect('/');
-    console.log('zzzzz=====');
   },
   isAuthorized: (req, res) => {
-    console.log('what is req user', req.user);
     if (req.user) {
       res.status(200).json({ isLoggedIn: true, user: req.user.username });
     } else {

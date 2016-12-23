@@ -1,7 +1,8 @@
 /* global fetch */
+import fetch from 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 import Auth from '../services/Auth';
-import config from '../config';
+// import config from '../config';
 import {
   RETRIEVE_WORDS,
   SELECT_WORD,
@@ -12,8 +13,6 @@ import {
   USER_LOGOUT,
 } from '../constants/actionTypes';
 
-const url = `${config.url}`;
-
 const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
 const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
@@ -21,7 +20,9 @@ const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
 export const selectWord = word => ({ type: SELECT_WORD, payload: word });
 export const fetchWords = () => (
   dispatch => (
-    fetch(`${url}/api/word`)
+    fetch('/api/word', {
+      credentials: 'same-origin',
+    })
       .then(res => res.json())
       .then((words) => {
         dispatch(receiveWords(words));
@@ -45,7 +46,7 @@ export const signIn = (info) => {
     body: `username=${info.username}&password=${info.password}`,
   };
   return (dispatch) => {
-    fetch(`${url}/api/auth/sign-in`, userInfo)
+    fetch('/api/auth/sign-in', userInfo)
     .then(res => res.json())
     .then((user) => {
       if (user && !!user.message) {
@@ -67,7 +68,7 @@ export const chromeSignIn = (info) => {
     body: `username=${info.username}&password=${info.password}`,
   };
   return (dispatch) => {
-    fetch(`${url}/api/auth/sign-in`, userInfo)
+    fetch('/api/auth/sign-in', userInfo)
     .then(res => res.json())
     .then((user) => {
       if (user && !!user.message) {
@@ -99,7 +100,7 @@ const receiveDeleteWord = () => ({ type: DELETE_WORD });
 
 export const deleteWord = id => (
   (dispatch) => {
-    fetch(`${url}/api/word`, {
+    fetch('/api/word', {
       method: 'DELETE',
       headers: {
         'Access-Control-Request-Method': 'DELETE',
