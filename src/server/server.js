@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const url = require('url');
 const favicon = require('serve-favicon');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -47,16 +48,47 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // session setup
-const sess = {
-  store: new RedisStore({
-    host: 'localhost',
-    port: 6379,
-  }),
-  resave: false,
-  secret: 'rolling squirrel',
-  saveUninitialized: false,
-  cookie: { secure: false },
-};
+// const sess = {
+//   store: new RedisStore({
+//     host: 'localhost',
+//     port: 6379,
+//   }),
+//   resave: false,
+//   secret: 'rolling squirrel',
+//   saveUninitialized: false,
+//   cookie: { secure: false },
+// };
+let sess;
+
+if (process.env.REDISTOGO_URL) {
+  const redisUrl = url.parse(process.env.REDISTOGO_URL);
+  console.log('the redis url', redisUrl);
+  const redisAuth = redisUrl.auth.split(':');
+
+  sess = {
+    store: new RedisStore({
+      host: redisUrl.hostname,
+      port: redisUrl.port,
+      db: redisAuth[0],
+      pass: redisAuth[1],
+    }),
+    resave: false,
+    secret: 'rolling squirrel',
+    saveUninitialized: false,
+    cookie: { secure: false },
+  };
+} else {
+  sess = {
+    store: new RedisStore({
+      host: 'localhost',
+      port: 6379,
+    }),
+    resave: false,
+    secret: 'rolling squirrel',
+    saveUninitialized: false,
+    cookie: { secure: false },
+  };
+}
 
 app.use(session(sess));
 app.use(passport.initialize());
