@@ -73,7 +73,6 @@ if (process.env.REDISTOGO_URL) {
     resave: false,
     secret: 'flying squirrel',
     saveUninitialized: false,
-    cookie: { secure: true },
   };
 } else {
   sess = {
