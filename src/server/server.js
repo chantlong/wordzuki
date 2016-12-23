@@ -72,10 +72,6 @@ if (process.env.REDISTOGO_URL) {
       db: redisAuth[0],
       pass: redisAuth[1],
     }),
-    resave: false,
-    secret: 'rolling squirrel',
-    saveUninitialized: false,
-    cookie: { secure: false },
   };
 } else {
   sess = {
