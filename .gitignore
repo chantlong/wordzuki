@@ -5,3 +5,4 @@ ideas/
 npm-debug.log
 public/bundle.js
 public/bundle.js.map
+/src/chrome/manifest.json

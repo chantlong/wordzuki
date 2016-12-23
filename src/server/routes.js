@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const passport = require('passport');
 const Users = require('./controllers/Users');
 const Words = require('./controllers/Words');
 
@@ -8,7 +9,7 @@ const router = new express.Router();
 // words
 router.get('/api/word', Words.fetchWords);
 router.post('/api/word', Words.saveWord);
-router.post('/api/search', Words.searchWord);
+router.post('/api/search', passport.authenticate('local'), Words.searchWord);
 router.delete('/api/word', Words.deleteWord);
 
 // users

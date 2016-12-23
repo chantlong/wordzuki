@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -12,6 +12,7 @@ import reducers from './reducers/reducers';
 import App from './components/App';
 import SearchHistory from './containers/SearchHistory';
 import SignIn from './containers/SignIn';
+import ChromeSignIn from './containers/ChromeSignIn';
 import Splash from './components/Splash';
 import { verify } from './actions/actions';
 import Auth from './services/Auth';
@@ -20,7 +21,7 @@ import './assets/styles/index.css';
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(thunk)));
 
-const history = syncHistoryWithStore(hashHistory, store);
+const history = syncHistoryWithStore(browserHistory, store);
 
 const requireAuth = (nextState, replace, next) => {
   Auth.isAuth()
@@ -41,10 +42,12 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={Splash} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/searchhistory" component={SearchHistory} />
+
+        <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
       </Route>
+      <Route path="/chrome-signin" component={ChromeSignIn} />
     </Router>
   </Provider>,
 document.getElementById('app'));
 
-// store.dispatch(verify());
+store.dispatch(verify());

@@ -1,5 +1,5 @@
 /* global fetch */
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import Auth from '../services/Auth';
 import config from '../config';
 import {
@@ -52,7 +52,28 @@ export const signIn = (info) => {
         dispatch(failedRequest(user));
       } else {
         dispatch(receiveLogin(user));
-        hashHistory.push('/searchhistory');
+        browserHistory.push('/searchhistory');
+      }
+    })
+    .catch(err => console.log('errrrr', err));
+  };
+};
+
+export const chromeSignIn = (info) => {
+  const userInfo = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    credentials: 'include',
+    body: `username=${info.username}&password=${info.password}`,
+  };
+  return (dispatch) => {
+    fetch(`${url}/api/auth/sign-in`, userInfo)
+    .then(res => res.json())
+    .then((user) => {
+      if (user && !!user.message) {
+        dispatch(failedRequest(user));
+      } else {
+        dispatch(receiveLogin(user));
       }
     })
     .catch(err => console.log('errrrr', err));
