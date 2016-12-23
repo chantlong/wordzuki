@@ -4,6 +4,7 @@ const url = require('url');
 const favicon = require('serve-favicon');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const redis = require('redis');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const logger = require('morgan');
@@ -62,16 +63,17 @@ let sess;
 
 if (process.env.REDISTOGO_URL) {
   const redisUrl = url.parse(process.env.REDISTOGO_URL);
-  console.log('the redis url', redisUrl);
-  const redisAuth = redisUrl.auth.split(':');
+  const rStore = redis.crientClient(redisUrl.port, redisUrl.hostname);
+  rStore.auth(redisUrl.auth.split(':')[1]);
 
   sess = {
     store: new RedisStore({
-      host: redisUrl.hostname,
-      port: redisUrl.port,
-      db: redisAuth[0],
-      pass: redisAuth[1],
+      client: rStore,
     }),
+    resave: false,
+    secret: 'flying squirrel',
+    saveUninitialized: false,
+    cookie: { secure: true },
   };
 } else {
   sess = {
