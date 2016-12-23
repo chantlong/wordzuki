@@ -28,6 +28,7 @@ module.exports = {
         if (err2) {
           return next(err2);
         }
+        console.log('have a user=======', user);
         return res.status(200).json(user.username);
       });
     })(req, res, next);
