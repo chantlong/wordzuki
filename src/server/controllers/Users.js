@@ -48,4 +48,11 @@ module.exports = {
       res.status(401).json({ isLoggedIn: false });
     }
   },
+  checkAuthorized: (req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      res.status(401).json({ isLoggedIn: false });
+    }
+  },
 };

@@ -1,16 +1,15 @@
 const express = require('express');
 const path = require('path');
-const passport = require('passport');
 const Users = require('./controllers/Users');
 const Words = require('./controllers/Words');
 
 const router = new express.Router();
 
 // words
-router.get('/api/word', Words.fetchWords);
-router.post('/api/word', Words.saveWord);
-router.post('/api/search', passport.authenticate('local'), Words.searchWord);
-router.delete('/api/word', Words.deleteWord);
+router.get('/api/word', Users.checkAuthorized, Words.fetchWords);
+router.post('/api/word', Users.checkAuthorized, Words.saveWord);
+router.post('/api/search', Users.checkAuthorized, Words.searchWord);
+router.delete('/api/word', Users.checkAuthorized, Words.deleteWord);
 
 // users
 router.post('/api/create-account', Users.createAccount);
