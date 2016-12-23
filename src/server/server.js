@@ -63,7 +63,7 @@ let sess;
 
 if (process.env.REDISTOGO_URL) {
   const redisUrl = url.parse(process.env.REDISTOGO_URL);
-  const rStore = redis.crientClient(redisUrl.port, redisUrl.hostname);
+  const rStore = redis.createClient(redisUrl.port, redisUrl.hostname);
   rStore.auth(redisUrl.auth.split(':')[1]);
 
   sess = {
