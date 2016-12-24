@@ -8,15 +8,13 @@ const stemmer = require('porter-stemmer').stemmer;
 
 module.exports = {
   fetchWords: (req, res) => {
-    console.log('FETCH HAVE A REQ USER===========', req.user);
-    Word.find().sort('-updatedAt').then((words) => {
+    Word.find({ userId: req.user._id }).sort('-updatedAt').then((words) => {
       res
         .status(200)
         .send(words);
     });
   },
   saveWord: (req, res) => {
-    console.log('WE HAVE A REQ USER===========', req.user);
     const newWord = new Word({
       _id: objectid(),
       userId: req.user._id,
