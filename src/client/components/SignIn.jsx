@@ -30,13 +30,14 @@ class SignIn extends React.Component {
     return (
       <div className="pa4">
         <form
-          className="measure-narrow center tc"
+          className="measure-narrow center ba br2 b--black-50 pa2 pb4 tc ma4 bg-white"
           onSubmit={this.handleSubmit}
           autoComplete="off"
         >
+          <p className="center f4 fw5 pb3 bb w-75 b--light-silver">ログイン</p>
           <div className="mt3">
             <input
-              className="ph2 pt2 pb1 input-reset ba hover-bg-dark-gray hover-white w-75 f6"
+              className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
               type="text"
               placeholder="メールアドレス"
               onChange={this.handleUsername}
@@ -44,7 +45,7 @@ class SignIn extends React.Component {
           </div>
           <div className="mt3">
             <input
-              className="ph2 pt2 pb1 input-reset ba hover-bg-dark-gray hover-white w-75 f6"
+              className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
               type="password"
               placeholder="パスワード"
               onChange={this.handlePassword}
@@ -52,7 +53,7 @@ class SignIn extends React.Component {
           </div>
           <div className="mt3">
             <button
-              className="ph2 pt2 pb1 fw6 ba b--black bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+              className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
               type="submit"
             >ログイン</button>
           </div>

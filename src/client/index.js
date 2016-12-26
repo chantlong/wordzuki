@@ -12,6 +12,7 @@ import reducers from './reducers/reducers';
 import App from './components/App';
 import SearchHistory from './containers/SearchHistory';
 import SignIn from './containers/SignIn';
+import SignUp from './containers/SignUp';
 import ChromeSignIn from './containers/ChromeSignIn';
 import Splash from './components/Splash';
 import { verify } from './actions/actions';
@@ -42,6 +43,7 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={Splash} />
         <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
       </Route>
       <Route path="/chrome-signin" component={ChromeSignIn} />

@@ -12,7 +12,7 @@ router.post('/api/search', Users.checkAuthorized, Words.searchWord);
 router.delete('/api/word', Users.checkAuthorized, Words.deleteWord);
 
 // users
-router.post('/api/create-account', Users.createAccount);
+router.post('/api/auth/sign-up', Users.createAccount);
 router.post('/api/auth/sign-in', Users.signIn);
 router.get('/api/auth/sign-out', Users.signOut);
 router.get('/api/auth/is-authorized', Users.isAuthorized);

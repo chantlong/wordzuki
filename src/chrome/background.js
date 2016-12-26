@@ -24,12 +24,13 @@ function updateTab(tab) {
 }
 
 function checkAuth(tab) {
-  $.get('http://localhost:3000/api/auth/is-authorized', (data) => {
+  $.get('https://desolate-cove-59104.herokuapp.com/api/auth/is-authorized', (data) => {
     const user = data.user;
-    enable(tab, user);
+    console.log('we got data', data);
+    enable(tab);
   }).fail(err => {
     console.log('fail', err);
-    chrome.tabs.create({ url: 'http://localhost:3000/chrome-signin' });
+    chrome.tabs.create({ url: 'https://desolate-cove-59104.herokuapp.com/chrome-signin' });
     chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
       chrome.tabs.onRemoved.addListener(() => {
         console.log('it was removed');
@@ -53,7 +54,6 @@ function toggleExt(tab) {
 }
 
 chrome.browserAction.onClicked.addListener(toggleExt);
-chrome.tabs.onUpdated.addListener(updateTab);
 
 chrome.runtime.onMessage.addListener(
   (request, sender, senderResponse) => {

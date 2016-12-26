@@ -13,7 +13,7 @@ import {
   USER_LOGOUT,
 } from '../constants/actionTypes';
 
-const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
+export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
 const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
 
@@ -58,6 +58,28 @@ export const signIn = (info) => {
     })
     .catch(err => console.log('errrrr', err));
   };
+};
+
+export const signUp = (info) => {
+  const userInfo = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    credentials: 'include',
+    body: `username=${info.username}&password=${info.password}`,
+  };
+  return (dispatch) => {
+    fetch('/api/auth/sign-up', userInfo)
+    .then(res => res.json())
+    .then((user) => {
+      if (user && !!user.message) {
+        dispatch(failedRequest(user));
+      } else {
+        dispatch(receiveLogin(user));
+        browserHistory.push('/searchhistory');
+      }
+    })
+    .catch(err => console.log('errrr', err));
+  }
 };
 
 export const chromeSignIn = (info) => {

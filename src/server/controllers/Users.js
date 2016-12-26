@@ -3,7 +3,13 @@ const User = require('../models/User');
 
 module.exports = {
   createAccount: (req, res) => {
-    User.register(new User({ username: req.body.username }),
+    User.findOne({ username: req.body.username })
+    .then((match) => {
+      if (match) {
+        console.log('======', match);
+        return res.status(400).json({ message: 'ユーザーが既存しております。' });
+      }
+      return User.register(new User({ username: req.body.username }),
       req.body.password, (err) => {
         if (err) {
           return res.status(400).json(err);
@@ -12,9 +18,13 @@ module.exports = {
           if (err2) {
             return res.status(400).json(err2);
           }
-          return res.redirect('/');
+          return res.json(req.user.username);
         });
       });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
   },
   signIn: (req, res, next) => {
     passport.authenticate('local', (err, user, errMsg) => {
@@ -22,7 +32,7 @@ module.exports = {
         return next(err);
       }
       if (errMsg) {
-        return res.status(401).json(errMsg);
+        return res.status(401).json({ message: errMsg });
       }
       return req.logIn(user, (err2) => {
         if (err2) {
