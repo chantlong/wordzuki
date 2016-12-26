@@ -6,8 +6,7 @@ module.exports = {
     User.findOne({ username: req.body.username })
     .then((match) => {
       if (match) {
-        console.log('======', match);
-        return res.status(400).json({ message: 'ユーザーが既存しております。' });
+        return res.status(400).json({ message: 'ユーザー名は既に存在しています' });
       }
       return User.register(new User({ username: req.body.username }),
       req.body.password, (err) => {

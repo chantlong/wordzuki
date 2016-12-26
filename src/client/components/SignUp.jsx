@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import debounce from 'debounce';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -12,24 +13,60 @@ class SignUp extends React.Component {
     this.handlePassword = this.handlePassword.bind(this);
     this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setState = this.setState.bind(this);
+    this.validateEmail = debounce(this.validateEmail, 1000);
+    this.validatePassword = debounce(this.validatePassword, 1000);
+    this.validateSamePassword = debounce(this.validateSamePassword, 1000);
+  }
+
+  setState(args) {
+    return new Promise(resolve => super.setState(args, resolve));
+  }
+
+  validateEmail() {
+    const { errorMsg } = this.props;
+    if (!/\S+@\S+\.\S+/.test(this.state.username)) {
+      return errorMsg({ message: '不正なメールアドレスです' });
+    }
+    return errorMsg({});
+  }
+
+  validatePassword() {
+    const { errorMsg } = this.props;
+    if (this.state.password.length < 6) {
+      return errorMsg({ message: '6文字以上のパスワードを設定してください' });
+    }
+    return errorMsg({});
+  }
+
+  validateSamePassword() {
+    const { errorMsg } = this.props;
+    if (this.state.password !== this.state.confirmPassword) {
+      return errorMsg({ message: 'パスワードが一致しません' });
+    }
+    return errorMsg({});
   }
 
   handleUsername(e) {
-    this.setState({ username: e.target.value });
+    this.setState({ username: e.target.value })
+      .then(() => {
+        this.validateEmail();
+      });
   }
 
   handlePassword(e) {
-    this.setState({ password: e.target.value });
+    this.setState({ password: e.target.value })
+      .then(() => {
+        this.validatePassword();
+      });
   }
 
   handleConfirmPassword(e) {
     const { errorMsg } = this.props;
-    this.setState({ confirmPassword: e.target.value }, () => {
-      if (this.state.password !== this.state.confirmPassword) {
-        return errorMsg({ message: '両パスワードは一致しておりません。' });
-      }
-      return errorMsg({});
-    });
+    this.setState({ confirmPassword: e.target.value })
+      .then(() => {
+        this.validateSamePassword();
+      });
   }
 
   handleSubmit(e) {
@@ -71,7 +108,7 @@ class SignUp extends React.Component {
               placeholder="パスワードの再入力"
               onChange={this.handleConfirmPassword}
             />
-            { errorHandle.message ? <div className="f6 pt2 red underline">{errorHandle.message}</div> : null}
+            { errorHandle.message ? <div className="f7 pt3 dark-red">{errorHandle.message}</div> : null}
           </div>
           <div className="mt3">
             <button
