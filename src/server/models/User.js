@@ -7,6 +7,12 @@ const User = new Schema({
   password: String,
 });
 
-User.plugin(passportLocalMongoose);
+const options = {
+  errorMessages: {
+    IncorrectPasswordError: 'メアドまたはパスワードが違います',
+  },
+};
+
+User.plugin(passportLocalMongoose, options);
 
 module.exports = mongoose.model('User', User);

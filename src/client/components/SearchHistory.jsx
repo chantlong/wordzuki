@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Word from '../containers/Word';
+import debounce from 'debounce';
 
 class SearchHistory extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class SearchHistory extends React.Component {
       height: undefined,
       remainHeight: undefined,
     };
-    this.selectHeight = this.selectHeight.bind(this);
+    this.selectHeight = debounce(this.selectHeight.bind(this), 100);
   }
 
   componentWillMount() {
@@ -18,9 +19,11 @@ class SearchHistory extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.selectHeight();
-    });
+    window.addEventListener('resize', this.selectHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.selectHeight);
   }
 
   selectHeight() {
@@ -33,33 +36,42 @@ class SearchHistory extends React.Component {
   }
 
   render() {
-    const { words, word, onSelect, deleteWord } = this.props;
-    if (words.length === 0) {
-      return (
-        <div className="dt w-100 border-box center">
-          <div className="dtc w-20 fixed wall-bg br b--black-10">
-            <select
-              className="list pl0 ml0 mt0 justify-right w-100"
-              size={this.state.height}
-            >
-              <option
-                className="pr3 pv2 f6 f6-ns fw4 link
-                bb b--black-10 tc"
-              >単語は保存していません。
-              </option>
-            </select>
-          </div>
-          <div className="dtc w-80 border-box" />
-        </div>
-      );
-    }
+    const { list, isFetching, word, onSelect, deleteWord } = this.props;
+    // if (list.length === 0) {
+    //   return (
+    //     <div className="dt w-100 border-box center">
+    //       <div className="dtc w-20 fixed wall-bg br b--black-10">
+    //         <select
+    //           className="list pl0 ml0 mt0 justify-right w-100"
+    //           size={this.state.height}
+    //         >
+    //           <option
+    //             className="pr3 pv2 f6 f6-ns fw4 link
+    //             bb b--black-10 tc"
+    //           >単語は保存していません。
+    //           </option>
+    //         </select>
+    //       </div>
+    //       <div className="dtc w-80 border-box" />
+    //     </div>
+    //   );
+    // }
     return (
       <div>
         <div className="dt w-100 border-box center">
           <div
             className="dtc w-30 w-20-ns fixed wall-bg br b--black-10"
           >
-            <select
+            {isFetching && <div className="flex justify-center items-center w-100">
+              <div className="loader">
+                <div className="line" />
+                <div className="line" />
+                <div className="line" />
+                <div className="line" />
+              </div>
+            </div>}
+            {!isFetching && list.length === 0 && <div>単語は保存していません。</div>}
+            {!isFetching && list.length > 0 && <select
               className="list pl0 ml0 mt0 justify-right w-100"
               size={this.state.height}
               onChange={(e) => {
@@ -67,7 +79,6 @@ class SearchHistory extends React.Component {
                   return null;
                 }
                 const term = JSON.parse(e.target.value);
-                console.log('that term', term);
                 return onSelect(term);
               }}
               onKeyDown={(e) => {
@@ -81,7 +92,7 @@ class SearchHistory extends React.Component {
                 return null;
               }}
             >
-              {words.map((term, i) => {
+              {list.map((term, i) => {
                 const theTerm = term;
                 theTerm.index = i;
                 return (
@@ -92,9 +103,10 @@ class SearchHistory extends React.Component {
                     bb b--black-10 tr hover-bg-dark-gray hover-white"
                     value={JSON.stringify(theTerm)}
                   >{theTerm.word}
-                  </option>)
+                  </option>);
               })}
             </select>
+          }
           </div>
           <div className="dtc w-80 border-box">
             <Word word={word} />
@@ -111,9 +123,10 @@ class SearchHistory extends React.Component {
 }
 
 SearchHistory.propTypes = {
-  words: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.object,
   ),
+  isFetching: PropTypes.bool,
   word: PropTypes.objectOf(
     PropTypes.any,
   ),
@@ -123,3 +136,4 @@ SearchHistory.propTypes = {
 };
 
 export default SearchHistory;
+

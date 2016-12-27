@@ -27,7 +27,6 @@ const history = syncHistoryWithStore(browserHistory, store);
 const requireAuth = (nextState, replace, next) => {
   Auth.isAuth()
     .then((auth) => {
-        console.log('that AUTH on load', auth);
       if (auth.isLoggedIn) {
         next();
       } else {

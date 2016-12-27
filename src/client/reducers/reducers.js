@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import {
+  REQUEST_WORDS,
   RETRIEVE_WORDS,
   SELECT_WORD,
   DELETE_WORD_FROM_WORDS,
@@ -10,16 +11,38 @@ import {
   USER_LOGOUT,
 } from '../constants/actionTypes';
 
-const words = (state = [], action) => {
+const words = (state = {
+  isFetching: false,
+  list: [],
+}, action) => {
   switch (action.type) {
+    case REQUEST_WORDS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        list: [],
+      });
     case RETRIEVE_WORDS:
-      return action.payload || state;
+      return Object.assign({}, state, {
+        isFetching: false,
+        list: action.payload,
+      });
     case DELETE_WORD_FROM_WORDS:
-      return state.filter(word => (word._id !== action.id));
+      return state.list.filter(word => (word._id !== action.id));
     default:
       return state;
   }
 };
+
+// const words = (state = [], action) => {
+//   switch (action.type) {
+//     case RETRIEVE_WORDS:
+//       return action.payload || state;
+//     case DELETE_WORD_FROM_WORDS:
+//       return state.filter(word => (word._id !== action.id));
+//     default:
+//       return state;
+//   }
+// };
 
 const word = (state = null, action) => {
   switch (action.type) {

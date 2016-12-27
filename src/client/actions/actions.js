@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import Auth from '../services/Auth';
 // import config from '../config';
 import {
+  REQUEST_WORDS,
   RETRIEVE_WORDS,
   SELECT_WORD,
   DELETE_WORD_FROM_WORDS,
@@ -15,23 +16,26 @@ import {
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
+const requestWords = () => ({ type: REQUEST_WORDS });
+
 const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
 
 export const selectWord = word => ({ type: SELECT_WORD, payload: word });
-export const fetchWords = () => (
-  dispatch => (
-    fetch('/api/word', {
-      credentials: 'same-origin',
-    })
-      .then(res => res.json())
-      .then((words) => {
-        dispatch(receiveWords(words));
-        if (words.length > 0) {
-          dispatch(selectWord(words[0]));
-        }
+export const fetchWords = () =>
+    ((dispatch) => {
+      dispatch(requestWords());
+      fetch('/api/word', {
+        credentials: 'same-origin',
       })
-      .catch(err => dispatch(failedRequest(err)))
-  ));
+        .then(res => res.json())
+        .then((words) => {
+          dispatch(receiveWords(words));
+          if (words.length > 0) {
+            dispatch(selectWord(words[0]));
+          }
+        })
+        .catch(err => dispatch(failedRequest(err)));
+    });
 
 const receiveLogin = user => ({
   type: USER_LOGIN,
@@ -50,13 +54,16 @@ export const signIn = (info) => {
     .then(res => res.json())
     .then((user) => {
       if (user && !!user.message) {
-        dispatch(failedRequest(user));
+        if (user.message === 'Missing credentials') {
+          dispatch(failedRequest({ message: 'メアドあるいはパスワードが入力してない' }));
+        } else {
+          dispatch(failedRequest(user));
+        }
       } else {
         dispatch(receiveLogin(user));
         browserHistory.push('/searchhistory');
       }
-    })
-    .catch(err => console.log('errrrr', err));
+    });
   };
 };
 
@@ -71,15 +78,15 @@ export const signUp = (info) => {
     fetch('/api/auth/sign-up', userInfo)
     .then(res => res.json())
     .then((user) => {
+      console.log('what user now', user);
       if (user && !!user.message) {
         dispatch(failedRequest(user));
       } else {
         dispatch(receiveLogin(user));
         browserHistory.push('/searchhistory');
       }
-    })
-    .catch(err => console.log('errrr', err));
-  }
+    });
+  };
 };
 
 export const chromeSignIn = (info) => {

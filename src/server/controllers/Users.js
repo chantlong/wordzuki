@@ -28,10 +28,11 @@ module.exports = {
   signIn: (req, res, next) => {
     passport.authenticate('local', (err, user, errMsg) => {
       if (err) {
+        console.log('WE ERR~~~~~~', err);
         return next(err);
       }
       if (errMsg) {
-        return res.status(401).json({ message: errMsg });
+        return res.status(401).json({ message: errMsg.message });
       }
       return req.logIn(user, (err2) => {
         if (err2) {

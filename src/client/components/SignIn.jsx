@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import debounce from 'debounce';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -10,10 +11,27 @@ class SignIn extends React.Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setState = this.setState.bind(this);
+    this.validateEmail = debounce(this.validateEmail, 1000);
+  }
+
+  setState(args) {
+    return new Promise(resolve => super.setState(args, resolve));
+  }
+
+  validateEmail() {
+    const { errorMsg } = this.props;
+    if (!/\S+@\S+\.\S+/.test(this.state.username)) {
+      return errorMsg({ message: '不正なメールアドレスです' });
+    }
+    return errorMsg({});
   }
 
   handleUsername(e) {
-    this.setState({ username: e.target.value });
+    this.setState({ username: e.target.value })
+      .then(() => {
+        this.validateEmail();
+      });
   }
 
   handlePassword(e) {
@@ -27,6 +45,8 @@ class SignIn extends React.Component {
   }
 
   render() {
+    console.log('this', this);
+    const { errorHandle } = this.props;
     return (
       <div className="pa4">
         <form
@@ -50,6 +70,7 @@ class SignIn extends React.Component {
               placeholder="パスワード"
               onChange={this.handlePassword}
             />
+          { errorHandle.message ? <div className="f7 pt3 dark-red">{errorHandle.message}</div> : null}
           </div>
           <div className="mt3">
             <button
@@ -64,7 +85,11 @@ class SignIn extends React.Component {
 }
 
 SignIn.propTypes = {
+  errorHandle: PropTypes.objectOf(
+    PropTypes.any,
+  ),
   signIn: PropTypes.func,
+  errorMsg: PropTypes.func,
 };
 
 export default SignIn;

@@ -114,7 +114,7 @@ class SignUp extends React.Component {
             <button
               className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
               type="submit"
-            >ログイン</button>
+            >アカウントを作成</button>
           </div>
         </form>
       </div>
