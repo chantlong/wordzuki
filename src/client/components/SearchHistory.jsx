@@ -62,15 +62,17 @@ class SearchHistory extends React.Component {
           <div
             className="dtc w-30 w-20-ns fixed wall-bg br b--black-10"
           >
-            {isFetching && <div className="flex justify-center items-center w-100">
+            <div className="flex justify-center items-center w-100 h-100">
+              {isFetching &&
               <div className="loader">
                 <div className="line" />
                 <div className="line" />
                 <div className="line" />
                 <div className="line" />
               </div>
-            </div>}
-            {!isFetching && list.length === 0 && <div>単語は保存していません。</div>}
+              }
+              {!isFetching && list.length === 0 && <div className="f6 f6-ns fw4">単語は保存していません。</div>}
+            </div>
             {!isFetching && list.length > 0 && <select
               className="list pl0 ml0 mt0 justify-right w-100"
               size={this.state.height}
