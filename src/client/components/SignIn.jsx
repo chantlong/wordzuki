@@ -45,7 +45,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    console.log('this', this);
     const { errorHandle } = this.props;
     return (
       <div className="pa4">

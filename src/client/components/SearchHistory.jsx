@@ -62,52 +62,57 @@ class SearchHistory extends React.Component {
           <div
             className="dtc w-30 w-20-ns fixed wall-bg br b--black-10"
           >
-            <div className="flex justify-center items-center w-100 h-100">
-              {isFetching &&
+            {isFetching && <div className="flex justify-center items-center w-100 h-100">
               <div className="loader">
                 <div className="line" />
                 <div className="line" />
                 <div className="line" />
                 <div className="line" />
               </div>
-              }
-              {!isFetching && list.length === 0 && <div className="f6 f6-ns fw4">単語は保存していません。</div>}
-            </div>
-            {!isFetching && list.length > 0 && <select
-              className="list pl0 ml0 mt0 justify-right w-100"
-              size={this.state.height}
-              onChange={(e) => {
-                if (e.target.value === null) {
-                  return null;
-                }
-                const term = JSON.parse(e.target.value);
-                return onSelect(term);
-              }}
-              onKeyDown={(e) => {
-                if (e.target.value === '') {
-                  return null;
-                }
-                if (e.keyCode === 8) {
+            </div>}
+            {
+              !isFetching && list.length === 0 &&
+              <div className="mt4 f6 f6-ns fw4 tc">単語は保存していません。</div>
+            }
+            {
+              !isFetching && list.length > 0 &&
+              <select
+                className="list pl0 ml0 mt0 justify-right w-100"
+                size={this.state.height}
+                onChange={(e) => {
+                  if (e.target.value === null) {
+                    return null;
+                  }
                   const term = JSON.parse(e.target.value);
-                  deleteWord(term._id);
-                }
-                return null;
-              }}
-            >
-              {list.map((term, i) => {
-                const theTerm = term;
-                theTerm.index = i;
-                return (
-                  <option
-                    key={i}
-                    onClick={() => { onSelect(theTerm); }}
-                    className="pr3 pv2 f6 f6-ns fw4 link
-                    bb b--black-10 tr hover-bg-dark-gray hover-white"
-                    value={JSON.stringify(theTerm)}
-                  >{theTerm.word}
-                  </option>);
-              })}
-            </select>
+                  return onSelect(term);
+                }}
+                onKeyDown={(e) => {
+                  if (e.target.value === '') {
+                    return null;
+                  }
+                  if (e.keyCode === 8) {
+                    const term = JSON.parse(e.target.value);
+                    deleteWord(term._id);
+                  }
+                  return null;
+                }}
+              >
+                {
+                list.map((term, i) => {
+                  const theTerm = term;
+                  theTerm.index = i;
+                  return (
+                    <option
+                      key={i}
+                      onClick={() => { onSelect(theTerm); }}
+                      className="pr3 pv2 f6 f6-ns fw4 link
+                      bb b--black-10 tr hover-bg-dark-gray hover-white"
+                      value={JSON.stringify(theTerm)}
+                    >{theTerm.word}
+                    </option>);
+                })
+              }
+              </select>
           }
           </div>
           <div className="dtc w-80 border-box">
