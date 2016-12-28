@@ -45,10 +45,12 @@ function toggleExt(tab) {
   if (config.enable === false) {
     config.enable = true;
     chrome.browserAction.setIcon({ path: 'assets/images/wordzuki-logo16.png' });
+    chrome.tabs.onUpdated.addListener(updateTab);
     checkAuth(tab);
   } else {
     config.enable = false;
     chrome.browserAction.setIcon({ path: 'assets/images/wordzuki-logo16-gs.png' });
+    chrome.tabs.onUpdated.removeListener(updateTab);
     disable(tab);
   }
 }

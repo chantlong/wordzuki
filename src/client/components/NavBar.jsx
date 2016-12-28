@@ -14,11 +14,14 @@ const NavBar = ({ login, signOut }) => (
             <Link to="/signin" className="near-black link dim f6 dib mr3 mr4-ns">ログイン</Link>
             <Link to="/signup" className="near-black link dim f6 dib mr3 mr4-ns">新規登録</Link>
           </span>) :
-        (<a
-          href="/api/auth/sign-out"
-          onClick={() => signOut}
-          className="near-black link dim f6 dib mr3 mr4-ns"
-        >ログアウト</a>)}
+        (<span>
+          <Link to="/searchhistory" className="near-black link dim f6 dib mr3 mr4-ns">単語リスト</Link>
+          <a
+            href="/api/auth/sign-out"
+            onClick={() => signOut}
+            className="near-black link dim f6 dib mr3 mr4-ns"
+          >ログアウト</a>
+        </span>)}
       </div>
     </nav>
   </div>

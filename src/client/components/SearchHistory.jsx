@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Word from '../containers/Word';
-import debounce from 'debounce';
+// import debounce from 'debounce';
 
 class SearchHistory extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class SearchHistory extends React.Component {
       height: undefined,
       remainHeight: undefined,
     };
-    this.selectHeight = debounce(this.selectHeight.bind(this), 100);
+    this.selectHeight = this.selectHeight.bind(this);
   }
 
   componentWillMount() {

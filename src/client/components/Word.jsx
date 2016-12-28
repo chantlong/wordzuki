@@ -26,7 +26,12 @@ const Word = ({ word, deleteWord }) => {
           </a>
         </li>
         <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}
-          <a href={word.source} className="mh1 mh2-ns i">~ 原文</a>
+          <a
+            href={word.source}
+            className="mh1 mh2-ns i"
+            target="_blank"
+            rel="noopener noreferrer"
+          >~ 原文</a>
         </li>
         <ol className="mv2-ns">
           {JSON.parse(word.def)

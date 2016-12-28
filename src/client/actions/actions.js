@@ -120,8 +120,7 @@ export const verify = () =>
           return null;
         }
         return dispatch(receiveLogin(res.user));
-      })
-      .catch(err => dispatch(failedRequest(err)));
+      });
   };
 
 const receiveDeleteWords = id => ({ type: DELETE_WORD_FROM_WORDS, id });
