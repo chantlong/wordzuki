@@ -1,4 +1,6 @@
-
+const Tesseract = require('tesseract.js');
+const fs = require('fs');
+const request = require('request');
 const Word = require('../models/Word');
 const objectid = require('objectid');
 const parseString = require('xml2js').parseString;
@@ -98,4 +100,20 @@ module.exports = {
         res.send({ message: `${info.word}を削除しました。` });
       });
   },
+  // readImage: (req, res) => {
+  //   console.log('the req.body i=mage', req.body.image)
+  //   var filename = 'pic.png'
+  //   const writeFile = fs.createWriteStream(filename)
+  //   request(req.body.image).pipe(writeFile).on('close', function() {
+  //     console.log(req.body.image, 'saved to', filename)
+  //     Tesseract.recognize(filename)
+  //       .progress((p) => { console.log('progress', p)  })
+  //       .catch(err => console.error(err))
+  //       .then((result) => {
+  //         console.log(result);
+  //         res.send(result);
+  //         process.exit(0)
+  //       })
+  //   });
+  // },
 };
