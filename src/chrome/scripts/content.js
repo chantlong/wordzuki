@@ -69,7 +69,7 @@ function closePopup(e) {
     return null;
   }
   if (e.target === popup) {
-    $('#wz-popup').fadeOut('fast', () => $('wz-popup').remove());
+    $('#wz-popup').fadeOut('fast', () => $('#wz-popup').remove());
   }
   return null;
 }
@@ -114,9 +114,9 @@ function getDefinition(term) {
     const word = term.toLowerCase();
     chrome.runtime.sendMessage({ message: 'search_word', word }, (definition) => {
       if (definition === null) {
-        reject('No definition found');
+        return reject('No definition found');
       }
-      resolve(definition.split(' / '));
+      return resolve(definition.split(' / '));
     });
   });
 }
@@ -134,16 +134,19 @@ function getWord() {
     getSource()
   ])
     .then((values) => {
-      const definition = values[0];
+      let definition = values[0];
       const example = values[1];
       const source = values[2];
       console.log('values', values);
       createPopup(word, definition, example);
+      definition = JSON.stringify(definition);
       saveWord({ word, definition, example, source });
     })
     .catch((reason) => {
       console.log('the reason', reason);
-      noDefPopup();
+      if (reason === 'No definition found') {
+        noDefPopup();
+      }
     });
   return null;
 }
