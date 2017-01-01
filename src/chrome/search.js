@@ -23,7 +23,7 @@ const search = (word) => {
       const referredWord = result.slice(1);
       search(referredWord);
     }
-    console.log('the result', result);
+    // console.log('the result', result);
     return result;
   }
   return null;

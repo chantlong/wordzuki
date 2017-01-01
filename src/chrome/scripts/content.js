@@ -8,89 +8,64 @@ function speakIt(word) {
   chrome.runtime.sendMessage({ message: 'speak_it', word });
 }
 
-function getWord() {
-  console.log('検索中...');
+function createPopup(word, definition, example) {
   if (document.getElementById('wz-popup')) {
     document.getElementById('wz-popup').remove();
   }
-  const word = window.getSelection().toString().toLowerCase().trim();
-  if (!word) {
-    return null;
-  }
-  chrome.runtime.sendMessage({ message: 'search_word', word }, (response) => {
-    console.log('tat response', response);
-  });
-  chrome.runtime.sendMessage({ message: 'get_url' }, (response) => {
-    console.log('tat response2', response);
-  });
-  return null;
-}
 
-function createPopup() {
   const popup = document.createElement('div');
   popup.setAttribute('id', 'wz-popup');
   const wContent = document.createElement('div');
   wContent.setAttribute('class', 'wz-content');
+
+  const defEl = document.createElement('ol');
+  for (let i = 0; i < definition.length; i += 1) {
+    const item = document.createElement('li');
+    const defItem = document.createTextNode(definition[i]);
+    item.append(defItem);
+    defEl.appendChild(item);
+  }
+  defEl.className = 'wz-def';
+  const wordItem = document.createElement('h1');
+  wordItem.className = 'wz-term';
+  const wordTerm = document.createTextNode(word);
+  const wordContainer = document.createElement('div');
+  wordContainer.setAttribute('class', 'wz-word-container');
+  const wordPronounce = document.createElement('img');
+  wordPronounce.setAttribute('class', 'wz-pronounce');
+  wordPronounce.setAttribute('src', chrome.extension.getURL('assets/images/speaker.png'));
+  wordItem.appendChild(wordTerm);
+  wordContainer.appendChild(wordItem);
+  wordContainer.appendChild(wordPronounce);
+  wContent.appendChild(wordContainer);
+  wContent.appendChild(defEl);
+  popup.appendChild(wContent);
+  document.body.appendChild(popup);
+  $('#wz-popup').fadeIn('fast');
+  const def = JSON.stringify(definition);
+  const pronounceListener = document.getElementsByClassName('wz-pronounce')[0];
+  pronounceListener.addEventListener('click', () => {
+    speakIt(word);
+  });
 }
-  // return $.post(url, { word }, (data1) => {
-  //   if (!!data1.SUCCESS && data1.SUCCESS.length) {
-  //     const defEl = document.createElement('ol');
-  //     for (let i = 0; i < data1.SUCCESS.length; i += 1) {
-  //       const item = document.createElement('li');
-  //       const defItem = document.createTextNode(data1.SUCCESS[i]);
-  //       item.append(defItem);
-  //       defEl.appendChild(item);
-  //     }
-  //     const daSel = window.getSelection().focusNode.data.split('.');
-  //     let ex;
-  //     for (let i = 0; i < daSel.length; i += 1) {
-  //       if (daSel[i].indexOf(word) > -1) {
-  //         ex = daSel[i].concat('.').trim();
-  //       }
-  //     }
-  //     defEl.className = 'wz-def';
-  //     const wordItem = document.createElement('h1');
-  //     wordItem.className = 'wz-term';
-  //     const wordTerm = document.createTextNode(word);
-  //     const wordContainer = document.createElement('div');
-  //     wordContainer.setAttribute('class', 'wz-word-container');
-  //     const wordPron = document.createElement('img');
-  //     wordPron.setAttribute('class', 'wz-pronounce');
-  //     wordPron.setAttribute('src', chrome.extension.getURL('assets/images/speaker.png'));
-  //     wordItem.appendChild(wordTerm);
-  //     wordContainer.appendChild(wordItem);
-  //     wordContainer.appendChild(wordPron);
-  //     wContent.appendChild(wordContainer);
-  //     wContent.appendChild(defEl);
-  //     popup.appendChild(wContent);
-  //     document.body.appendChild(popup);
-  //     $('#wz-popup').fadeIn('fast');
-  //     const def = JSON.stringify(data1.SUCCESS);
-  //     const pronounceListener = document.getElementsByClassName('wz-pronounce')[0];
-  //     pronounceListener.addEventListener('click', () => {
-  //       speakIt(word);
-  //     });
-  //     console.log('hey=====');
-  //     $.post('https://desolate-cove-59104.herokuapp.com/api/word',
-  //       { word, def, ex, source },
-  //       (data2, status2) => { console.log('posted?', data2, status2); });
-  //   } else {
-  //     console.log('No definition');
-  //     const noDef = document.createElement('p');
-  //     noDef.setAttribute('class', 'wz-error');
-  //     const errMessage = document.createTextNode('cannot be found');
-  //     noDef.appendChild(errMessage);
-  //     wContent.appendChild(noDef);
-  //     popup.appendChild(wContent);
-  //     document.body.appendChild(popup);
-  //     $('#wz-popup').fadeIn('fast');
-  //     setTimeout(() => {
-  //       $('#wz-popup').fadeOut('fast', () => popup.remove());
-  //     }, 2000);
-  //   }
-  // }).fail(err => {
-  //   console.log('we have err', err);
-  // });
+
+function noDefPopup() {
+  const popup = document.createElement('div');
+  popup.setAttribute('id', 'wz-popup');
+  const wContent = document.createElement('div');
+  wContent.setAttribute('class', 'wz-content');
+  const noDef = document.createElement('p');
+  noDef.setAttribute('class', 'wz-error');
+  const errMessage = document.createTextNode('cannot be found');
+  noDef.appendChild(errMessage);
+  wContent.appendChild(noDef);
+  popup.appendChild(wContent);
+  document.body.appendChild(popup);
+  $('#wz-popup').fadeIn('fast');
+  setTimeout(() => {
+    $('#wz-popup').fadeOut('fast', () => popup.remove());
+  }, 3000);
+}
 
 function closePopup(e) {
   const popup = document.getElementById('wz-popup');
@@ -100,6 +75,72 @@ function closePopup(e) {
   if (e.target === popup) {
     $('#wz-popup').fadeOut('fast', () => $('wz-popup').remove());
   }
+  return null;
+}
+
+function getSentence(selection, word) {
+  console.log('the selection', selection);
+  // includes words that are hyperlinks in the sentence
+  // matches for '.' '!' '?'
+  const sentences = selection.anchorNode.parentNode.innerText.match(/[^.!?]+[.!?]+/g);
+  let example = '';
+  if (sentences) {
+    for (let i = 0; i < sentences.length; i += 1) {
+      if (sentences[i].indexOf(word) > -1) {
+        example = sentences[i].trim();
+        break;
+      }
+    }
+    return example;
+  }
+  // if no puncation matched return node directly
+  example = selection.anchorNode.data;
+  return example;
+}
+
+function getSource() {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ message: 'get_url' }, (source) => {
+      resolve(source);
+    });
+  });
+}
+
+function getDefinition(term) {
+  return new Promise((resolve, reject) => {
+    const word = term.toLowerCase();
+    chrome.runtime.sendMessage({ message: 'search_word', word }, (definition) => {
+      if (definition === null) {
+        reject('No definition found');
+      }
+      resolve(definition.split(' / '));
+    });
+  });
+}
+
+function getWord() {
+  console.log('検索中...');
+  const word = window.getSelection().toString().trim();
+  if (!word) {
+    return null;
+  }
+  const selectedArea = window.getSelection();
+  Promise.all([
+    getDefinition(word),
+    getSentence(selectedArea, word),
+    getSource()
+  ])
+    .then((values) => {
+      const definition = values[0];
+      const example = values[1];
+      const source = values[2];
+      console.log('values', values);
+      createPopup(word, definition, example);
+    })
+    .catch((reason) => {
+      console.log('the reason', reason);
+      noDefPopup();
+    });
   return null;
 }
 
@@ -114,9 +155,12 @@ chrome.runtime.onMessage.addListener(
       }
     }
     if (request.message === 'disable') {
-      console.log('wordzuki 終了');
-      document.removeEventListener('dblclick', getWord);
-      window.removeEventListener('click', closePopup);
+      if (window.wordzuki.enable) {
+        console.log('wordzuki 終了');
+        window.wordzuki.enable = 0;
+        document.removeEventListener('dblclick', getWord);
+        window.removeEventListener('click', closePopup);
+      }
     }
   }
 );

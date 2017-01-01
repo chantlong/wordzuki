@@ -8,7 +8,7 @@
   position: fixed;
   font-family: 'Avenir', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-size: 13px;
+  font-size: 14px;
   opacity: 0.95;
 }
 
@@ -21,7 +21,7 @@
   margin-right: 15px;
   margin-top: 15px;
   padding: 12px;
-  z-index: 99999;
+  z-index: 999999;
   position: fixed;
   top: 0;
   right: 0;
@@ -46,6 +46,7 @@
 }
 
 #wz-popup .wz-content .wz-word-container .wz-term {
+  text-transform: none;
   font-family: 'Georgia', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', sans-serif;
   font-size:18px;
   font-weight: bold;

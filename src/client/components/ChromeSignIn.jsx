@@ -12,6 +12,7 @@ class ChromeSignIn extends React.Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.closeTab = this.closeTab.bind(this);
   }
 
   handleUsername(e) {
@@ -26,6 +27,10 @@ class ChromeSignIn extends React.Component {
     e.preventDefault();
     const { chromeSignIn } = this.props;
     chromeSignIn(this.state);
+  }
+
+  closeTab() {
+    setTimeout(() => { window.close(); }, 1000);
   }
 
   render() {
@@ -80,7 +85,18 @@ class ChromeSignIn extends React.Component {
         </div>
       );
     }
-    return null;
+    return (
+      <div className="avenir pa3 bg-near-white tc vh-100">
+        <a href="/" className="near-black v-mid link dim tracked f5 fw4">
+          <img src={logo} alt="wordzuki" className="w2 h2 v-mid mr1 mr2-ns" />
+          <span className="dn dib-ns fw5">wordzuki</span>
+        </a>
+        <div className="measure-narrow center ba br2 b--black-50 pa2 pa2 tc ma4 bg-white">
+          <p className="tc">ログインできました</p>
+          {this.closeTab()}
+        </div>
+      </div>
+    );
   }
 }
 
