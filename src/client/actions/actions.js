@@ -134,6 +134,7 @@ export const deleteWord = id => (
         'Access-Control-Request-Method': 'DELETE',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
+      credentials: 'include',
       body: `id=${id}`,
     })
     .then(res => console.log('what we got', res))

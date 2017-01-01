@@ -55,6 +55,7 @@ module.exports = {
     }
   },
   checkAuthorized: (req, res, next) => {
+    console.log('uhh req user', req.user);
     if (req.user) {
       next();
     } else {

@@ -27,22 +27,14 @@ const words = (state = {
         list: action.payload,
       });
     case DELETE_WORD_FROM_WORDS:
-      return state.list.filter(word => (word._id !== action.id));
+      return Object.assign({}, state, {
+        isFetching: false,
+        list: state.list.filter(word => (word._id !== action.id)),
+      });
     default:
       return state;
   }
 };
-
-// const words = (state = [], action) => {
-//   switch (action.type) {
-//     case RETRIEVE_WORDS:
-//       return action.payload || state;
-//     case DELETE_WORD_FROM_WORDS:
-//       return state.filter(word => (word._id !== action.id));
-//     default:
-//       return state;
-//   }
-// };
 
 const word = (state = null, action) => {
   switch (action.type) {

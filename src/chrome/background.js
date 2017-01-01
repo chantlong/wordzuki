@@ -40,7 +40,14 @@ function loadDictAsync() {
         const entries = data.split('\n');
         for (let i = 0; i < entries.length; i += 1) {
           const entry = entries[i].split('\t ');
-          dict[entry[0].toLowerCase().trim()] = entry[1];
+          if (entry[0].indexOf(',') > -1) {
+            const similarEntries = entry[0].split(',');
+            for (let j = 0; j < similarEntries.length; j += 1) {
+              dict[similarEntries[j].toLowerCase().trim()] = entry[1];
+            }
+          } else {
+            dict[entry[0].toLowerCase().trim()] = entry[1];
+          }
         }
         console.log('loaded');
         window.wordzuki.enable = true;
@@ -113,7 +120,11 @@ chrome.runtime.onMessage.addListener(
       }
       case 'search_word': {
         const result = search(lemmatizer(request.word));
-        console.log('the lemmatized word', result);
+        senderResponse(result);
+        break;
+      }
+      case 'get_base_word': {
+        const result = lemmatizer(request.word);
         senderResponse(result);
         break;
       }

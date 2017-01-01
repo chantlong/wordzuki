@@ -81,8 +81,21 @@ function saveWord({ word, definition, example, source }) {
   .fail(err => console.log('save error', err));
 }
 
+function getBaseWord(term) {
+  return new Promise((resolve, reject) => {
+    const word = term.toLowerCase();
+    chrome.runtime.sendMessage({ message: 'get_base_word', word }, (base) => {
+      console.log('the base', base);
+      if (!base) {
+        return reject(base);
+      }
+      return resolve(base);
+    });
+  });
+}
+
 function getSentence(selection, word) {
-  console.log('the selection', selection);
+  // console.log('the selection', selection);
   // includes words that are hyperlinks in the sentence
   // matches for '.' '!' '?'
   const sentences = selection.anchorNode.parentNode.innerText.match(/[^.!?]+[.!?]+/g);
@@ -121,7 +134,7 @@ function getDefinition(term) {
   });
 }
 
-function getWord() {
+function getWordInfo() {
   console.log('検索中...');
   const word = window.getSelection().toString().trim();
   if (!word) {
@@ -129,24 +142,20 @@ function getWord() {
   }
   const selectedArea = window.getSelection();
   Promise.all([
+    getBaseWord(word),
     getDefinition(word),
     getSentence(selectedArea, word),
     getSource()
   ])
     .then((values) => {
-      let definition = values[0];
-      const example = values[1];
-      const source = values[2];
-      console.log('values', values);
+      const [word, definition, example, source] = values;
+      // console.log('values', values);
       createPopup(word, definition, example);
-      definition = JSON.stringify(definition);
-      saveWord({ word, definition, example, source });
+      saveWord({ word, definition: JSON.stringify(definition), example, source });
     })
     .catch((reason) => {
       console.log('the reason', reason);
-      if (reason === 'No definition found') {
-        noDefPopup();
-      }
+      noDefPopup();
     });
   return null;
 }
@@ -157,7 +166,7 @@ chrome.runtime.onMessage.addListener(
       if (!window.wordzuki.enable) {
         window.wordzuki.enable = 1;
         console.log('wordzuki スタート');
-        document.addEventListener('dblclick', getWord);
+        document.addEventListener('dblclick', getWordInfo);
         window.addEventListener('click', closePopup);
       }
     }
@@ -165,7 +174,7 @@ chrome.runtime.onMessage.addListener(
       if (window.wordzuki.enable) {
         console.log('wordzuki 終了');
         window.wordzuki.enable = 0;
-        document.removeEventListener('dblclick', getWord);
+        document.removeEventListener('dblclick', getWordInfo);
         window.removeEventListener('click', closePopup);
       }
     }
