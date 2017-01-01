@@ -9,10 +9,6 @@ function speakIt(word) {
 }
 
 function createPopup(word, definition, example) {
-  if (document.getElementById('wz-popup')) {
-    document.getElementById('wz-popup').remove();
-  }
-
   const popup = document.createElement('div');
   popup.setAttribute('id', 'wz-popup');
   const wContent = document.createElement('div');
@@ -78,6 +74,13 @@ function closePopup(e) {
   return null;
 }
 
+function saveWord({ word, definition, example, source }) {
+  $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+        { word, definition, example, source },
+        (data2, status2) => { console.log('posted?', data2, status2); })
+  .fail(err => console.log('save error', err));
+}
+
 function getSentence(selection, word) {
   console.log('the selection', selection);
   // includes words that are hyperlinks in the sentence
@@ -136,6 +139,7 @@ function getWord() {
       const source = values[2];
       console.log('values', values);
       createPopup(word, definition, example);
+      saveWord({ word, definition, example, source });
     })
     .catch((reason) => {
       console.log('the reason', reason);

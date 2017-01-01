@@ -1,6 +1,6 @@
-const Tesseract = require('tesseract.js');
-const fs = require('fs');
-const request = require('request');
+// const Tesseract = require('tesseract.js');
+// const fs = require('fs');
+// const request = require('request');
 const Word = require('../models/Word');
 const objectid = require('objectid');
 const parseString = require('xml2js').parseString;
@@ -21,8 +21,8 @@ module.exports = {
       _id: objectid(),
       userId: req.user._id,
       word: req.body.word,
-      def: req.body.def,
-      ex: req.body.ex,
+      def: req.body.definition,
+      ex: req.body.example,
       source: req.body.source,
     });
     console.log('some save WORD====', req.body.def);
@@ -94,7 +94,7 @@ module.exports = {
     });
   }),
   deleteWord: (req, res) => {
-    console.log('in delete =====')
+    console.log('in delete =====');
     Word.findOneAndRemove({ _id: req.body.id })
       .then((info) => {
         res.send({ message: `${info.word}を削除しました。` });

@@ -56,7 +56,8 @@ function loadDictAsync() {
 function checkAuth(tab) {
   return new Promise((resolve, reject) => {
     const url = 'https://desolate-cove-59104.herokuapp.com/api/auth/is-authorized';
-    $.get('http://localhost:3000/api/auth/is-authorized')
+    const testUrl = 'http://localhost:3000/api/auth/is-authorized';
+    $.get('https://desolate-cove-59104.herokuapp.com/api/auth/is-authorized')
     .then((data) => {
       const user = data.user;
       console.log('we got data', data);
@@ -70,7 +71,7 @@ function checkAuth(tab) {
       console.log('fail', err);
       if (window.wordzuki.loginAttempt < 1) {
         window.wordzuki.loginAttempt += 1;
-        chrome.tabs.create({ url: 'http://localhost:3000/chrome-signin' });
+        chrome.tabs.create({ url: 'https://desolate-cove-59104.herokuapp.com/chrome-signin' });
         chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
           chrome.tabs.onRemoved.addListener(checkAuth);
         });
