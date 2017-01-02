@@ -128,15 +128,14 @@ const receiveDeleteWord = () => ({ type: DELETE_WORD });
 
 export const deleteWord = id => (
   (dispatch) => {
-    fetch('/api/word', {
+    fetch(`/api/word/${id}`, {
       method: 'DELETE',
       headers: {
         'Access-Control-Request-Method': 'DELETE',
-        'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
-      body: `id=${id}`,
     })
+    .then(res => res.json())
     .then(res => console.log('what we got', res))
     .then(() => dispatch(receiveDeleteWords(id)))
     .then(() => dispatch(receiveDeleteWord()));
