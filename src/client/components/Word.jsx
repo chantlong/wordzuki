@@ -26,16 +26,19 @@ const Word = ({ word, deleteWord }) => {
           </a>
         </li>
         <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}
-          <a
-            href={word.source}
-            className="mh1 mh2-ns i"
-            target="_blank"
-            rel="noopener noreferrer"
-          >~ 原文</a>
+          { word.source ?
+            <a
+              href={word.source}
+              className="mh1 mh2-ns i"
+              target="_blank"
+              rel="noopener noreferrer"
+            >~ 原文</a> :
+            null
+          }
         </li>
         <ol className="mv2-ns">
-          {JSON.parse(word.def)
-            .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>))}
+          {JSON.parse(word.def) !== null ? JSON.parse(word.def)
+            .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) : (<li>No defnition yet</li>)}
         </ol>
         <a
           onClick={() => deleteWord(word._id)}

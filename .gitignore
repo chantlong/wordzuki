@@ -6,3 +6,4 @@ npm-debug.log
 /src/chrome/manifest.json
 /src/chrome/lib/
 /src/chrome/dict/
+/src/server/uploads/

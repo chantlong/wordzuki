@@ -22,9 +22,9 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURI[app.settings.env], (err) => {
   if (err) {
-    process.stdout.write(`\ncannot connect to db. ${err}`);
+    process.stdout.write(`cannot connect to db. ${err}`);
   } else {
-    process.stdout.write(`\nconnected to db ${config.mongoURI[app.settings.env]}`);
+    process.stdout.write(`connected to db ${config.mongoURI[app.settings.env]}\n`);
   }
 });
 
@@ -81,7 +81,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(routes);
 app.listen(port, () => {
-  process.stdout.write(`\nListening on Port${port}`);
+  process.stdout.write(`Listening on Port${port}\n`);
 });
 
 module.exports = app;
