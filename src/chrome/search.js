@@ -2,16 +2,9 @@
 const lemmatizer = (word) => {
   const lemmatize = new Lemmatizer();
   console.log('lem', lemmatize.lemmas(word));
-  const baseRetrieverWord = lemmatize.lemmas(word)[0][0];
-  const singularizedWord = pluralize.singular(word);
-  let result = '';
-  if (baseRetrieverWord.length <= singularizedWord.length) {
-    result = baseRetrieverWord;
-  } else {
-    result = singularizedWord;
-  }
-  console.log('the lemma, result', result);
-  return result;
+  const stem = lemmatize.lemmas(word)[0][0];
+  console.log('the lemma, result', stem);
+  return stem;
 };
 
 
