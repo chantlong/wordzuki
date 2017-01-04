@@ -22,7 +22,6 @@ module.exports = {
             dict[entry[0].toLowerCase().trim()] = entry[1];
           }
         }
-        console.log('loaded', dict);
         resolve(dict);
       });
     });
@@ -30,7 +29,7 @@ module.exports = {
   searchE2J: (word, dict) => {
     if (dict[word]) {
       const result = dict[word].trim().split(' / ');
-      if (result[0] === '=') {
+      if (result[0][0] === '=') {
         const referredWord = result.slice(1);
         module.exports.searchE2J(referredWord);
       }

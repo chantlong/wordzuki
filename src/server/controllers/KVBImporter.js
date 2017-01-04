@@ -4,6 +4,7 @@ const searchE2J = require('./Dict').searchE2J;
 const objectid = require('objectid');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
 module.exports = {
   // fetch Kindle Vocabulary Builder Data
@@ -13,12 +14,22 @@ module.exports = {
     db.serialize(() => {
       db.all('SELECT l.usage, w.word, w.stem, w.lang, b.title, b.authors from LOOKUPS l INNER JOIN WORDS w ON l.word_key = w.id INNER JOIN BOOK_INFO b ON l.book_key = b.id', (err, data) => {
         if (err) {
-          console.log('errrr', err);
+          fs.unlink(file, (err) => {
+            if (err) {
+              console.log('delete err', err);
+            }
+            res.json({ ERROR: 'このファイルは導入できませんでした。' });
+          });
         }
         module.exports.saveKVB(req, res, data)
           .then(count => {
             console.log('the count', count);
-            res.json(count);
+            fs.unlink(file, (err) => {
+              if (err) {
+                console.log('delete err', err);
+              }
+              res.json({ SUCCESS: count });
+            });
           });
       });
     });
@@ -33,8 +44,10 @@ module.exports = {
       loadE2JDict()
         .then((dictData) => {
           const dict = dictData;
+          console.log('loaded that dict');
           for (let i = 0; i < KVBdata.length; i += 1) {
             ((pos) => {
+              count += 1;
               const item = KVBdata[pos];
               Word.findOne({ userId: req.user._id, word: item.word })
                 .then((match) => {
@@ -61,11 +74,15 @@ module.exports = {
                       insertCount += 1;
                     }
                   }
-                  count += 1;
+                })
+                .then(() => {
+                  console.log('the inserted', insertCount);
+                  console.log('the count2', count, total);
                   if (count > total) {
+                    console.log('got in here');
                     resolve(`単語${insertCount}個を導入しました。`);
                   }
-                });
+                })
             })(i);
           }
         });

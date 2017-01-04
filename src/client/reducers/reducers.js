@@ -9,6 +9,9 @@ import {
   ERR_FAILED_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
+  REQUEST_IMPORT_WORDS,
+  SUCCESS_IMPORT_WORDS,
+  FAIL_IMPORT_WORDS
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -30,6 +33,31 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
+      });
+    default:
+      return state;
+  }
+};
+
+const fetcher = (state = {
+  inRequest: undefined,
+  message: undefined,
+}, action) => {
+  switch (action.type) {
+    case REQUEST_IMPORT_WORDS:
+      return Object.assign({}, state, {
+        inRequest: true,
+        message: undefined,
+      });
+    case SUCCESS_IMPORT_WORDS:
+      return Object.assign({}, state, {
+        inRequest: false,
+        message: action.message,
+      });
+    case FAIL_IMPORT_WORDS:
+      return Object.assign({}, state, {
+        inRequest: undefined,
+        message: action.message,
       });
     default:
       return state;
@@ -81,6 +109,7 @@ const routing = routerReducer;
 const reducers = combineReducers({
   words,
   word,
+  fetcher,
   errorHandle,
   login,
   routing,

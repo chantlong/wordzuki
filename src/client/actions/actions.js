@@ -12,6 +12,9 @@ import {
   ERR_FAILED_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
+  REQUEST_IMPORT_WORDS,
+  SUCCESS_IMPORT_WORDS,
+  FAIL_IMPORT_WORDS
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -141,3 +144,27 @@ export const deleteWord = id => (
     .then(() => dispatch(receiveDeleteWord()));
   }
 );
+
+const importLoading = () => ({ type: REQUEST_IMPORT_WORDS });
+const importSuccess = success => ({ type: SUCCESS_IMPORT_WORDS, message: success });
+const importFail = err => ({ type: FAIL_IMPORT_WORDS, message: err });
+
+export const KVBImporter = info =>
+  ((dispatch) => {
+    dispatch(importLoading());
+    fetch('/api/kvb/', {
+      method: 'POST',
+      body: info,
+      credentials: 'include',
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+      console.log('the resssss', res);
+      if (res.ERROR) {
+        dispatch(importFail(res));
+      } else {
+        dispatch(importSuccess(res));
+      }
+    });
+  });
+

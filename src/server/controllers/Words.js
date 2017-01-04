@@ -44,7 +44,6 @@ module.exports = {
 };
 
 
-
 // searchWord: (req, res) => {
 //   var term = req.body.word.trim();
 //   if (term.length === 0) {

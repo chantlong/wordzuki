@@ -15,7 +15,7 @@ import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import ChromeSignIn from './containers/ChromeSignIn';
 import Splash from './components/Splash';
-import KVBImport from './components/KVBImport';
+import KVBImport from './containers/KVBImport';
 import { verify } from './actions/actions';
 import Auth from './services/Auth';
 import './assets/styles/index.css';
@@ -45,7 +45,7 @@ render(
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
-        <Route path="/kvb" component={KVBImport} />
+        <Route path="/kindlevb" component={KVBImport} />
       </Route>
       <Route path="/chrome-signin" component={ChromeSignIn} />
     </Router>
