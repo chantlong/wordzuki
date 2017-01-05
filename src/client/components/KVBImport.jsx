@@ -33,7 +33,7 @@ class KVBImport extends React.Component {
   render() {
     const { inRequest, message } = this.props;
     return (
-      <div className="pa4 measure-wide center">
+      <div className="pa3 measure-wide center">
         {inRequest === true && <div className="flex justify-center items-center w-100 h-100">
           <div className="loader">
             <div className="line" />
@@ -83,7 +83,7 @@ class KVBImport extends React.Component {
             { message && message.ERROR ? <div className="f7 pt3 dark-red">{message.ERROR}</div> : null}
           </form>
           <section className="pa2 f6 tc">
-            <h2 className="f5 fw5">＜Macで隠れフォルダーを表示するのやり方＞</h2>
+            <h2 className="f5 fw5">＜Macで隠れフォルダーを表示する方法＞</h2>
             <ul className="list mb4">
               <li className="pv1">ターミナルを開き、下記の二行を別々に入力する。</li>
               <li className="pv1">defaults write com.apple.finder AppleShowAllFiles YES</li>
@@ -97,7 +97,7 @@ class KVBImport extends React.Component {
             <h2 className="f5 fw5">＜Windowsの場合＞</h2>
             <span className="pv1"><a
               href="https://helpx.adobe.com/jp/x-productkb/global/cpsid_87117.html"
-              className="near-black link dim b"
+              className="near-black dim"
               target="_blank"
               rel="noopener noreferrer"
             >こちら</a>を参考してください。</span>
