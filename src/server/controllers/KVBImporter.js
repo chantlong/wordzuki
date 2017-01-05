@@ -76,13 +76,11 @@ module.exports = {
                   }
                 })
                 .then(() => {
-                  console.log('the inserted', insertCount);
-                  console.log('the count2', count, total);
                   if (count > total) {
                     console.log('got in here');
                     resolve(`単語${insertCount}個を導入しました。`);
                   }
-                })
+                });
             })(i);
           }
         });

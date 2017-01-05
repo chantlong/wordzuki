@@ -50,6 +50,17 @@ select:focus {
   animation-delay: 540ms;
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal:focus {
+  outline: 0;
+}
+
 @keyframes expand {
   0% {
     transform: scale(1);

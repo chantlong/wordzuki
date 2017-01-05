@@ -14,7 +14,9 @@ import {
   USER_LOGOUT,
   REQUEST_IMPORT_WORDS,
   SUCCESS_IMPORT_WORDS,
-  FAIL_IMPORT_WORDS
+  FAIL_IMPORT_WORDS,
+  UPDATE_WORD,
+  UPDATE_WORD_LIST,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -139,9 +141,13 @@ export const deleteWord = id => (
       credentials: 'include',
     })
     .then(res => res.json())
-    .then(res => console.log('what we got', res))
-    .then(() => dispatch(receiveDeleteWords(id)))
-    .then(() => dispatch(receiveDeleteWord()));
+    .then((res) => {
+      if (res.message) {
+        dispatch(receiveDeleteWords(id));
+        dispatch(receiveDeleteWord());
+      }
+    })
+    .catch(err => console.log('the errrrr', err));
   }
 );
 
@@ -168,3 +174,25 @@ export const KVBImporter = info =>
     });
   });
 
+const updateWord = word => ({ type: UPDATE_WORD, payload: word });
+const updateList = word => ({ type: UPDATE_WORD_LIST, payload: word });
+
+export const addDefinition = (id, def) =>
+  ((dispatch) => {
+    fetch(`/api/word/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ def }),
+    })
+    .then(res => res.json())
+    .then((word) => {
+      dispatch(updateWord(word));
+      dispatch(updateList(word));
+    })
+    .catch((err) => {
+      console.log('the err', err);
+    });
+  });

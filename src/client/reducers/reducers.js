@@ -11,7 +11,9 @@ import {
   USER_LOGOUT,
   REQUEST_IMPORT_WORDS,
   SUCCESS_IMPORT_WORDS,
-  FAIL_IMPORT_WORDS
+  FAIL_IMPORT_WORDS,
+  UPDATE_WORD,
+  UPDATE_WORD_LIST,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -33,6 +35,11 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
+      });
+    case UPDATE_WORD_LIST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
       });
     default:
       return state;
@@ -70,6 +77,8 @@ const word = (state = null, action) => {
       return action.payload || state;
     case DELETE_WORD:
       return null;
+    case UPDATE_WORD:
+      return action.payload || state;
     default:
       return state;
   }

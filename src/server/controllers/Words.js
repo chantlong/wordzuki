@@ -34,11 +34,18 @@ module.exports = {
       }
     });
   },
+  addWordDefinition: (req, res) => {
+    Word.findOneAndUpdate({ _id: req.params.id }, { def: req.body.def }, { new: true })
+      .then((word) => {
+        res.status(200).json(word);
+      })
+      .catch(err => console.log('uhhh errr', err));
+  },
   deleteWord: (req, res) => {
     console.log('in delete =====');
     Word.findOneAndRemove({ _id: req.params.id })
       .then((info) => {
-        res.status(204).send({ message: `${info.word}を削除しました。` });
+        res.status(200).json({ message: `${info.word}を削除しました。` });
       });
   },
 };
