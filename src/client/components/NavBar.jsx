@@ -10,10 +10,10 @@ const NavBar = ({ login, signOut }) => (
         <span className="dn dib-ns fw5">wordzuki</span></a>
       <div className="tr">
         {!login.isAuth ? (
-          <span>
-            <Link to="/signin" className="link dim f6 dib mr3 mr4-ns">ログイン</Link>
-            <Link to="/signup" className="link dim f6 dib mr3 mr4-ns">新規登録</Link>
-          </span>) :
+          <ul className="list">
+            <li className="dib"><Link to="/signin" className="link dim f6 dib mr3 mr4-ns">ログイン</Link></li>
+            <li className="dib"><Link to="/signup" className="link dim f6 dib mr3 mr4-ns">新規登録</Link></li>
+          </ul>) :
         (<ul className="list">
           <li className="dropdown f6">
             {login.user}
