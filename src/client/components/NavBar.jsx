@@ -4,24 +4,47 @@ import logo from '../assets/images/wordzuki-logo128.png';
 
 const NavBar = ({ login, signOut }) => (
   <div>
-    <nav className=" w-100 flex items-center justify-between border-box pa3 ph5-ns bg-near-white avenir">
-      <a href="/" className="near-black link dim dib tracked f5 fw4 flex items-center">
-        <img src={logo} alt="wordzuki" className="dib w2 h2 mr2 mr3-ns" />
+    <nav className="w-100 flex items-center justify-between border-box ph5-ns bg-near-white avenir mid-gray">
+      <a href="/" className="link dim dib tracked f5 fw4 flex items-center">
+        <img src={logo} alt="wordzuki" className="dib wz-icon mr2 mr3-ns" />
         <span className="dn dib-ns fw5">wordzuki</span></a>
       <div className="tr">
         {!login.isAuth ? (
           <span>
-            <Link to="/signin" className="near-black link dim f6 dib mr3 mr4-ns">ログイン</Link>
-            <Link to="/signup" className="near-black link dim f6 dib mr3 mr4-ns">新規登録</Link>
+            <Link to="/signin" className="link dim f6 dib mr3 mr4-ns">ログイン</Link>
+            <Link to="/signup" className="link dim f6 dib mr3 mr4-ns">新規登録</Link>
           </span>) :
-        (<span>
-          <Link to="/searchhistory" className="near-black link dim f6 dib mr3 mr4-ns">単語リスト</Link>
-          <a
-            href="/api/auth/sign-out"
-            onClick={() => signOut}
-            className="near-black link dim f6 dib mr3 mr4-ns"
-          >ログアウト</a>
-        </span>)}
+        (<ul className="list">
+          <li className="dropdown f6">
+            {login.user}
+            <ul className="dropdown-content tl pa2 list br2">
+              <li className="db mt3 pa2 bb b--black-10">
+                <Link
+                  to="/searchhistory"
+                  className="link f7 dim"
+                >
+                単語リスト
+                </Link>
+              </li>
+              <li className="db mt1 pa2 bb b--black-10">
+                <Link
+                  to="/kindlevb"
+                  className="link f7 dim"
+                >
+                Kindle単語帳
+                </Link>
+              </li>
+              <li className="db mt1 pa2">
+                <a
+                  href="/api/auth/sign-out"
+                  onClick={() => signOut}
+                  className="link f7 dim"
+                >ログアウト
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>)}
       </div>
     </nav>
   </div>
