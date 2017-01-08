@@ -1,12 +1,5 @@
 const Word = require('../models/Word');
 const objectid = require('objectid');
-// const Tesseract = require('tesseract.js');
-// const fs = require('fs');
-// const request = require('request');
-// const parseString = require('xml2js').parseString;
-// const http = require('http');
-// const stemmer = require('porter-stemmer').stemmer;
-// const lemmer = require('lemmer').lemmatize;
 
 module.exports = {
   fetchWords: (req, res) => {
@@ -25,7 +18,6 @@ module.exports = {
       ex: req.body.example,
       source: req.body.source,
     });
-    console.log('some save WORD====', req.body.def);
     newWord.save((err) => {
       if (err) {
         res.json({ ERROR: err });
@@ -39,10 +31,9 @@ module.exports = {
       .then((word) => {
         res.status(200).json(word);
       })
-      .catch(err => console.log('uhhh errr', err));
+      .catch(err => res.status(400).json({ message: err }));
   },
   deleteWord: (req, res) => {
-    console.log('in delete =====');
     Word.findOneAndRemove({ _id: req.params.id })
       .then((info) => {
         res.status(200).json({ message: `${info.word}を削除しました。` });
@@ -50,6 +41,13 @@ module.exports = {
   },
 };
 
+// const Tesseract = require('tesseract.js');
+// const fs = require('fs');
+// const request = require('request');
+// const parseString = require('xml2js').parseString;
+// const http = require('http');
+// const stemmer = require('porter-stemmer').stemmer;
+// const lemmer = require('lemmer').lemmatize;
 
 // searchWord: (req, res) => {
 //   var term = req.body.word.trim();

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { createUserSetup } from './fixtures';
 import app from '../../src/server/server';
 
-test('before', (assert) => {
+test('setup', (assert) => {
   mongoose.connection.once('connected', () => {
     mongoose.connection.db.dropDatabase(err => err || assert.end());
   });
@@ -96,8 +96,8 @@ test('verify if user is logged when logged in', (assert) => {
       testSession
         .get('/api/auth/is-authorized')
         .expect(200)
-        .end((err2, res2) => {
-          const actual = res2.body;
+        .end((err2, res) => {
+          const actual = res.body;
           const expected = { isLoggedIn: true, user: 'test@test.com' };
           assert.deepEqual(actual, expected, 'should return verified user');
           assert.end(err);

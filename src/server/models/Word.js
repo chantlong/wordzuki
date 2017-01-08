@@ -4,7 +4,7 @@ const WordSchema = new mongoose.Schema({
   userId: String,
   word: String,
   stem: String,
-  def: [String],
+  def: String,
   pron: String,
   ex: String,
   source: String,
@@ -16,4 +16,3 @@ const WordSchema = new mongoose.Schema({
 const Word = mongoose.model('Word', WordSchema);
 
 module.exports = Word;
-

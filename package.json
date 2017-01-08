@@ -8,7 +8,8 @@
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
     "css": "tachyons ./src/client/assets/styles/main.css > ./src/client/assets/styles/index.css --minify",
-    "test": "NODE_ENV=test babel-node ./test/*/*.js | tap-spec"
+    "test": "NODE_ENV=test babel-node ./test/*/*-test.js | tap-spec",
+    "testspec": "NODE_ENV=test babel-node ./test/*/word-test.js | tap-spec"
   },
   "author": "Alex Wong",
   "license": "ISC",
