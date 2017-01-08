@@ -22,6 +22,7 @@ module.exports = {
             dict[entry[0].toLowerCase().trim()] = entry[1];
           }
         }
+        console.log(dict);
         resolve(dict);
       });
     });

@@ -81,7 +81,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(routes);
 app.listen(port, () => {
-  process.stdout.write(`Listening on Port${port}\n`);
+  process.stdout.write(`Listening on Port: ${port}\n`);
 });
 
 module.exports = app;

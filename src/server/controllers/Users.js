@@ -17,7 +17,7 @@ module.exports = {
           if (err2) {
             return res.status(400).json(err2);
           }
-          return res.json(req.user.username);
+          return res.status(201).json(req.user.username);
         });
       });
     })

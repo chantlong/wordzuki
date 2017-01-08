@@ -37,25 +37,6 @@ class SearchHistory extends React.Component {
 
   render() {
     const { list, isFetching, word, onSelect, deleteWord } = this.props;
-    // if (list.length === 0) {
-    //   return (
-    //     <div className="dt w-100 border-box center">
-    //       <div className="dtc w-20 fixed wall-bg br b--black-10">
-    //         <select
-    //           className="list pl0 ml0 mt0 justify-right w-100"
-    //           size={this.state.height}
-    //         >
-    //           <option
-    //             className="pr3 pv2 f6 f6-ns fw4 link
-    //             bb b--black-10 tc"
-    //           >単語は保存していません。
-    //           </option>
-    //         </select>
-    //       </div>
-    //       <div className="dtc w-80 border-box" />
-    //     </div>
-    //   );
-    // }
     return (
       <div>
         <div className="dt w-100 border-box center">
@@ -76,8 +57,9 @@ class SearchHistory extends React.Component {
             }
             {
               !isFetching && list.length > 0 &&
-              <select
-                className="list pl0 ml0 mt0 justify-right w-100"
+              <ul
+                tabIndex={0}
+                className="vh-100 pre list pl0 ml0 mt0 justify-right w-100"
                 size={this.state.height}
                 onChange={(e) => {
                   if (e.target.value === null) {
@@ -87,6 +69,7 @@ class SearchHistory extends React.Component {
                   return onSelect(term);
                 }}
                 onKeyDown={(e) => {
+                  console.log('the e----', e.target.value, e.keyCode)
                   if (e.target.value === '') {
                     return null;
                   }
@@ -102,17 +85,17 @@ class SearchHistory extends React.Component {
                   const theTerm = term;
                   theTerm.index = i;
                   return (
-                    <option
+                    <li
                       key={i}
                       onClick={() => { onSelect(theTerm); }}
                       className="pr3 pv2 f6 f6-ns fw4 link
                       bb b--black-10 tr hover-bg-dark-gray hover-white"
                       value={JSON.stringify(theTerm)}
                     >{theTerm.word}
-                    </option>);
+                    </li>);
                 })
               }
-              </select>
+              </ul>
           }
           </div>
           <div className="dtc w-80 border-box">
