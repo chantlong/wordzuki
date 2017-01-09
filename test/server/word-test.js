@@ -6,22 +6,20 @@ import app from '../../src/server/server';
 
 let userSession;
 
-test('setup', (assert) => {
-  mongoose.connection.once('connected', () => {
-    mongoose.connection.db.dropDatabase((err) => {
-      if (err) { assert.fail(err); }
-      // create a user session
-      userSession = request.agent(app);
-      userSession
-        .post('/api/auth/sign-up')
-        .send({
-          username: 'test@test.com',
-          password: 'test123',
-        })
-        .end((err2) => {
-          assert.end(err2);
-        });
-    });
+test('setup word', (assert) => {
+  mongoose.connection.db.dropDatabase((err) => {
+    if (err) { assert.fail(err); }
+    // create a user session
+    userSession = request.agent(app);
+    userSession
+      .post('/api/auth/sign-up')
+      .send({
+        username: 'test@test.com',
+        password: 'test123',
+      })
+      .end((err2) => {
+        assert.end(err2);
+      });
   });
 });
 
@@ -44,7 +42,7 @@ test('fetch a created word', (assert) => {
         };
         const expected = {
           word: 'isolate',
-          def: '["«…から» 〈国組織人など〉を孤立させる, 離す"]',
+          def: ['«…から» 〈国組織人など〉を孤立させる, 離す'],
         };
         assert.deepEqual(actual, expected, 'should return saved definition');
         assert.end(err2);

@@ -54,7 +54,7 @@ module.exports = {
                   if (!match) {
                     if (item.lang === 'en' || item.lang === 'en-GB') {
                       const stem = item.title !== item.stem ? item.stem : null;
-                      const def = JSON.stringify(searchE2J(stem, dict));
+                      const def = searchE2J(stem, dict);
                       const newWord = new Word({
                         _id: objectid(),
                         userId: req.user._id,

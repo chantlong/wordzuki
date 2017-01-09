@@ -185,7 +185,7 @@ export const addDefinition = (id, def) =>
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ def }),
+      body: { def },
     })
     .then(res => res.json())
     .then((word) => {

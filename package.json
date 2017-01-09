@@ -8,8 +8,7 @@
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
     "css": "tachyons ./src/client/assets/styles/main.css > ./src/client/assets/styles/index.css --minify",
-    "test": "NODE_ENV=test babel-node ./test/*/*-test.js | tap-spec",
-    "testspec": "NODE_ENV=test babel-node ./test/*/word-test.js | tap-spec"
+    "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
   "author": "Alex Wong",
   "license": "ISC",
@@ -77,6 +76,7 @@
     "style-loader": "^0.13.1",
     "supertest": "^2.0.1",
     "tachyons-cli": "^1.0.10",
+    "tap": "^9.0.1",
     "tape": "^4.6.3",
     "tape-catch": "^1.0.6",
     "tesseract.js": "^1.0.10",

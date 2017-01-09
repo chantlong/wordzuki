@@ -57,8 +57,7 @@ class SearchHistory extends React.Component {
             }
             {
               !isFetching && list.length > 0 &&
-              <ul
-                tabIndex={0}
+              <select
                 className="vh-100 pre list pl0 ml0 mt0 justify-right w-100"
                 size={this.state.height}
                 onChange={(e) => {
@@ -69,7 +68,6 @@ class SearchHistory extends React.Component {
                   return onSelect(term);
                 }}
                 onKeyDown={(e) => {
-                  console.log('the e----', e.target.value, e.keyCode)
                   if (e.target.value === '') {
                     return null;
                   }
@@ -85,17 +83,17 @@ class SearchHistory extends React.Component {
                   const theTerm = term;
                   theTerm.index = i;
                   return (
-                    <li
+                    <option
                       key={i}
                       onClick={() => { onSelect(theTerm); }}
                       className="pr3 pv2 f6 f6-ns fw4 link
                       bb b--black-10 tr hover-bg-dark-gray hover-white"
                       value={JSON.stringify(theTerm)}
                     >{theTerm.word}
-                    </li>);
+                    </option>);
                 })
               }
-              </ul>
+              </select>
           }
           </div>
           <div className="dtc w-80 border-box">
@@ -126,4 +124,3 @@ SearchHistory.propTypes = {
 };
 
 export default SearchHistory;
-

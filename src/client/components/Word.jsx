@@ -29,7 +29,7 @@ class Word extends React.Component {
 
   handleSubmit(e) {
     const { word, addDefinition } = this.props;
-    const def = JSON.stringify([].concat(this.state.definition));
+    const def = [].concat(this.state.definition);
     e.preventDefault();
     addDefinition(word._id, def);
     this.closeModal();
@@ -76,7 +76,7 @@ class Word extends React.Component {
             }
           </li>
           <ol className="mv2-ns">
-            {JSON.parse(word.def) !== null ? JSON.parse(word.def)
+            {word.def ? word.def
               .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
               (<p className="f6 f5-ns fw3 mid-gray pv2">意味を追加する
                 <a

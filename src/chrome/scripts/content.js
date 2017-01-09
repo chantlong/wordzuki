@@ -151,7 +151,7 @@ function getWordInfo() {
       const [word, definition, example, source] = values;
       // console.log('values', values);
       createPopup(word, definition, example);
-      saveWord({ word, definition: JSON.stringify(definition), example, source });
+      saveWord({ word, definition, example, source });
     })
     .catch((reason) => {
       console.log('the reason', reason);
@@ -180,4 +180,3 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
-

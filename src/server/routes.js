@@ -14,10 +14,7 @@ const router = new express.Router();
 router.get('/api/word', Words.fetchWords);
 router.post('/api/word', Users.checkAuthorized, Words.saveWord);
 router.put('/api/word/:id', Users.checkAuthorized, Words.addWordDefinition);
-
 router.delete('/api/word/:id', Users.checkAuthorized, Words.deleteWord);
-// router.post('/api/search', Users.checkAuthorized, Words.searchWord);
-// router.post('/api/image', Words.readImage);
 
 // kvb importer
 router.post('/api/kvb/', upload.single('kindlevb'), KVBImporter.readKVB);
@@ -34,3 +31,6 @@ router.get('*', (req, res) => {
 });
 
 module.exports = router;
+
+// router.post('/api/search', Users.checkAuthorized, Words.searchWord);
+// router.post('/api/image', Words.readImage);

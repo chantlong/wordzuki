@@ -29,10 +29,6 @@ class ChromeSignIn extends React.Component {
     chromeSignIn(this.state);
   }
 
-  closeTab() {
-    setTimeout(() => { window.close(); }, 1000);
-  }
-
   render() {
     const { login } = this.props;
     if (!login.isAuth) {
@@ -93,7 +89,7 @@ class ChromeSignIn extends React.Component {
         </a>
         <div className="measure-narrow center ba br2 b--black-50 pa2 pa2 tc ma4 bg-white">
           <p className="tc">ログインできました</p>
-          {this.closeTab()}
+          {() => { setTimeout(() => { window.close(); }, 1000); }}
         </div>
       </div>
     );

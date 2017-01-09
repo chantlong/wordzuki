@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { createUserSetup } from './fixtures';
 import app from '../../src/server/server';
 
-test('setup', (assert) => {
+test('setup auth', (assert) => {
   mongoose.connection.once('connected', () => {
     mongoose.connection.db.dropDatabase(err => err || assert.end());
   });
@@ -104,5 +104,3 @@ test('verify if user is logged when logged in', (assert) => {
         });
     });
 });
-
-test.onFinish(() => process.exit(0));
