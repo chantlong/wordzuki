@@ -10,6 +10,7 @@ module.exports = {
     });
   },
   saveWord: (req, res) => {
+    console.log('req body', req.body);
     const newWord = new Word({
       _id: objectid(),
       userId: req.user._id,
@@ -22,6 +23,7 @@ module.exports = {
       if (err) {
         res.json({ ERROR: err });
       } else {
+        console.log('the new word', newWord);
         res.json({ SUCCESS: newWord });
       }
     });
