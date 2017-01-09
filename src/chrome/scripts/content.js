@@ -77,7 +77,7 @@ function closePopup(e) {
 function saveWord({ word, definition, example, source }) {
   $.post('https://desolate-cove-59104.herokuapp.com/api/word',
         { word, definition, example, source },
-        (data2, status2) => { console.log('posted?', data2, status2); })
+        (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
   .fail(err => console.log('save error', err));
 }
 
@@ -151,7 +151,7 @@ function getWordInfo() {
       const [word, definition, example, source] = values;
       // console.log('values', values);
       createPopup(word, definition, example);
-      saveWord({ word, definition, example, source });
+      saveWord({ word, definition: JSON.stringify(definition), example, source });
     })
     .catch((reason) => {
       console.log('the reason', reason);

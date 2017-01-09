@@ -68,7 +68,7 @@ class Word extends React.Component {
             { word.source ?
               <a
                 href={word.source}
-                className="mh1 mh2-ns i"
+                className="mh1 mh2-ns i link dim"
                 target="_blank"
                 rel="noopener noreferrer"
               >~ 原文</a> :
