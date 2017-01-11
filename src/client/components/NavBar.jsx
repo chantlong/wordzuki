@@ -4,7 +4,7 @@ import logo from '../assets/images/wordzuki-logo128.png';
 
 const NavBar = ({ login, signOut }) => (
   <div>
-    <nav className="w-100 flex items-center justify-between border-box ph5-ns bg-near-white avenir mid-gray">
+    <nav className="w-100 flex items-center justify-between border-box ph3 ph5-ns bg-near-white avenir mid-gray">
       <a href="/" className="link dim dib tracked f5 fw4 flex items-center">
         <img src={logo} alt="wordzuki" className="dib wz-icon mr2 mr3-ns" />
         <span className="dn dib-ns fw5">wordzuki</span></a>

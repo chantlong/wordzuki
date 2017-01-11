@@ -14,6 +14,7 @@ import {
   FAIL_IMPORT_WORDS,
   UPDATE_WORD,
   UPDATE_WORD_LIST,
+  TOGGLE_EDIT_MODAL,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -113,6 +114,16 @@ const login = (state = { isAuth: false, user: null }, action) => {
   }
 };
 
+const editModal = (state = false, action) => {
+  switch (action.type) {
+    case TOGGLE_EDIT_MODAL: {
+      return !state;
+    }
+    default:
+      return state;
+  }
+};
+
 const routing = routerReducer;
 
 const reducers = combineReducers({
@@ -121,6 +132,7 @@ const reducers = combineReducers({
   fetcher,
   errorHandle,
   login,
+  editModal,
   routing,
 });
 

@@ -1,0 +1,24 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left:auto;
+  margin-right:0;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  background-color: #f4f4f4;
+  opacity: 0;
+  transform: translate(0, -1.5em);
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s
+}
+
+.tooltip:hover .tooltip-content {
+  visibility: visible; /* shows sub-menu */
+  opacity: 1;
+  z-index: 1;
+  transform: translate(1.5em, -1.5em);
+  transition-delay: 0s, 0s, 0.3s;
+}

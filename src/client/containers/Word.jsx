@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { deleteWord, addDefinition } from '../actions/actions';
+import { deleteWord, addDefinition, toggleEditModal } from '../actions/actions';
 import Word from '../components/Word';
 
 const mapStateToProps = ({ words }) => {
@@ -14,8 +14,11 @@ const mapDispatchToProps = dispatch => ({
   deleteWord: (id) => {
     dispatch(deleteWord(id));
   },
-  addDefinition: (id, def) => {
-    dispatch(addDefinition(id, def));
+  addDefinition: (id, ex, def) => {
+    dispatch(addDefinition(id, ex, def));
+  },
+  toggleEditModal: () => {
+    dispatch(toggleEditModal());
   },
 });
 

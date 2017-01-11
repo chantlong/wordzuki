@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
+import EditModal from '../containers/EditModal';
 import voice from '../assets/images/speaker.png';
 import add from '../assets/images/add.png';
+import edit from '../assets/images/edit.png';
 import trash from '../assets/images/trash-can.png';
 
 const speakIt = (term) => {
@@ -31,7 +33,7 @@ class Word extends React.Component {
     const { word, addDefinition } = this.props;
     const def = [].concat(this.state.definition);
     e.preventDefault();
-    addDefinition(word._id, def);
+    addDefinition(word._id, word.ex, def);
     this.closeModal();
   }
 
@@ -47,7 +49,7 @@ class Word extends React.Component {
     return (
       <div className="w-100-m w-70-ns">
         <ul className="list ml2 ml3-ns mr3 mr5-ns mt2 mt4-ns georgia">
-          <li className="ph3 pv3 f5 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
+          <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
             <a
               onClick={() => {
                 speakIt(word.word);
@@ -57,6 +59,7 @@ class Word extends React.Component {
               <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
             </a>
           </li>
+          { /* EXAMPLE */ }
           <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}<a
             onClick={() => {
               speakIt(word.ex);
@@ -75,6 +78,7 @@ class Word extends React.Component {
               null
             }
           </li>
+          { /* DEFINITION */ }
           <ol className="mv2-ns">
             {word.def ? word.def
               .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
@@ -87,9 +91,19 @@ class Word extends React.Component {
                 </a>
               </p>)}
           </ol>
+          { /* EDIT WORD */ }
+          <a
+            onClick={() => {
+              this.props.toggleEditModal();
+            }}
+            className="mh1 mh2-ns"
+          >
+            <img src={edit} alt="edit" className="dib w1 h1 v-mid mr2 mr3-ns dim fr" />
+          </a>
+          <EditModal />
           <div>
             <Modal
-              className="modal w-30-ns center ba br2 b--black-50 pa2 tc ma4 bg-white"
+              className="modal mid-gray georgia w-30-ns center ba br2 b--black-50 pa2 tc ma4 bg-white"
               isOpen={this.state.open}
               onRequestClose={this.closeModal}
               contentLabel="definition adding"
@@ -124,6 +138,7 @@ Word.propTypes = {
   ),
   deleteWord: PropTypes.func,
   addDefinition: PropTypes.func,
+  toggleEditModal: PropTypes.func,
 };
 
 export default Word;

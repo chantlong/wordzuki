@@ -28,7 +28,6 @@ module.exports = {
   signIn: (req, res, next) => {
     passport.authenticate('local', (err, user, errMsg) => {
       if (err) {
-        console.log('WE ERR~~~~~~', err);
         return next(err);
       }
       if (errMsg) {

@@ -17,6 +17,7 @@ import {
   FAIL_IMPORT_WORDS,
   UPDATE_WORD,
   UPDATE_WORD_LIST,
+  TOGGLE_EDIT_MODAL,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -83,7 +84,6 @@ export const signUp = (info) => {
     fetch('/api/auth/sign-up', userInfo)
     .then(res => res.json())
     .then((user) => {
-      console.log('what user now', user);
       if (user && !!user.message) {
         dispatch(failedRequest(user));
       } else {
@@ -111,7 +111,7 @@ export const chromeSignIn = (info) => {
         dispatch(receiveLogin(user));
       }
     })
-    .catch(err => console.log('errrrr', err));
+    .catch(err => dispatch(failedRequest(err)));
   };
 };
 
@@ -147,7 +147,7 @@ export const deleteWord = id => (
         dispatch(receiveDeleteWord());
       }
     })
-    .catch(err => console.log('the errrrr', err));
+    .catch(err => dispatch(failedRequest(err)));
   }
 );
 
@@ -165,7 +165,6 @@ export const KVBImporter = info =>
     })
     .then(res => (res.json()))
     .then((res) => {
-      console.log('the resssss', res);
       if (res.ERROR) {
         dispatch(importFail(res));
       } else {
@@ -177,7 +176,7 @@ export const KVBImporter = info =>
 const updateWord = word => ({ type: UPDATE_WORD, payload: word });
 const updateList = word => ({ type: UPDATE_WORD_LIST, payload: word });
 
-export const addDefinition = (id, def) =>
+export const addDefinition = (id, ex = null, def) =>
   ((dispatch) => {
     fetch(`/api/word/${id}`, {
       method: 'PUT',
@@ -185,7 +184,7 @@ export const addDefinition = (id, def) =>
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: { def },
+      body: JSON.stringify({ ex, def }),
     })
     .then(res => res.json())
     .then((word) => {
@@ -193,6 +192,8 @@ export const addDefinition = (id, def) =>
       dispatch(updateList(word));
     })
     .catch((err) => {
-      console.log('the err', err);
+      dispatch(failedRequest(err));
     });
   });
+
+export const toggleEditModal = () => ({ type: TOGGLE_EDIT_MODAL });

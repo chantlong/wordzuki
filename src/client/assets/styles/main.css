@@ -1,5 +1,6 @@
 @import "tachyons";
 @import "dropdown";
+@import "tooltip";
 
 .wall-bg {
   height: calc(100vh - 50px);
