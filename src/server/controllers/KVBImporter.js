@@ -38,75 +38,79 @@ module.exports = {
   },
   saveKVB: (req, res, data) => (new Promise((resolve) => {
     const KVBdata = data;
+    const total = KVBdata.length - 1;
+    let count = 0;
     let insertCount = 0;
-    let dict;
-
-    const checkIfExist = (item, cb) => {
-      Word.count({ userId: req.user._id, word: item.word })
-        .then((count) => {
-          if (!count) {
-            insertCount++;
-          }
-          cb(null, !count);
-        });
-    };
+    const checkCount = () => {
+      count += 1;
+      if (count > total) {
+        resolve(`単語${insertCount}個を導入しました。`);
+      }
+    }
     loadE2JDict()
       .then((dictData) => {
-        dict = dictData;
-        return new Promise((resolve2) => {
-          async.filter(
-            KVBdata,
-            checkIfExist,
-            (err, result) => {
-              resolve2(result);
-            });
-        });
+        const dict = dictData;
+        for (let i = 0; i < KVBdata.length; i += 1) {
+          ((pos) => {
+            const item = KVBdata[pos];
+            Word.findOne({ userId: req.user._id, word: item.word })
+              .then((match) => {
+                if (!match) {
+                  if (item.lang === 'en' || item.lang === 'en-GB') {
+                    const stem = item.title !== item.stem ? item.stem : null;
+                    const def = searchE2J(stem, dict);
+                    const newWord = new Word({
+                      _id: objectid(),
+                      userId: req.user._id,
+                      word: item.word,
+                      stem,
+                      def,
+                      ex: item.usage.trim(),
+                      author: `${item.title} - ${item.authors}`,
+                    });
+                    newWord.save((err) => {
+                      if (!err) {
+                        insertCount += 1;
+                        checkCount();
+                      }
+                    });
+                  } else {
+                    checkCount();
+                  }
+                } else {
+                  checkCount();
+                }
+              });
+          })(i);
+        }
       });
   })),
 };
 
-
 // saveKVB: (req, res, data) => (new Promise((resolve) => {
 //   const KVBdata = data;
-//   const total = KVBdata.length - 1;
-//   let count = 0;
 //   let insertCount = 0;
+//   let dict;
+//
+//   const checkIfExist = (item, cb) => {
+//     Word.count({ userId: req.user._id, word: item.word })
+//       .then((count) => {
+//         if (!count) {
+//           insertCount++;
+//         }
+//         cb(null, !count);
+//       });
+//   };
 //   loadE2JDict()
 //     .then((dictData) => {
-//       const dict = dictData;
-//       for (let i = 0; i < KVBdata.length; i += 1) {
-//         ((pos) => {
-//           count += 1;
-//           const item = KVBdata[pos];
-//           Word.findOne({ userId: req.user._id, word: item.word })
-//             .then((match) => {
-//               if (!match) {
-//                 if (item.lang === 'en' || item.lang === 'en-GB') {
-//                   const stem = item.title !== item.stem ? item.stem : null;
-//                   const def = searchE2J(stem, dict);
-//                   const newWord = new Word({
-//                     _id: objectid(),
-//                     userId: req.user._id,
-//                     word: item.word,
-//                     stem,
-//                     def,
-//                     ex: item.usage.trim(),
-//                     author: `${item.title} - ${item.authors}`,
-//                   });
-//                   newWord.save((err) => {
-//                     if (!err) {
-//                       insertCount += 1;
-//                     }
-//                   });
-//                 }
-//               }
-//             })
-//             .then(() => {
-//               if (count > total) {
-//                 resolve(`単語${insertCount}個を導入しました。`);
-//               }
-//             });
-//         })(i);
-//       }
+//       dict = dictData;
+//       return new Promise((resolve2) => {
+//         async.filter(
+//           KVBdata,
+//           checkIfExist,
+//           (err, result) => {
+//             resolve2(result);
+//           });
+//       });
 //     });
 // })),
