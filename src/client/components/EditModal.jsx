@@ -58,49 +58,40 @@ class EditModal extends React.Component {
           contentLabel="edit word"
         >
           <p className="f5 f3-ns fw7 center f4 fw5">{word.word}</p>
-          <div className="mt2 flex items-center">
-            <label
-              className="dib w3 tr pr2"
-              htmlFor="ex"
-            >例:
-            </label>
-            <textarea
-              id="ex"
-              className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 mr4 outline-0"
-              type="text"
-              rows="3"
-              onChange={this.handleExample}
-              value={this.state.example}
-            />
-          </div>
-          <div className="mt3 flex items-center">
-            <label
-              className="dib w3 tr pr2"
-              htmlFor="def"
-            >意味:
+          <p className="f5 ma0 pa0">- 例 -</p>
+          <textarea
+            id="ex"
+            className="ma2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0"
+            type="text"
+            rows="3"
+            onChange={this.handleExample}
+            value={this.state.example}
+          />
+          <div className="">
+            <div className="f5 ma0 mt2 pa0">- 意味 -&nbsp;</div>
             <div
-              className="tooltip db fr pt2 pr3"
+              className="tooltip"
             >
               <img src={question} alt="question" className="dib w1 h1 v-mid dim" />
               <div
-                className="tooltip-content pa2 br2"
+                className="tooltip-content"
               >
-                <p className="tl f6 ma0 pa0 w5">意味が２つ以上あれば '||' でわけてください。
+                <p className="tl f7 ma0 pa2">意味が２つ以上あれば &quot;||&quot; でわけてください。
                 例：『異常な』|| 普通でない || 規準をはずれた
                 </p>
               </div>
             </div>
-            </label>
-            <textarea
-              id="def"
-              className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 mr4 outline-0"
-              type="text"
-              rows="5"
-              onChange={this.handleDefinition}
-              placeholder="yoooozz"
-              value={this.state.definition === null ? '' : this.state.definition}
-            />
           </div>
+          <textarea
+            id="def"
+            className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0"
+            type="text"
+            rows="5"
+            onChange={this.handleDefinition}
+            placeholder="yoooozz"
+            value={this.state.definition === null ? '' : this.state.definition}
+          />
+
           <div className="db center">
             <button
               className="mv3 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"

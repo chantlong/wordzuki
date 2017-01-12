@@ -8,7 +8,9 @@
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/server --color",
-    "css": "tachyons ./src/client/assets/styles/main.css > ./src/client/assets/styles/index.css --minify",
+    "css": "npm run build:css && npm run build:minify && tachyons ./src/client/assets/styles/main.css > ./src/client/assets/styles/index.css --minify",
+    "build:css": "tachyons node_modules/tachyons/src/tachyons.css > node_modules/tachyons/css/tachyons.css",
+    "build:minify": "tachyons node_modules/tachyons/src/tachyons.css -m > node_modules/tachyons/css/tachyons.min.css",
     "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
   "author": "Alex Wong",
