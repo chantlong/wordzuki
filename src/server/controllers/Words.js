@@ -1,5 +1,6 @@
 const Word = require('../models/Word');
 const objectid = require('objectid');
+const Fuse = require('fuse.js');
 
 module.exports = {
   fetchWords: (req, res) => {
@@ -20,14 +21,13 @@ module.exports = {
     });
     newWord.save((err) => {
       if (err) {
-        res.json({ ERROR: err });
+        res.status(400).json({ ERROR: err });
       } else {
-        res.json({ SUCCESS: newWord });
+        res.status(200).json({ SUCCESS: newWord });
       }
     });
   },
   addWordDefinition: (req, res) => {
-    console.log('req body', req.body);
     Word.findOneAndUpdate({ _id: req.params.id }, { ex: req.body.ex, def: req.body.def }, { new: true })
       .then((word) => {
         res.status(200).json(word);
@@ -39,6 +39,29 @@ module.exports = {
       .then((info) => {
         res.status(200).json({ message: `${info.word}を削除しました。` });
       });
+  },
+  searchWords: (req, res) => {
+    const searched = req.body.search;
+    const words = req.body.words;
+    const options = {
+      shouldSort: true,
+      tokenize: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 2,
+      keys: [
+        'word',
+        'stem',
+        'def',
+        'ex',
+        'author',
+      ],
+    };
+    const fuse = new Fuse(words, options); // "list" is the item array
+    const result = fuse.search(searched);
+    res.send(result);
   },
 };
 

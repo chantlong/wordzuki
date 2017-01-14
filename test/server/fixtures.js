@@ -9,7 +9,7 @@ const createUserSetup = server => (request(server)
 
 const wordsFixture = {
   word: 'isolate',
-  definition: ['«…から» 〈国組織人など〉を孤立させる, 離す'],
+  definition: JSON.stringify(['«…から» 〈国組織人など〉を孤立させる, 離す']),
   ex: 'She was isolated in his room from society',
   source: 'www.test.test',
 };

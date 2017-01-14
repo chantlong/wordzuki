@@ -15,6 +15,7 @@ import {
   UPDATE_WORD,
   UPDATE_WORD_LIST,
   TOGGLE_EDIT_MODAL,
+  SEARCH_WORD,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -41,6 +42,11 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
+      });
+    case SEARCH_WORD:
+      return Object.assign({}, state, {
+        isFetching: false,
+        list: action.payload,
       });
     default:
       return state;

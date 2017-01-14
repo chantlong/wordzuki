@@ -2,8 +2,14 @@
 @import "dropdown";
 @import "tooltip";
 
+
 .wall-bg {
   height: calc(100vh - 50px);
+}
+
+/* menu 50px + search bar 30px */
+.word-list {
+  height: calc(100vh - 80px);
 }
 
 .wz-icon {
@@ -65,6 +71,11 @@ select:focus {
 
 .usn {
   user-select: none;
+}
+
+.search-bar {
+  background: white;
+  box-shadow: 0px 0px 0px 5px white;
 }
 
 @keyframes expand {

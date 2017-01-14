@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Word from '../containers/Word';
+import Search from '../containers/Search';
 // import debounce from 'debounce';
 
 class SearchHistory extends React.Component {
@@ -39,10 +40,11 @@ class SearchHistory extends React.Component {
     const { list, isFetching, word, onSelect, deleteWord } = this.props;
     return (
       <div>
-        <div className="dt w-100 border-box center">
+        <div className="dt w-100 center">
           <div
-            className="dtc w-30 w-20-ns fixed wall-bg br b--black-10"
+            className="dtc w-30 w-20-ns wall-bg br b--black-10 v-top"
           >
+            <Search />
             {isFetching && <div className="flex justify-center items-center w-100 h-100">
               <div className="loader">
                 <div className="line" />
@@ -58,7 +60,7 @@ class SearchHistory extends React.Component {
             {
               !isFetching && list.length > 0 &&
               <select
-                className="vh-100 pre list pl0 ml0 mt0 justify-right w-100"
+                className="word-list pre list pl0 ml0 mt0 justify-right w-100"
                 size={this.state.height}
                 onChange={(e) => {
                   if (e.target.value === null) {

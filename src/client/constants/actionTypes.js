@@ -18,3 +18,5 @@ export const UPDATE_WORD = 'UPDATE_WORD';
 export const UPDATE_WORD_LIST = 'UPDATE_WORD_LIST';
 
 export const TOGGLE_EDIT_MODAL = 'TOGGLE_EDIT_MODAL';
+
+export const SEARCH_WORD = 'SEARCH_WORD';

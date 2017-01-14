@@ -1,7 +1,9 @@
 /* global fetch */
 import fetch from 'isomorphic-fetch';
+import Fuse from 'fuse.js';
 import { browserHistory } from 'react-router';
 import Auth from '../services/Auth';
+
 // import config from '../config';
 import {
   REQUEST_WORDS,
@@ -18,13 +20,14 @@ import {
   UPDATE_WORD,
   UPDATE_WORD_LIST,
   TOGGLE_EDIT_MODAL,
+  SEARCH_WORD,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
 const requestWords = () => ({ type: REQUEST_WORDS });
 
-const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
+export const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
 
 export const selectWord = word => ({ type: SELECT_WORD, payload: word });
 export const fetchWords = () =>
@@ -197,3 +200,32 @@ export const addDefinition = (id, ex = null, def) =>
   });
 
 export const toggleEditModal = () => ({ type: TOGGLE_EDIT_MODAL });
+
+const searchExecute = search => ({ type: SEARCH_WORD, payload: search });
+
+export const searchWord = (search, wordList, original) =>
+  ((dispatch) => {
+    if (!search.length) {
+      return dispatch(receiveWords(original));
+    }
+    dispatch(requestWords());
+    const options = {
+      shouldSort: true,
+      tokenize: true,
+      matchAllTokens: true,
+      threshold: 0.1,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 2,
+      keys: [
+        'word',
+        'stem',
+        'ex',
+      ],
+    };
+    const fuse = new Fuse(wordList, options); // "list" is the item array
+    const result = fuse.search(search);
+    console.log('the result', result);
+    return dispatch(searchExecute(result));
+  });

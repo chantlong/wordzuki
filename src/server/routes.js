@@ -12,6 +12,7 @@ const router = new express.Router();
 
 // words
 router.get('/api/word', Users.checkAuthorized, Words.fetchWords);
+router.post('/api/search', Users.checkAuthorized, Words.searchWords);
 router.post('/api/word', Users.checkAuthorized, Words.saveWord);
 router.put('/api/word/:id', Users.checkAuthorized, Words.addWordDefinition);
 router.delete('/api/word/:id', Users.checkAuthorized, Words.deleteWord);
