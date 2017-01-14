@@ -9,7 +9,7 @@
 
 /* menu 50px + search bar 30px */
 .word-list {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 97px);
 }
 
 .wz-icon {
