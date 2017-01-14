@@ -226,6 +226,8 @@ export const searchWord = (search, wordList, original) =>
     };
     const fuse = new Fuse(wordList, options); // "list" is the item array
     const result = fuse.search(search);
-    console.log('the result', result);
+    if (result.length > 0) {
+      dispatch(selectWord(result[0]));
+    }
     return dispatch(searchExecute(result));
   });

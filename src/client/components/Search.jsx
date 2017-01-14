@@ -26,7 +26,6 @@ class SearchBar extends React.Component {
   }
 
   handleInput(e) {
-    const { receiveWords } = this.props;
     this.setState({ searchInput: e.target.value }, () => {
       this.handleSearch(this.state.searchInput);
     });
@@ -34,9 +33,10 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="pa2 bb b--black-10">
         <input
-          className="tr collapse pt2 pr3 pb1 ba br-0 b--black-10 hover-bg-dark-gray hover-white f6 w-100"
+          id="s-icon"
+          className="search-icon-input tr collapse pt2 pr3 pb1 ba br4 b--black-10 f6 w-100 outline-0"
           type="text"
           placeholder="検索"
           onKeyUp={this.handleInput}
