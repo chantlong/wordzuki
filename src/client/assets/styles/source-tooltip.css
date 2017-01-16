@@ -5,17 +5,19 @@
 
 .sourcetip .sourcetip-content {
     visibility: hidden;
-    width: 256px;
+    width: 300px;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 5px 5px;
     position: absolute;
     z-index: 1;
     bottom: 120%;
     left: 50%;
-    margin-left: -128px;
+    margin-left: -150px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
 }
 
 .sourcetip .sourcetip-content::after {
@@ -31,4 +33,7 @@
 
 .sourcetip:hover .sourcetip-content {
     visibility: visible;
+    opacity: 1;
+    z-index: 1;
+    transition-delay: 0s, 0s, 0.3s;
 }

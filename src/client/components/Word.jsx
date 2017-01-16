@@ -82,7 +82,7 @@ class Word extends React.Component {
                     className="f7 i near-white dim"
                     target="_blank"
                     rel="noopener noreferrer"
-                  >{word.source}
+                  >{word.sourceTitle}
                   </a>
                 </div>
               </div>
