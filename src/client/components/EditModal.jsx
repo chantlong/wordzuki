@@ -61,7 +61,7 @@ class EditModal extends React.Component {
           <p className="f5 ma0 pa0">- 例 -</p>
           <textarea
             id="ex"
-            className="ma2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0"
+            className="ma2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
             rows="3"
             onChange={this.handleExample}
@@ -84,7 +84,7 @@ class EditModal extends React.Component {
           </div>
           <textarea
             id="def"
-            className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0"
+            className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
             rows="5"
             onChange={this.handleDefinition}

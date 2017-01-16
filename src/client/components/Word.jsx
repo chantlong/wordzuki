@@ -62,50 +62,53 @@ class Word extends React.Component {
             </a>
           </li>
           { /* EXAMPLE */ }
-          <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}<a
-            onClick={() => {
-              speakIt(word.ex);
-            }}
-            className="mh1 mh2-ns"
-          >
-            <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
-          </a>
-            { word.source && word.sourceTitle ?
-              <div
-                className="sourcetip"
+          <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}
+            <div className="db tr">
+              <a
+                onClick={() => {
+                  speakIt(word.ex);
+                }}
+                className="mh1 ph2"
               >
-                <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                <img src={voice} alt="speak" className="dib w1 h1 v-mid dim" />
+              </a>
+              { word.source && word.sourceTitle ?
                 <div
-                  className="sourcetip-content"
+                  className="sourcetip"
                 >
-                  <a
-                    href={word.source}
-                    className="f7 i near-white link dim"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >{word.sourceTitle}
-                  </a>
+                  <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                  <div
+                    className="sourcetip-content"
+                  >
+                    <a
+                      href={word.source}
+                      className="f7 i near-white link dim"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >{word.sourceTitle}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              :
-              null
-            }
-            { word.author ?
-              <div
-                className="sourcetip"
-              >
-                <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                :
+                null
+              }
+              { word.author ?
                 <div
-                  className="sourcetip-content"
+                  className="sourcetip"
                 >
-                  <p
-                    className="f7 i ma0"
-                  >{word.author}</p>
+                  <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                  <div
+                    className="sourcetip-content"
+                  >
+                    <p
+                      className="f7 i ma0"
+                    >{word.author}</p>
+                  </div>
                 </div>
-              </div>
-              :
-              null
-            }
+                :
+                null
+              }
+            </div>
           </li>
           { /* DEFINITION */ }
           <ol className="mv2-ns">
