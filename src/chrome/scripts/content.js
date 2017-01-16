@@ -75,7 +75,7 @@ function closePopup(e) {
 }
 
 function saveWord({ word, definition, example, source }) {
-  $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+  $.post('http://www.wordzuki.xyz/api/word',
         { word, definition, example, source },
         (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
   .fail(err => console.log('save error', err));
