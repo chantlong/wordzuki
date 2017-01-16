@@ -6,23 +6,14 @@ class SearchBar extends React.Component {
     super();
     this.state = {
       searchInput: '',
-      original: undefined,
-      loaded: false,
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSearch = debounce(this.handleSearch, 300);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.loaded) {
-      this.setState({ original: nextProps.list, loaded: true });
-    }
-  }
-
   handleSearch(search) {
     const { searchWord, list } = this.props;
-    const original = this.state.original;
-    searchWord(search, list, original);
+    searchWord(search, list);
   }
 
   handleInput(e) {
@@ -51,7 +42,6 @@ SearchBar.propTypes = {
     PropTypes.object,
   ),
   searchWord: PropTypes.func,
-  receiveWords: PropTypes.func,
 };
 
 export default SearchBar;

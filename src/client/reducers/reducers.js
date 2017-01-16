@@ -21,12 +21,12 @@ import {
 const words = (state = {
   isFetching: false,
   list: [],
+  results: null,
 }, action) => {
   switch (action.type) {
     case REQUEST_WORDS:
       return Object.assign({}, state, {
         isFetching: true,
-        list: [],
       });
     case RETRIEVE_WORDS:
       return Object.assign({}, state, {
@@ -37,16 +37,19 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
+        results: state.results.filter(word => (word._id !== action.id)),
       });
     case UPDATE_WORD_LIST:
       return Object.assign({}, state, {
         isFetching: false,
         list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
+        results: [action.payload, ...state.results.filter(word => (word._id !== action.payload._id))],
       });
     case SEARCH_WORD:
       return Object.assign({}, state, {
         isFetching: false,
-        list: action.payload,
+        list: state.list,
+        results: action.payload,
       });
     default:
       return state;

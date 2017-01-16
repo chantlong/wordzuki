@@ -203,10 +203,12 @@ export const toggleEditModal = () => ({ type: TOGGLE_EDIT_MODAL });
 
 const searchExecute = search => ({ type: SEARCH_WORD, payload: search });
 
-export const searchWord = (search, wordList, original) =>
+export const searchWord = (search, list) =>
+
   ((dispatch) => {
     if (!search.length) {
-      return dispatch(receiveWords(original));
+      dispatch(receiveWords(list));
+      return dispatch(searchExecute(null));
     }
     dispatch(requestWords());
     const options = {
@@ -224,7 +226,7 @@ export const searchWord = (search, wordList, original) =>
         'ex',
       ],
     };
-    const fuse = new Fuse(wordList, options); // "list" is the item array
+    const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(search);
     if (result.length > 0) {
       dispatch(selectWord(result[0]));

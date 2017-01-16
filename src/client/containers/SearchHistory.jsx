@@ -4,11 +4,12 @@ import SearchHistory from '../components/SearchHistory';
 
 // const mapStateToProps = ({ words, word }) => ({ words, word });
 const mapStateToProps = ({ words, word }) => {
-  const { list, isFetching } = words;
+  const { list, isFetching, results } = words;
   return {
     word,
     list,
     isFetching,
+    results,
   };
 };
 const mapDispatchToProps = dispatch => ({
