@@ -12,7 +12,6 @@ class ChromeSignIn extends React.Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.closeTab = this.closeTab.bind(this);
   }
 
   handleUsername(e) {

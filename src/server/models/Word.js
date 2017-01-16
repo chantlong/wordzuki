@@ -8,6 +8,7 @@ const WordSchema = new mongoose.Schema({
   pron: String,
   ex: String,
   source: String,
+  sourceTitle: String,
   lang: String,
   author: String,
 },

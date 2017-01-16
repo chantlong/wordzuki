@@ -18,6 +18,7 @@ module.exports = {
       def: JSON.parse(req.body.definition),
       ex: req.body.example,
       source: req.body.source,
+      sourceTitle: req.body.sourceTitle,
     });
     newWord.save((err) => {
       if (err) {

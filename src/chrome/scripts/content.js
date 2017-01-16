@@ -74,9 +74,9 @@ function closePopup(e) {
   return null;
 }
 
-function saveWord({ word, definition, example, source }) {
-  $.post('http://www.wordzuki.xyz/api/word',
-        { word, definition, example, source },
+function saveWord({ word, definition, example, source, sourceTitle }) {
+  $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+        { word, definition, example, source, sourceTitle },
         (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
   .fail(err => console.log('save error', err));
 }
@@ -116,8 +116,8 @@ function getSentence(selection, word) {
 
 function getSource() {
   return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ message: 'get_url' }, (source) => {
-      resolve(source);
+    chrome.runtime.sendMessage({ message: 'get_url' }, (info) => {
+      resolve(info);
     });
   });
 }
@@ -148,10 +148,12 @@ function getWordInfo() {
     getSource()
   ])
     .then((values) => {
-      const [word, definition, example, source] = values;
+      console.log('the values', values);
+      const [word, definition, example, info] = values;
+      const { source, sourceTitle } = info;
       // console.log('values', values);
       createPopup(word, definition, example);
-      saveWord({ word, definition: JSON.stringify(definition), example, source });
+      saveWord({ word, definition: JSON.stringify(definition), example, source, sourceTitle });
     })
     .catch((reason) => {
       console.log('the reason', reason);

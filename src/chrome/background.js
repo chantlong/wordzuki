@@ -111,9 +111,9 @@ chrome.runtime.onMessage.addListener(
     switch (request.message) {
       case 'get_url': {
         chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-          const currentTab = tab[0].url;
-          console.log('currentTab', currentTab);
-          senderResponse(currentTab);
+          const source = tab[0].url;
+          const sourceTitle = tab[0].title;
+          senderResponse({ source, sourceTitle });
         });
 
         break;
