@@ -150,7 +150,9 @@ export const deleteWord = id => (
         dispatch(receiveDeleteWord());
       }
     })
-    .catch(err => dispatch(failedRequest(err)));
+    .catch((err) => {
+      dispatch(failedRequest(err));
+    });
   }
 );
 

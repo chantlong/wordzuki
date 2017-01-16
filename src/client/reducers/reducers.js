@@ -26,6 +26,7 @@ const words = (state = {
   switch (action.type) {
     case REQUEST_WORDS:
       return Object.assign({}, state, {
+        list: state.list,
         isFetching: true,
       });
     case RETRIEVE_WORDS:
@@ -37,13 +38,13 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
-        results: state.results.filter(word => (word._id !== action.id)),
+        results: !state.results ? null : state.results.filter(word => (word._id !== action.id)),
       });
     case UPDATE_WORD_LIST:
       return Object.assign({}, state, {
         isFetching: false,
         list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
-        results: [action.payload, ...state.results.filter(word => (word._id !== action.payload._id))],
+        results: !state.results ? null : [action.payload, ...state.results.filter(word => (word._id !== action.payload._id))],
       });
     case SEARCH_WORD:
       return Object.assign({}, state, {
