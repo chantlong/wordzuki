@@ -16,6 +16,7 @@ import {
   UPDATE_WORD_LIST,
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
+  REFRESH_TO_DEFAULT
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -71,6 +72,11 @@ const fetcher = (state = {
       return Object.assign({}, state, {
         inRequest: false,
         message: action.message,
+      });
+    case REFRESH_TO_DEFAULT:
+      return Object.assign({}, state, {
+        inRequest: undefined,
+        message: undefined,
       });
     case FAIL_IMPORT_WORDS:
       return Object.assign({}, state, {

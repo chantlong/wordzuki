@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 
 class KVBImport extends React.Component {
   constructor(props) {
@@ -9,7 +8,6 @@ class KVBImport extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.forwardToSearchHistory = this.forwardToSearchHistory.bind(this);
   }
 
   handleChange(e) {
@@ -26,12 +24,8 @@ class KVBImport extends React.Component {
     KVBImporter(this.state.formData);
   }
 
-  forwardToSearchHistory() {
-    setTimeout(() => { browserHistory.push('/searchhistory'); }, 3000);
-  }
-
   render() {
-    const { inRequest, message } = this.props;
+    const { inRequest, message, KVBDone } = this.props;
     return (
       <div className="pa3 measure-wide center">
         {inRequest === true && <div className="flex justify-center items-center w-100 h-100">
@@ -47,7 +41,7 @@ class KVBImport extends React.Component {
             <h2 className="f6 fw5">{message.SUCCESS}</h2>
           </section>
         </div>}
-        {inRequest === false && message.SUCCESS ? this.forwardToSearchHistory() : null }
+        {inRequest === false && message.SUCCESS ? KVBDone() : null }
         {inRequest === undefined && <div>
           <section className="pa2 f6 tc">
             <h1 className="measure center f4 fw3 pb3 bb b--light-silver">Kindle単語帳の導入</h1>
@@ -110,6 +104,7 @@ class KVBImport extends React.Component {
 
 KVBImport.propTypes = {
   KVBImporter: PropTypes.func,
+  KVBDone: PropTypes.func,
   inRequest: PropTypes.bool,
   message: PropTypes.objectOf(
     PropTypes.string,

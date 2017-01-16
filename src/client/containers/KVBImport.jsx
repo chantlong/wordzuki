@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { KVBImporter } from '../actions/actions';
+import { KVBImporter, KVBDone } from '../actions/actions';
 import KVBImport from '../components/KVBImport';
 
 const mapStateToProps = ({ fetcher }) => {
@@ -10,6 +10,9 @@ const mapStateToProps = ({ fetcher }) => {
 const mapDispatchToProps = dispatch => ({
   KVBImporter: (info) => {
     dispatch(KVBImporter(info));
+  },
+  KVBDone: () => {
+    dispatch(KVBDone());
   },
 });
 

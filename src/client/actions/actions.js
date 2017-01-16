@@ -16,6 +16,7 @@ import {
   USER_LOGOUT,
   REQUEST_IMPORT_WORDS,
   SUCCESS_IMPORT_WORDS,
+  REFRESH_TO_DEFAULT,
   FAIL_IMPORT_WORDS,
   UPDATE_WORD,
   UPDATE_WORD_LIST,
@@ -158,6 +159,7 @@ export const deleteWord = id => (
 
 const importLoading = () => ({ type: REQUEST_IMPORT_WORDS });
 const importSuccess = success => ({ type: SUCCESS_IMPORT_WORDS, message: success });
+const importRefreshDefault = () => ({ type: REFRESH_TO_DEFAULT });
 const importFail = err => ({ type: FAIL_IMPORT_WORDS, message: err });
 
 export const KVBImporter = info =>
@@ -176,6 +178,14 @@ export const KVBImporter = info =>
         dispatch(importSuccess(res));
       }
     });
+  });
+
+export const KVBDone = () =>
+  ((dispatch) => {
+    setTimeout(() => {
+      dispatch(importRefreshDefault());
+      browserHistory.push('/searchhistory');
+    }, 2500);
   });
 
 const updateWord = word => ({ type: UPDATE_WORD, payload: word });
