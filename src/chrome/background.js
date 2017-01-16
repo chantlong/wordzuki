@@ -6,9 +6,16 @@ window.wordzuki = {
   loginAttempt: 0,
 };
 
+function saveWord({ word, definition, example, source, sourceTitle }) {
+  // 'https://desolate-cove-59104.herokuapp.com/api/word'
+  $.post('http://www.wordzuki.xyz/api/word',
+        { word, definition, example, source, sourceTitle },
+        (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
+  .fail(err => console.log('save error', err));
+}
+
 function enable(tab) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-    console.log('update tabs', tab);
     chrome.tabs.sendMessage(tab[0].id, { message: 'enable', url: tab[0].url });
   });
 }
@@ -25,7 +32,7 @@ function disable(tab) {
 }
 
 function updateTab(tab) {
-  console.log('the window.wordzuki enable?', window.wordzuki.enable);
+  // console.log('the window.wordzuki enable?', window.wordzuki.enable);
   if (window.wordzuki.enable) {
     enable(tab);
   }
@@ -130,6 +137,10 @@ chrome.runtime.onMessage.addListener(
       }
       case 'speak_it': {
         chrome.tts.speak(request.word, { rate: 0.8, lang: 'en-US', gender: 'male' });
+        break;
+      }
+      case 'save_word': {
+        saveWord(request.data);
         break;
       }
       default:

@@ -74,18 +74,10 @@ function closePopup(e) {
   return null;
 }
 
-function saveWord({ word, definition, example, source, sourceTitle }) {
-  $.post('https://desolate-cove-59104.herokuapp.com/api/word',
-        { word, definition, example, source, sourceTitle },
-        (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
-  .fail(err => console.log('save error', err));
-}
-
 function getBaseWord(term) {
   return new Promise((resolve, reject) => {
     const word = term.toLowerCase();
     chrome.runtime.sendMessage({ message: 'get_base_word', word }, (base) => {
-      console.log('the base', base);
       if (!base) {
         return reject(base);
       }
@@ -148,15 +140,21 @@ function getWordInfo() {
     getSource()
   ])
     .then((values) => {
-      console.log('the values', values);
       const [word, definition, example, info] = values;
       const { source, sourceTitle } = info;
       // console.log('values', values);
+      const data = {
+        word,
+        definition: JSON.stringify(definition),
+        example,
+        source,
+        sourceTitle,
+      };
       createPopup(word, definition, example);
-      saveWord({ word, definition: JSON.stringify(definition), example, source, sourceTitle });
+      chrome.runtime.sendMessage({ message: 'save_word', data });
+      // saveWord({ word, definition: JSON.stringify(definition), example, source, sourceTitle });
     })
     .catch((reason) => {
-      console.log('the reason', reason);
       noDefPopup();
     });
   return null;
@@ -182,3 +180,10 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
+
+// function saveWord({ word, definition, example, source, sourceTitle }) {
+//   $.post('https://desolate-cove-59104.herokuapp.com/api/word',
+//         { word, definition, example, source, sourceTitle },
+//         (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
+//   .fail(err => console.log('save error', err));
+// }

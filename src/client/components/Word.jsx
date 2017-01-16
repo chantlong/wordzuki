@@ -6,6 +6,7 @@ import add from '../assets/images/add.png';
 import edit from '../assets/images/edit.png';
 import trash from '../assets/images/trash-can.png';
 import link from '../assets/images/link.png';
+import ereader from '../assets/images/ereader.png';
 
 const speakIt = (term) => {
   const synth = window.speechSynthesis;
@@ -69,7 +70,7 @@ class Word extends React.Component {
           >
             <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
           </a>
-            { word.source ?
+            { word.source && word.sourceTitle ?
               <div
                 className="sourcetip"
               >
@@ -79,11 +80,27 @@ class Word extends React.Component {
                 >
                   <a
                     href={word.source}
-                    className="f7 i near-white dim"
+                    className="f7 i near-white link dim"
                     target="_blank"
                     rel="noopener noreferrer"
                   >{word.sourceTitle}
                   </a>
+                </div>
+              </div>
+              :
+              null
+            }
+            { word.author ?
+              <div
+                className="sourcetip"
+              >
+                <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                <div
+                  className="sourcetip-content"
+                >
+                  <p
+                    className="f7 i ma0"
+                  >{word.author}</p>
                 </div>
               </div>
               :

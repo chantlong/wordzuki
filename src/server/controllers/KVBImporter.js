@@ -59,6 +59,7 @@ module.exports = {
                   if (item.lang === 'en' || item.lang === 'en-GB') {
                     const stem = item.title !== item.stem ? item.stem : null;
                     const def = searchE2J(stem, dict);
+                    const authors = item.authors.split(';').map(el => el.split(',')).map(el2 => el2.join(' ')).join(', ');
                     const newWord = new Word({
                       _id: objectid(),
                       userId: req.user._id,
@@ -66,7 +67,7 @@ module.exports = {
                       stem,
                       def,
                       ex: item.usage.trim(),
-                      author: `${item.title} - ${item.authors}`,
+                      author: `${item.title} - ${authors}`,
                     });
                     newWord.save((err) => {
                       if (!err) {
