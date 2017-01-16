@@ -17,6 +17,7 @@ test('setup word', (assert) => {
         username: 'test@test.com',
         password: 'test123',
       })
+      .expect('set-cookie', /connect.sid/)
       .end((err2) => {
         assert.end(err2);
       });
