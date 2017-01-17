@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { wordsFixture } from './fixtures';
 import app from '../../src/server/server';
 
+let cookie;
 let userSession;
 
 test('setup word', (assert) => {
@@ -18,7 +19,8 @@ test('setup word', (assert) => {
         password: 'test123',
       })
       .expect('set-cookie', /connect.sid/)
-      .end((err2) => {
+      .end((err2, res) => {
+        cookie = res.headers['set-cookie'];
         assert.end(err2);
       });
   });
@@ -27,6 +29,7 @@ test('setup word', (assert) => {
 test('fetch a created word', (assert) => {
   userSession
     .post('/api/word')
+    .set('Cookie', cookie)
     .send(wordsFixture)
     .expect(200)
     .end((err) => {
@@ -54,6 +57,7 @@ test('fetch a created word', (assert) => {
 test('delete a word', (assert) => {
   userSession
     .get('/api/word')
+    .set('Cookie', cookie)
     .end((err, res) => {
       // pick 1st word in word array
       const wordId = res.body[0]._id;

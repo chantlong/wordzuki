@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import { createUserSetup } from './fixtures';
 import app from '../../src/server/server';
 
+let cookie;
+
 test('setup auth', (assert) => {
   mongoose.connection.once('connected', () => {
     mongoose.connection.db.dropDatabase(err => err || assert.end());
@@ -91,13 +93,15 @@ test('verify if user is logged when logged in', (assert) => {
       password: 'test123',
     })
     .expect('set-cookie', /connect.sid/)
-    .end((err) => {
+    .end((err, res) => {
       // authenticated session
+      cookie = res.headers['set-cookie'];
       testSession
         .get('/api/auth/is-authorized')
+        .set('Cookie', cookie)
         .expect(200)
-        .end((err2, res) => {
-          const actual = res.body;
+        .end((err2, res2) => {
+          const actual = res2.body;
           const expected = { isLoggedIn: true, user: 'test@test.com' };
           assert.deepEqual(actual, expected, 'should return verified user');
           assert.end(err);
