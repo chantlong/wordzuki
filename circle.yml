@@ -3,3 +3,4 @@ machine:
     version: 6.2.1
   services:
     - redis
+    - sqlite3
