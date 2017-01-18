@@ -88,7 +88,6 @@ class EditModal extends React.Component {
             type="text"
             rows="5"
             onChange={this.handleDefinition}
-            placeholder="yoooozz"
             value={this.state.definition === null ? '' : this.state.definition}
           />
 
