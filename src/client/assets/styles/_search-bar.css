@@ -1,0 +1,11 @@
+.search-bar {
+  background: white;
+  box-shadow: 0px 0px 0px 5px white;
+}
+
+.search-icon-input {
+  background-size: 1rem;
+  background-image:url(../images/search.png);
+  background-repeat:no-repeat;
+  background-position:6px;
+}

@@ -1,0 +1,25 @@
+.f7 { font-size: .8125rem }
+.f8 { font-size: .75rem }
+
+.link {
+  color: #555;
+}
+.link:visited {
+  color: #555;
+  transition: #555 .15s ease-in;
+}
+
+@media (--breakpoint-not-small) {
+  .f7-ns { font-size: .8125rem }
+  .f8-ns { font-size: .75rem }
+}
+
+@media (--breakpoint-medium) {
+  .f7-m { font-size: .8125rem }
+  .f8-m { font-size: .75rem }
+}
+
+@media (--breakpoint-large) {
+  .f7-l { font-size: .8125rem }
+  .f8-l { font-size: .75rem }
+}

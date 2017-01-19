@@ -1,0 +1,8 @@
+.wall-bg {
+  height: calc(100vh - 50px);
+}
+
+.wz-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}

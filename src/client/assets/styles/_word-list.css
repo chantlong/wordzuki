@@ -1,0 +1,20 @@
+/* menu 50px + search bar 30px */
+.word-list {
+  height: calc(100vh - 97px);
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: 2px inherit #c1c2c3
+}
+
+select:focus {
+  outline: none;
+}
+
+.usn {
+  user-select: none;
+}

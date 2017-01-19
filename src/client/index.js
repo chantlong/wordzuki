@@ -18,7 +18,7 @@ import Splash from './components/Splash';
 import KVBImport from './containers/KVBImport';
 import { verify } from './actions/actions';
 import Auth from './services/Auth';
-import './assets/styles/index.css';
+import './assets/styles/main.css';
 
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(thunk)));
