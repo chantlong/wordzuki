@@ -46,7 +46,7 @@ module.exports = {
       if (count > total) {
         resolve(`単語${insertCount}個を導入しました。`);
       }
-    }
+    };
     loadE2JDict()
       .then((dictData) => {
         const dict = dictData;
@@ -57,13 +57,13 @@ module.exports = {
               .then((match) => {
                 if (!match) {
                   if (item.lang === 'en' || item.lang === 'en-GB') {
-                    const stem = item.title !== item.stem ? item.stem : null;
+                    const stem = item.stem ? item.stem : item.word;
                     const def = searchE2J(stem, dict);
                     const authors = item.authors.split(';').map(el => el.split(',')).map(el2 => el2.join(' ')).join(', ');
                     const newWord = new Word({
                       _id: objectid(),
                       userId: req.user._id,
-                      word: item.word,
+                      word: item.stem,
                       stem,
                       def,
                       ex: item.usage.trim(),
