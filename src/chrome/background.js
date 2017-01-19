@@ -10,7 +10,7 @@ function saveWord({ word, definition, example, source, sourceTitle }) {
   // 'https://desolate-cove-59104.herokuapp.com/api/word'
   $.post('http://www.wordzuki.xyz/api/word',
         { word, definition, example, source, sourceTitle },
-        (data2, status2) => { console.log('posted?', data2, status2); }, 'json')
+        (data2, status2) => { console.log('posted!'); }, 'json')
   .fail(err => console.log('save error', err));
 }
 
@@ -74,7 +74,6 @@ function checkAuth(tab) {
     $.get('http://www.wordzuki.xyz/api/auth/is-authorized')
     .then((data) => {
       const user = data.user;
-      console.log('we got data', data);
       if (!window.wordzuki.dictLoad) {
         loadDictAsync()
           .then(() => enable(tab));
@@ -100,8 +99,6 @@ function checkAuth(tab) {
 function toggleExt(tab) {
   checkAuth()
     .then((user) => {
-      console.log('waht the user', user);
-      console.log('the window', window.wordzuki);
       if (user) {
         if (window.wordzuki.enable) {
           chrome.tabs.onUpdated.removeListener(updateTab);

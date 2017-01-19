@@ -8,8 +8,7 @@
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/server --color",
-    "css": "npm run build:css && npm run build:minify",
-    "build:postcss": "postcss -c './src/client/assets/styles/postcss.config.js'",
+    "build:css": "postcss -c './src/client/assets/styles/postcss.config.js'",
     "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
   "author": "Alex Wong",
