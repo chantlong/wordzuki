@@ -62,7 +62,6 @@ class SignUp extends React.Component {
   }
 
   handleConfirmPassword(e) {
-    const { errorMsg } = this.props;
     this.setState({ confirmPassword: e.target.value })
       .then(() => {
         this.validateSamePassword();
