@@ -1,27 +1,48 @@
-.sourcetip {
+.sourcetip, .tooltip, .dropdown {
     position: relative;
     display: inline-block;
 }
 
-.sourcetip .sourcetip-content {
+.sourcetip .sourcetip-content, .tooltip .tooltip-content, .dropdown-content {
     visibility: hidden;
-    width: 300px;
-    background-color: #CCCCCC;
-    color: #555;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 8px;
     position: absolute;
-    z-index: 1;
-    bottom: 120%;
-    left: 50%;
-    margin-left: -150px;
     opacity: 0;
-    transform: translateY(0.375em);
     transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
 }
 
-.sourcetip .sourcetip-content::after {
+.sourcetip .sourcetip-content, .tooltip .tooltip-content {
+  text-align: center;
+  border-radius: 6px;
+  z-index: 1;
+  left: 50%;
+  transform: translateY(0.375em);
+}
+
+.sourcetip .sourcetip-content {
+  width: 300px;
+  background-color: #CCCCCC;
+  color: #555;
+  padding: 8px 8px;
+  bottom: 120%;
+  margin-left: -150px;
+}
+
+.dropdown-content {
+  background-color: #f4f4f4;
+  left: 0;
+  transform: translateY(-0.375em);
+}
+
+.tooltip .tooltip-content {
+  width: 256px;
+  background-color: #555;
+  color: #fff;
+  padding: 5px 0;
+  bottom: 150%;
+  margin-left: -128px;
+}
+
+.sourcetip .sourcetip-content::after, .tooltip .tooltip-content::after{
     content: "";
     position: absolute;
     top: 100%;
@@ -29,10 +50,17 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #CCCCCC transparent transparent transparent;
 }
 
-.sourcetip:hover .sourcetip-content {
+.sourcetip .sourcetip-content::after {
+  border-color: #CCCCCC transparent transparent transparent;
+}
+
+.tooltip .tooltip-content::after {
+  border-color: #555 transparent transparent transparent;
+}
+
+.sourcetip:hover .sourcetip-content, .tooltip:hover .tooltip-content, .dropdown:hover .dropdown-content {
     visibility: visible;
     opacity: 1;
     z-index: 1;
