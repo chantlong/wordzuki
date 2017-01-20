@@ -17,8 +17,8 @@ module.exports = {
       },
     },
   },
-  input: 'src/client/assets/styles/main.css',
-  output: 'src/client/assets/styles/main.min.css',
+  input: 'src/client/assets/styles/_app.css',
+  output: 'src/client/assets/styles/_app.min.css',
   'postcss-cssnext': {
     features: {
       autoprefixer: false,
