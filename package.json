@@ -14,7 +14,7 @@
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/server --color",
     "watch:css": "postcss -c './src/client/assets/styles/postcss.config.js'",
-    "postinstall": "npm install sqlite3",
+    "postinstall": "yarn add sqlite3",
     "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
   "author": "Alex Wong",
