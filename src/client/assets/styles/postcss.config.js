@@ -4,6 +4,17 @@ module.exports = {
     'postcss-cssnext',
     'cssnano',
   ],
+  plugins: {
+    'postcss-import': {},
+    'postcss-cssnext': {
+      features: {
+        autoprefixer: true,
+      },
+    },
+    cssnano: {
+      autoprefixer: false,
+    },
+  },
   input: 'src/client/assets/styles/_app.css',
   output: 'src/client/assets/styles/_app.min.css',
   watch: true,
