@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/,
-        loader: 'style!css?importLoaders=1!postcss',
+        loader: 'style!css',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
