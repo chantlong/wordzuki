@@ -28,6 +28,14 @@ const NavBar = ({ login, signOut }) => (
               </li>
               <li className="db mt1 pa2 bb b--black-10">
                 <Link
+                  to="/profile"
+                  className="link f7 dim"
+                >
+                プロファイル
+                </Link>
+              </li>
+              <li className="db mt1 pa2 bb b--black-10">
+                <Link
                   to="/kindlevb"
                   className="link f7 dim"
                 >

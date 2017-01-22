@@ -6,3 +6,23 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+
+/* Heat Map Settings */
+.react-calendar-heatmap {
+  font-family: avenir;
+  font-size: .6rem;
+  font-weight: 400;
+  color: #555;
+}
+
+.react-calendar-heatmap .color-empty { fill: #f4f4f4; }
+.react-calendar-heatmap .color-scale-1 { fill: #ffdeeb; }
+.react-calendar-heatmap .color-scale-2 { fill: #faa2c1; }
+.react-calendar-heatmap .color-scale-3 { fill: #e64980; }
+.react-calendar-heatmap .color-scale-4 { fill: #c2255c; }
+
+.color-empty { background-color: #f4f4f4; }
+.color-scale-1 { background-color: #ffdeeb; }
+.color-scale-2 { background-color: #faa2c1; }
+.color-scale-3 { background-color: #e64980; }
+.color-scale-4 { background-color: #c2255c; }

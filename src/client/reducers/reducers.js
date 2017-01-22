@@ -16,7 +16,7 @@ import {
   UPDATE_WORD_LIST,
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
-  REFRESH_TO_DEFAULT
+  REFRESH_TO_DEFAULT,
 } from '../constants/actionTypes';
 
 const words = (state = {
