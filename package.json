@@ -78,7 +78,6 @@
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
     "serve-favicon": "^2.3.2",
-    "sqlite3": "^3.1.8",
     "style-loader": "^0.13.1",
     "supertest": "^2.0.1",
     "tachyons-cli": "^1.0.10",
