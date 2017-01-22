@@ -8,7 +8,7 @@
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/server --color",
-    "build:css": "postcss -c './src/client/assets/styles/postcss.config.js'",
+    "watch:css": "postcss -c './src/client/assets/styles/postcss.config.js'",
     "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
   "author": "Alex Wong",
@@ -26,6 +26,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "autoprefixer": "^6.6.1",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
     "babel-polyfill": "^6.20.0",
