@@ -1,1 +1,1 @@
-web: node_modules/.bin/webpack && node ./src/server/server.js
+web: node -r babel-register -r babel-polyfill ./src/server/server.js
