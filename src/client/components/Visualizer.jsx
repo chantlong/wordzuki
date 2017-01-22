@@ -75,7 +75,6 @@ class Visualizer extends React.Component {
   }
 }
 
-
 Visualizer.propTypes = {
   filterByDate: PropTypes.func,
 };

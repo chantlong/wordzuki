@@ -11,7 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers/reducers';
 import App from './components/App';
 import SearchHistory from './containers/SearchHistory';
-import Visualizer from './containers/Visualizer';
+import Visualizer from './components/Visualizer';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import ChromeSignIn from './containers/ChromeSignIn';
