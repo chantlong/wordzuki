@@ -1,5 +1,9 @@
-/* TYPE SCALE */
 :root {
+  --spacing-extra-small: .1875rem;
+}
+
+/* TYPE SCALE */
+/*:root {
   --type-mega-small: .75rem;
   --type-extra-extra-small: .8125rem;
   --type-extra-small: .875rem;
@@ -19,12 +23,12 @@
 .f-5,
 .f-subheadline {
   font-size: 5rem;
-}
+}*/
 
 
 /* Type Scale */
 
-.f1 { font-size: var(--type-extra-extra-large); }
+/*.f1 { font-size: var(--type-extra-extra-large); }
 .f2 { font-size: var(--type-extra-large); }
 .f3 { font-size: var(--type-large); }
 .f4 { font-size: var(--type-medium); }
@@ -80,7 +84,7 @@
   .f6-l { font-size: var(--type-extra-small) }
   .f7-l { font-size: var(--type-extra-extra-small); }
   .f8-l { font-size: var(--type-mega-small); }
-}
+}*/
 
 /* LINKS */
 .link {
@@ -90,3 +94,7 @@
   color: #555;
   transition: #555 .15s ease-in;
 }
+
+/* WIDTHS */
+.w0 { width: .75rem; }
+.h0 { height: .75rem; }

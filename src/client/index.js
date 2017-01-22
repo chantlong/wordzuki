@@ -11,6 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers/reducers';
 import App from './components/App';
 import SearchHistory from './containers/SearchHistory';
+import Visualizer from './containers/Visualizer';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import ChromeSignIn from './containers/ChromeSignIn';
@@ -44,6 +45,7 @@ render(
         <IndexRoute component={Splash} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/profile" component={Visualizer} />
         <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
         <Route path="/kindlevb" component={KVBImport} />
       </Route>

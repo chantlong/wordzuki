@@ -8,3 +8,4 @@ npm-debug.log
 /src/chrome/lib/
 /src/chrome/dict/
 /src/server/uploads/
+yarn-error.log

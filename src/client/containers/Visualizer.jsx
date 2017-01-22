@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { filterByDate } from '../actions/actions';
 import Visualizer from '../components/Visualizer';
 
 // const mapStateToProps = ({ words, word }) => ({ words, word });
@@ -9,4 +10,10 @@ const mapStateToProps = ({ words }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Visualizer);
+const mapDispatchToProps = dispatch => ({
+  filterByDate: () => {
+    dispatch(filterByDate());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Visualizer);
