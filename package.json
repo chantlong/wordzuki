@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "an app to save words",
   "main": "index.js",
+  "engines": {
+    "node": "6.2.1"
+  },
   "scripts": {
     "start": "nodemon -r babel-register -r babel-polyfill ./src/server/server.js",
     "watch": "webpack --progress --watch",
