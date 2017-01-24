@@ -35,6 +35,7 @@ passportSetup();
 //   sess.cookie.secure = true;
 // }
 // app uses
+app.set('x-powered-by', false);
 app.use(favicon(path.join(__dirname, '../../public/favicon.ico')));
 app.use(cors({
   origin: '*',
