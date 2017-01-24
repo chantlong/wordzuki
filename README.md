@@ -17,6 +17,7 @@
 - Redux
 - Fuse.js
 - Tachyons
+- PostCSS
 
 #### Continuous Integration and Testing
 - Tape
