@@ -9,7 +9,7 @@ window.wordzuki = {
 function saveWord({ word, definition, example, source, sourceTitle }) {
   const url = 'http://www.wordzuki.xyz/api/word';
   const testUrl = 'http://localhost:3000/api/word';
-  $.post(testUrl,
+  $.post(url,
         { word, definition, example, source, sourceTitle },
         (data2, status2) => { console.log('posted!'); }, 'json')
   .fail(err => console.log('save error', err));
@@ -72,7 +72,7 @@ function checkAuth(tab) {
   return new Promise((resolve, reject) => {
     const url = 'http://www.wordzuki.xyz/api/auth/is-authorized';
     const testUrl = 'http://localhost:3000/api/auth/is-authorized';
-    $.get(testUrl)
+    $.get(url)
     .then((data) => {
       const user = data.user;
       if (!window.wordzuki.dictLoad) {

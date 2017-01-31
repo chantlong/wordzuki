@@ -9,6 +9,7 @@ const User = new Schema({
 
 const options = {
   errorMessages: {
+    IncorrectUsernameError: 'メアドまたはパスワードが違います',
     IncorrectPasswordError: 'メアドまたはパスワードが違います',
   },
 };

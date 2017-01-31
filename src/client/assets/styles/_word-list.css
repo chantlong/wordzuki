@@ -17,18 +17,18 @@
 }
 
 
-select {
+/*select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   outline: none;
-  border: 2px inherit #c1c2c3
-}
+  border: 2px inherit #c1c2c3;
+}*/
 
 select:focus {
   outline: none;
 }
 
-.usn {
+/*.usn {
   user-select: none;
-}
+}*/

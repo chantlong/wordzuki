@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import { deleteWord, addDefinition, toggleEditModal } from '../actions/actions';
 import Word from '../components/Word';
 
-const mapStateToProps = ({ words }) => {
+const mapStateToProps = ({ words, word }) => {
   const { list, isFetching } = words;
   return {
+    word,
     list,
     isFetching,
   };
