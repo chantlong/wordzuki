@@ -5,7 +5,9 @@
   "description": "Look up an English word with the Japanese definition and save it to the wordzuki app for reference!",
   "icons": {
     "16" : "assets/images/wordzuki-logo16.png",
-    "32" : "assets/images/wordzuki-logo32.png"
+    "48" : "assets/images/wordzuki-logo48.png",
+    "32" : "assets/images/wordzuki-logo32.png",
+    "128" : "assets/images/wordzuki-logo128.png"
   },
 
   "browser_action": {

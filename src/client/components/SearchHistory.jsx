@@ -28,21 +28,26 @@ class SearchHistory extends React.Component {
   }
 
   selectHeight() {
-    // 64 is height of nav bar
-    // padding of options will affect the 35
-    const height = Math.floor((window.innerHeight - 64) / 35).toString();
-    const remainHeight = ((window.innerHeight - 64) % 35) -
-    Math.floor((window.innerHeight - 64) / 35);
-    this.setState({ height, remainHeight });
+    const width = window.innerWidth;
+    if (width <= 480) {
+      this.setState({ height: 4, remainHeight: 0 });
+    } else {
+      // 64 is height of nav bar
+      // padding of options will affect the 35
+      const height = Math.floor((window.innerHeight - 64) / 35).toString();
+      const remainHeight = ((window.innerHeight - 64) % 35) -
+      Math.floor((window.innerHeight - 64) / 35);
+      this.setState({ height, remainHeight });
+    }
   }
 
   render() {
     const { list, results, isFetching, word, onSelect, deleteWord } = this.props;
     return (
       <div>
-        <div className="dt w-100 center">
+        <div className="w-100 center">
           <div
-            className="dtc w-30 w-20-ns wall-bg br b--black-10 v-top"
+            className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top"
           >
             <Search />
             {isFetching && <div className="flex justify-center items-center w-100 h-100">
@@ -59,8 +64,8 @@ class SearchHistory extends React.Component {
             }
             {
               !isFetching && !results && list.length > 0 &&
-              <select
-                className="word-list pre list pl0 ml0 mt0 justify-right w-100"
+              <ul
+                className="word-list word-list-ns pre list pl0 ml0 mt0 justify-right w-100 bb b--black-10 bn-ns"
                 size={this.state.height}
                 onChange={(e) => {
                   if (e.target.value === null) {
@@ -85,17 +90,17 @@ class SearchHistory extends React.Component {
                   const theTerm = term;
                   theTerm.index = i;
                   return (
-                    <option
+                    <li
                       key={i}
                       onClick={() => { onSelect(theTerm); }}
                       className="pr3 pv2 f6 f6-ns fw4 link
                       bb b--black-10 tr hover-bg-dark-gray hover-white"
                       value={JSON.stringify(theTerm)}
                     >{theTerm.word}
-                    </option>);
+                    </li>);
                 })
               }
-              </select>
+              </ul>
           }
             {
             !isFetching && results && results.length > 0 && list.length > 0 &&
@@ -142,7 +147,7 @@ class SearchHistory extends React.Component {
               <div className="mt4 f6 f6-ns fw4 tc">該当する単語は見つかりませんでした。</div>
             }
           </div>
-          <div className="dtc w-80 border-box">
+          <div className="db dib-ns w-100 w-70-m w-80-l border-box">
             <Word word={word} />
           </div>
         </div>

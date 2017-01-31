@@ -1,10 +1,30 @@
 .modal {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 }
 
 .modal:focus {
   outline: 0;
+}
+
+
+@media (--breakpoint-not-small){
+  .modal-ns {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal-ns:focus {
+    outline: 0;
+  }
+}
+
+@media (--breakpoint-medium) {
+}
+
+@media (--breakpoint-large) {
 }

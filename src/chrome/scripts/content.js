@@ -9,7 +9,11 @@ function speakIt(word) {
 }
 
 function createPopup(word, definition, example) {
-  const popup = document.createElement('div');
+  let popup = document.getElementById('wz-popup');
+  if (popup) {
+    $('#wz-popup').fadeOut('fast', () => $('#wz-popup').remove());
+  }
+  popup = document.createElement('div');
   popup.setAttribute('id', 'wz-popup');
   const wContent = document.createElement('div');
   wContent.setAttribute('class', 'wz-content');

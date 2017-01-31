@@ -1,7 +1,21 @@
 /* menu 50px + search bar 30px */
 .word-list {
-  height: calc(100vh - 97px);
+  height: 140px;
 }
+
+
+@media (--breakpoint-not-small){
+  .word-list-ns {
+    height: calc(100vh - 97px);
+  }
+}
+
+@media (--breakpoint-medium) {
+}
+
+@media (--breakpoint-large) {
+}
+
 
 select {
   -webkit-appearance: none;

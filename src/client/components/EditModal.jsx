@@ -51,7 +51,7 @@ class EditModal extends React.Component {
     return (
       <div>
         <Modal
-          className="modal mid-gray georgia w-80 w-30-ns center ba br2 b--black-50 pa2 tc ma4 bg-white"
+          className="modal modal-ns mid-gray georgia w-90 w-40-m w-30-l center ba br2 b--black-50 pa2 tc ma4 bg-white"
           isOpen={editModal}
           onAfterOpen={this.loadWord}
           onRequestClose={this.closeModal}
@@ -63,7 +63,7 @@ class EditModal extends React.Component {
             id="ex"
             className="ma2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
-            rows="3"
+            rows="7"
             onChange={this.handleExample}
             value={this.state.example}
           />
@@ -86,7 +86,7 @@ class EditModal extends React.Component {
             id="def"
             className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
-            rows="5"
+            rows="8"
             onChange={this.handleDefinition}
             value={this.state.definition === null ? '' : this.state.definition}
           />
