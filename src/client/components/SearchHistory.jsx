@@ -43,19 +43,19 @@ class SearchHistory extends React.Component {
   }
 
   render() {
-    const { list, results, isFetching, word, onSelect, deleteWord } = this.props;
+    const { list, results, isFetching, onSelect, deleteWord } = this.props;
     const wordSelectable = (term, i) => {
       const theTerm = term;
       theTerm.index = i;
       return (
-        <option
+        <li
           key={i}
           onClick={() => { onSelect(theTerm); }}
           className="pr3 pv2 f6 f6-ns fw4 link
           bb b--black-10 tr hover-bg-dark-gray hover-white"
           value={JSON.stringify(theTerm)}
         >{theTerm.word}
-        </option>);
+        </li>);
     };
     return (
       <div>
@@ -71,8 +71,8 @@ class SearchHistory extends React.Component {
             }
             {
               !isFetching && list.length > 0 &&
-              <select
-                className="word-list word-list-ns pre list pl0 ml0 mt0 justify-right w-100 bb b--black-10 bn-ns"
+              <ul
+                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 bn-ns"
                 size={this.state.height}
                 onChange={(e) => {
                   if (e.target.value === null) {
@@ -97,7 +97,7 @@ class SearchHistory extends React.Component {
                 results.map(wordSelectable) :
                 list.map(wordSelectable)
               }
-              </select>
+              </ul>
           }
             {
               !isFetching && results && results.length < 1 && list.length > 0 &&
