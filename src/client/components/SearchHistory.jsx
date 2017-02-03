@@ -72,8 +72,7 @@ class SearchHistory extends React.Component {
             {
               !isFetching && list.length > 0 &&
               <ul
-                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 bn-ns"
-                size={this.state.height}
+                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
                 onChange={(e) => {
                   if (e.target.value === null) {
                     return null;
@@ -104,14 +103,8 @@ class SearchHistory extends React.Component {
               <div className="mt4 f6 f6-ns fw4 tc">該当する単語は見つかりませんでした。</div>
             }
           </div>
-
-            <Word />
-
+          <Word />
         </div>
-        <div
-          className="w-100 fixed bg-near-white bottom-0"
-          style={{ height: `${this.state.remainHeight}px` }}
-        />
       </div>
 
     );
@@ -126,9 +119,6 @@ SearchHistory.propTypes = {
     PropTypes.object,
   ),
   isFetching: PropTypes.bool,
-  word: PropTypes.objectOf(
-    PropTypes.any,
-  ),
   onSelect: PropTypes.func,
   deleteWord: PropTypes.func,
   fetchWords: PropTypes.func,

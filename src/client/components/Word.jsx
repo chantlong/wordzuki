@@ -6,7 +6,6 @@ import add from '../assets/images/add.png';
 import edit from '../assets/images/edit.png';
 import trash from '../assets/images/trash-can.png';
 import link from '../assets/images/link.png';
-import ereader from '../assets/images/ereader.png';
 
 const speakIt = (term) => {
   const synth = window.speechSynthesis;
@@ -49,7 +48,7 @@ class Word extends React.Component {
       return null;
     }
     return (
-      <div className="db dib-ns w-100 w-70-m w-80-l border-box">
+      <div className="db dib-ns w-100 w-70-m w-80-l border-box mb0-ns mb5">
         <div className="w-100 w-70-l">
           <ul className="list ml2 ml3-ns mr3 mr5-ns mt2 mt4-ns georgia pl0 pl4-ns">
             <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
@@ -112,7 +111,7 @@ class Word extends React.Component {
               </div>
             </li>
             { /* DEFINITION */ }
-            <ol className="mv2-ns">
+            <ol className="pv3">
               {word.def ? word.def
                 .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
                 (<p className="f6 f5-ns fw3 mid-gray pv2">意味を追加する
@@ -154,11 +153,11 @@ class Word extends React.Component {
                 </button>
               </Modal>
             </div>
-            <a
+            {/* {<a
               onClick={() => deleteWord(word._id)}
             >
               <img src={trash} alt="trash" className="dib wz-icon bottom-2 right-2 fixed dim" />
-            </a>
+            </a> } */}
           </ul>
         </div>
       </div>

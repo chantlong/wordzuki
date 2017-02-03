@@ -1,12 +1,14 @@
 /* menu 50px + search bar 30px */
 .word-list {
   height: 140px;
+  overflow-x: hidden;
 }
 
 
 @media (--breakpoint-not-small){
   .word-list-ns {
-    height: calc(100vh - 97px);
+    height: calc(100vh - 46px);
+    overflow-x: hidden;
   }
 }
 

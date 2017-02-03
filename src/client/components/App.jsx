@@ -1,9 +1,10 @@
 import React from 'react';
-import NavBar from '../containers/NavBar';
+// import NavBar from '../containers/NavBar';
+import TestMenu from '../containers/TestMenu';
 
 const App = ({ children }) => (
   <div className="avenir">
-    <NavBar />
+    <TestMenu />
     {children}
   </div>
 );

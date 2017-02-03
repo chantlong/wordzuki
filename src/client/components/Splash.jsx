@@ -1,11 +1,23 @@
 import React from 'react';
-import bgWall from '../assets/images/home.jpg';
+import bgWall1 from '../assets/images/home1.jpg';
+import bgWall2 from '../assets/images/home2.jpg';
+import bgWall3 from '../assets/images/home3.jpg';
+import logo from '../assets/images/wordzuki-logo128.png';
 
-const bgimage = { backgroundImage: `url('${bgWall}')` };
-const bgtrans = { backgroundColor: 'rgba(255,255,255,0.7)' };
+const bgWallSelection = [bgWall1, bgWall2, bgWall3];
+const bgimage = { backgroundImage: `url('${bgWallSelection[Math.floor((Math.random() * 3))]}')` };
+const bgtrans = { backgroundColor: 'rgba(255,255,255,0.8)' };
+
 const Splash = () => (
-  <div className="flex ph3 ph5-ns tc wall-bg cover bg-center items-center" style={bgimage}>
-    <h1 className="f3 lh-copy fw4 center pa3 shadow-1" style={bgtrans}>調べた単語を自動でリストに保存し、復習しやすくするツールです。</h1>
+  <div className="vh-100 cover bg-center" style={bgimage}>
+    <div className="tc tl-ns w5">
+      <a href="/" className="absolute left-0 ma4 no-underline near-white dim db tracked f5 fw4 flex items-center justify-start">
+        <img src={logo} alt="wordzuki" className="db wz-icon mr2 mr3-ns" />
+        <span className="dn db-ns fw5">wordzuki</span></a>
+    </div>
+    <div className="pa4 flex items-center h-100">
+      <h1 className="f4 lh-copy-ns fw4 center br3 pa3 shadow-1" style={bgtrans}>調べた単語を自動でリストに保存し、復習しやすくするツールです。</h1>
+    </div>
   </div>
 );
 

@@ -1,6 +1,6 @@
-.wall-bg {
+/*.wall-bg {
   height: calc(100vh - 50px);
-}
+}*/
 
 .wz-icon {
   width: 1.5rem;
@@ -8,7 +8,7 @@
 }
 
 .wz-dc {
-  min-width: 37rem;
+  min-width: 38rem;
 }
 
 /* Heat Map Settings */

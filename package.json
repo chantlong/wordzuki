@@ -14,7 +14,7 @@
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/server --color",
     "watch:css": "postcss -c './src/client/assets/styles/postcss.config.js'",
-    "build:prod" :"NODE_ENV=production webpack --progress",
+    "build:prod": "NODE_ENV=production webpack --progress",
     "postinstall": "npm install sqlite3",
     "test": "NODE_ENV=test tape -r babel-register ./test/**/*-test.js | tap-spec"
   },
