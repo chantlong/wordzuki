@@ -1,9 +1,9 @@
 const devMode = process.env.NODE_ENV !== 'production';
+
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: devMode ? 'inline-sourcemap' : null,
   entry: './src/client/index.js',
   output: {
     path: './public',
@@ -12,9 +12,13 @@ module.exports = {
   plugins: devMode ? [
     new ExtractTextPlugin('style.min.css'),
   ] : [
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'PROTOCOL', 'HOST', 'PORT']),
     new ExtractTextPlugin('style.min.css'),
     new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false },
+      mangle: false,
+    }),
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -39,7 +43,10 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'url',
+        loaders: [
+          'url-loader?limit=5000',
+          'image-webpack-loader',
+        ],
       },
     ],
   },
