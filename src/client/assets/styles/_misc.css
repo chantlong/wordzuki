@@ -1,6 +1,6 @@
-/*.wall-bg {
-  height: calc(100vh - 50px);
-}*/
+.wall-bg {
+  height: calc(100vh - 56px);
+}
 
 .wz-icon {
   width: 1.5rem;

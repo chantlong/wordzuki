@@ -31132,7 +31132,7 @@
 	              null,
 	              !login.isAuth ? _react2.default.createElement(
 	                'ul',
-	                { className: 'list' },
+	                { className: 'list ml0 pl0' },
 	                _react2.default.createElement(
 	                  'li',
 	                  { className: 'db mt1 pa2' },
@@ -31147,7 +31147,11 @@
 	                  { className: 'db mt1 pa2' },
 	                  _react2.default.createElement(
 	                    _reactRouter.Link,
-	                    { to: '/signup', className: 'link f6-ns f5 dim' },
+	                    {
+	                      to: '/signup',
+	                      onClick: this.toggleMenu,
+	                      className: 'link f6-ns f5 dim'
+	                    },
 	                    '\u65B0\u898F\u767B\u9332'
 	                  )
 	                )
@@ -31164,6 +31168,7 @@
 	                      _reactRouter.Link,
 	                      {
 	                        to: '/searchhistory',
+	                        onClick: this.toggleMenu,
 	                        className: 'link f6-ns f5 dim'
 	                      },
 	                      '\u5358\u8A9E\u30EA\u30B9\u30C8'
@@ -31176,6 +31181,7 @@
 	                      _reactRouter.Link,
 	                      {
 	                        to: '/profile',
+	                        onClick: this.toggleMenu,
 	                        className: 'link f6-ns f5 dim'
 	                      },
 	                      '\u30D7\u30ED\u30D5\u30A1\u30A4\u30EB'
@@ -31188,6 +31194,7 @@
 	                      _reactRouter.Link,
 	                      {
 	                        to: '/kindlevb',
+	                        onClick: this.toggleMenu,
 	                        className: 'link f6-ns f5 dim'
 	                      },
 	                      'Kindle\u5358\u8A9E\u5E33'
@@ -33855,6 +33862,22 @@
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
+	var _home = __webpack_require__(329);
+
+	var _home2 = _interopRequireDefault(_home);
+
+	var _home3 = __webpack_require__(330);
+
+	var _home4 = _interopRequireDefault(_home3);
+
+	var _home5 = __webpack_require__(331);
+
+	var _home6 = _interopRequireDefault(_home5);
+
+	var _wordzukiLogo = __webpack_require__(327);
+
+	var _wordzukiLogo2 = _interopRequireDefault(_wordzukiLogo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33862,6 +33885,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var bgWallSelection = [_home2.default, _home4.default, _home6.default];
+	var bgimage = { backgroundImage: 'url(\'' + bgWallSelection[Math.floor(Math.random() * 3)] + '\')' };
 
 	var SignIn = function (_React$Component) {
 	  _inherits(SignIn, _React$Component);
@@ -33931,54 +33957,72 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'pa4' },
+	        { className: 'vh-100 cover bg-center', style: bgimage },
 	        _react2.default.createElement(
-	          'form',
-	          {
-	            className: 'measure-narrow center ba br2 b--black-50 pa2 pb4 tc ma4 bg-white',
-	            onSubmit: this.handleSubmit,
-	            autoComplete: 'off'
-	          },
+	          'div',
+	          { className: 'flex justify-center justify-start-ns' },
 	          _react2.default.createElement(
-	            'p',
-	            { className: 'center f4 fw5 pb3 bb w-75 b--light-silver' },
-	            '\u30ED\u30B0\u30A4\u30F3'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
-	            _react2.default.createElement('input', {
-	              className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
-	              type: 'text',
-	              placeholder: '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9',
-	              onChange: this.handleUsername
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
-	            _react2.default.createElement('input', {
-	              className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
-	              type: 'password',
-	              placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9',
-	              onChange: this.handlePassword
-	            }),
-	            errorHandle.message ? _react2.default.createElement(
-	              'div',
-	              { className: 'f7 pt3 dark-red' },
-	              errorHandle.message
-	            ) : null
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
+	            'a',
+	            { href: '/', className: 'pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns' },
+	            _react2.default.createElement('img', { src: _wordzukiLogo2.default, alt: 'wordzuki', className: 'db wz-icon mr2 mr3-ns' }),
 	            _react2.default.createElement(
-	              'button',
-	              {
-	                className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer',
-	                type: 'submit'
-	              },
+	              'span',
+	              { className: 'db fw5' },
+	              'wordzuki'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            {
+	              className: 'measure-narrow center br2 pa2 pb4 tc ma4 bg-near-white',
+	              onSubmit: this.handleSubmit,
+	              autoComplete: 'off'
+	            },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'center f4 fw5 pb3 bb w-75 b--light-silver' },
 	              '\u30ED\u30B0\u30A4\u30F3'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
+	                type: 'text',
+	                placeholder: '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9',
+	                onChange: this.handleUsername
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
+	                type: 'password',
+	                placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9',
+	                onChange: this.handlePassword
+	              }),
+	              errorHandle.message ? _react2.default.createElement(
+	                'div',
+	                { className: 'f7 pt3 dark-red' },
+	                errorHandle.message
+	              ) : null
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer',
+	                  type: 'submit'
+	                },
+	                '\u30ED\u30B0\u30A4\u30F3'
+	              )
 	            )
 	          )
 	        )
@@ -34056,6 +34100,22 @@
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
+	var _home = __webpack_require__(329);
+
+	var _home2 = _interopRequireDefault(_home);
+
+	var _home3 = __webpack_require__(330);
+
+	var _home4 = _interopRequireDefault(_home3);
+
+	var _home5 = __webpack_require__(331);
+
+	var _home6 = _interopRequireDefault(_home5);
+
+	var _wordzukiLogo = __webpack_require__(327);
+
+	var _wordzukiLogo2 = _interopRequireDefault(_wordzukiLogo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34063,6 +34123,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var bgWallSelection = [_home2.default, _home4.default, _home6.default];
+	var bgimage = { backgroundImage: 'url(\'' + bgWallSelection[Math.floor(Math.random() * 3)] + '\')' };
 
 	var SignUp = function (_React$Component) {
 	  _inherits(SignUp, _React$Component);
@@ -34169,64 +34232,82 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'pa4' },
+	        { className: 'vh-100 cover bg-center', style: bgimage },
 	        _react2.default.createElement(
-	          'form',
-	          {
-	            className: 'measure-narrow center ba br2 b--black-50 pa2 pb4 tc ma4 bg-white',
-	            onSubmit: this.handleSubmit,
-	            autoComplete: 'off'
-	          },
+	          'div',
+	          { className: 'flex justify-center justify-start-ns' },
 	          _react2.default.createElement(
-	            'p',
-	            { className: 'center f4 fw5 pb3 bb w-75 b--light-silver' },
-	            '\u30A2\u30AB\u30A6\u30F3\u30C8\u306E\u4F5C\u6210'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
-	            _react2.default.createElement('input', {
-	              className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
-	              type: 'text',
-	              placeholder: '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9',
-	              onChange: this.handleUsername
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
-	            _react2.default.createElement('input', {
-	              className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
-	              type: 'password',
-	              placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u4F5C\u6210',
-	              onChange: this.handlePassword
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
-	            _react2.default.createElement('input', {
-	              className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
-	              type: 'password',
-	              placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u306E\u518D\u5165\u529B',
-	              onChange: this.handleConfirmPassword
-	            }),
-	            errorHandle.message ? _react2.default.createElement(
-	              'div',
-	              { className: 'f7 pt3 dark-red' },
-	              errorHandle.message
-	            ) : null
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'mt3' },
+	            'a',
+	            { href: '/', className: 'pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns' },
+	            _react2.default.createElement('img', { src: _wordzukiLogo2.default, alt: 'wordzuki', className: 'db wz-icon mr2 mr3-ns' }),
 	            _react2.default.createElement(
-	              'button',
-	              {
-	                className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer',
-	                type: 'submit'
-	              },
-	              '\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u4F5C\u6210'
+	              'span',
+	              { className: 'db fw5' },
+	              'wordzuki'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            {
+	              className: 'measure-narrow center br2 pa2 pb4 tc ma4 bg-near-white',
+	              onSubmit: this.handleSubmit,
+	              autoComplete: 'off'
+	            },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'center f4 fw5 pb3 bb w-75 b--light-silver' },
+	              '\u30A2\u30AB\u30A6\u30F3\u30C8\u306E\u4F5C\u6210'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
+	                type: 'text',
+	                placeholder: '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9',
+	                onChange: this.handleUsername
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
+	                type: 'password',
+	                placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u4F5C\u6210',
+	                onChange: this.handlePassword
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6',
+	                type: 'password',
+	                placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u306E\u518D\u5165\u529B',
+	                onChange: this.handleConfirmPassword
+	              }),
+	              errorHandle.message ? _react2.default.createElement(
+	                'div',
+	                { className: 'f7 pt3 dark-red' },
+	                errorHandle.message
+	              ) : null
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer',
+	                  type: 'submit'
+	                },
+	                '\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u4F5C\u6210'
+	              )
 	            )
 	          )
 	        )
@@ -34526,21 +34607,21 @@
 	    { className: 'vh-100 cover bg-center', style: bgimage },
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'tc tl-ns w5' },
+	      { className: 'flex justify-center justify-start-ns' },
 	      _react2.default.createElement(
 	        'a',
-	        { href: '/', className: 'absolute left-0 ma4 no-underline near-white dim db tracked f5 fw4 flex items-center justify-start' },
+	        { href: '/', className: 'pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns' },
 	        _react2.default.createElement('img', { src: _wordzukiLogo2.default, alt: 'wordzuki', className: 'db wz-icon mr2 mr3-ns' }),
 	        _react2.default.createElement(
 	          'span',
-	          { className: 'dn db-ns fw5' },
+	          { className: 'db fw5' },
 	          'wordzuki'
 	        )
 	      )
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'pa4 flex items-center h-100' },
+	      { className: 'pa4 flex items-center wall-bg' },
 	      _react2.default.createElement(
 	        'h1',
 	        { className: 'f4 lh-copy-ns fw4 center br3 pa3 shadow-1', style: bgtrans },

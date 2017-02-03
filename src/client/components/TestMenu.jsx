@@ -35,15 +35,23 @@ class TestMenu extends React.Component {
             </a>
             <div>
               {!login.isAuth ? (
-                <ul className="list">
+                <ul className="list ml0 pl0">
                   <li className="db mt1 pa2"><Link onClick={this.toggleMenu} to="/signin" className="link f6-ns f5 dim">ログイン</Link></li>
-                  <li className="db mt1 pa2"><Link to="/signup" className="link f6-ns f5 dim">新規登録</Link></li>
+                  <li className="db mt1 pa2">
+                    <Link
+                      to="/signup"
+                      onClick={this.toggleMenu}
+                      className="link f6-ns f5 dim"
+                    >新規登録
+                  </Link>
+                  </li>
                 </ul>) :
               (<ul className="list ml0 pl0">
                 <div className="">
                   <li className="db mt3 pa2">
                     <Link
                       to="/searchhistory"
+                      onClick={this.toggleMenu}
                       className="link f6-ns f5 dim"
                     >
                     単語リスト
@@ -52,6 +60,7 @@ class TestMenu extends React.Component {
                   <li className="db mt1 pa2">
                     <Link
                       to="/profile"
+                      onClick={this.toggleMenu}
                       className="link f6-ns f5 dim"
                     >
                     プロファイル
@@ -60,6 +69,7 @@ class TestMenu extends React.Component {
                   <li className="db mt1 pa2">
                     <Link
                       to="/kindlevb"
+                      onClick={this.toggleMenu}
                       className="link f6-ns f5 dim"
                     >
                     Kindle単語帳
