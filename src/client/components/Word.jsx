@@ -95,7 +95,7 @@ class Word extends React.Component {
               <div
                 className="sourcetip"
               >
-                <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                <img src={link} alt="link" className="dib w1 h1 v-mid dim mh1 mh2-ns" />
                 <div
                   className="sourcetip-content"
                 >
