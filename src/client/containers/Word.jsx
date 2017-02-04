@@ -12,8 +12,8 @@ const mapStateToProps = ({ words, word }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  deleteWord: (id) => {
-    dispatch(deleteWord(id));
+  deleteWord: (id, index, list) => {
+    dispatch(deleteWord(id, index, list));
   },
   addDefinition: (id, ex, def) => {
     dispatch(addDefinition(id, ex, def));

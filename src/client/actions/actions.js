@@ -135,7 +135,7 @@ export const verify = () =>
 const receiveDeleteWords = id => ({ type: DELETE_WORD_FROM_WORDS, id });
 const receiveDeleteWord = () => ({ type: DELETE_WORD });
 
-export const deleteWord = id => (
+export const deleteWord = (id, index, list) => (
   (dispatch) => {
     fetch(`/api/word/${id}`, {
       method: 'DELETE',
@@ -149,6 +149,9 @@ export const deleteWord = id => (
       if (res.message) {
         dispatch(receiveDeleteWords(id));
         dispatch(receiveDeleteWord());
+        if (list.length > 1) {
+          dispatch(selectWord(list[index + 1]));
+        }
       }
     })
     .catch((err) => {

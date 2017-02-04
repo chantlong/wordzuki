@@ -43,7 +43,7 @@ class Word extends React.Component {
   closeModal() { this.setState({ open: false }); }
 
   render() {
-    const { word, deleteWord } = this.props;
+    const { word, deleteWord, list } = this.props;
     if (!word) {
       return null;
     }
@@ -124,7 +124,9 @@ class Word extends React.Component {
           { /* DELETE WORD */}
           <div className="db tr mt2 mb4">
             <a
-              onClick={() => deleteWord(word._id)}
+              onClick={() => {
+                deleteWord(word._id, list.indexOf(word), list);
+              }}
             >
               <img src={trash} alt="trash" className="dib w1 h1 v-mid mr2 dim" />
             </a>
@@ -166,6 +168,9 @@ class Word extends React.Component {
 Word.propTypes = {
   word: PropTypes.objectOf(
     PropTypes.any,
+  ),
+  list: PropTypes.arrayOf(
+    PropTypes.object,
   ),
   deleteWord: PropTypes.func,
   addDefinition: PropTypes.func,

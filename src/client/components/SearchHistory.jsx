@@ -67,7 +67,7 @@ class SearchHistory extends React.Component {
             {isFetching && <Preloader />}
             {
               !isFetching && !results && list.length === 0 &&
-              <div className="word-list word-list-ns mt4 f6 f6-ns fw4 tc">単語は保存していません。</div>
+              <div className="word-list word-list-ns pt4 f6 f6-ns fw4 tc">単語は保存していません。</div>
             }
             {
               !isFetching && list.length > 0 &&
