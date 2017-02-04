@@ -48,86 +48,85 @@ class Word extends React.Component {
       return null;
     }
     return (
-      <div className="db dib-ns w-100 w-70-m w-80-l border-box mb0-ns mb5">
-        <div className="w-100 w-70-l">
-          <ul className="list ml2 ml3-ns mr3 mr5-ns mt2 mt4-ns georgia pl0 pl4-ns">
-            <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
-              <a
-                onClick={() => {
-                  speakIt(word.word);
-                }}
-                className="mh1 mh2-ns"
+      <div className="db dib-ns w-100 w-70-m w-60-l border-box mb0-ns mb5">
+        <ul className="list ma0 pl2 pl3-ns pr3 pr5-ns pt2 pt4-ns georgia pl0 pl4-ns vh-100-ns flex flex-column">
+          <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
+            <a
+              onClick={() => {
+                speakIt(word.word);
+              }}
+              className="mh1 mh2-ns"
+            >
+              <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 dim" />
+            </a>
+          </li>
+          { /* EXAMPLE */ }
+          <li className="ph3 f6 f5-ns fw5 mid-gray pv3 lh-copy">例：{word.ex}
+          </li>
+          <div className="bb b--black-10 db tr pb3">
+            <a
+              onClick={() => {
+                speakIt(word.ex);
+              }}
+            >
+              <img src={voice} alt="speak" className="dib w1 h1 v-mid dim mr2" />
+            </a>
+            { word.source && word.sourceTitle ?
+              <div
+                className="sourcetip"
               >
-                <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
-              </a>
-            </li>
-            { /* EXAMPLE */ }
-            <li className="ph3 f6 f5-ns fw5 mid-gray pv3 bb b--black-10 lh-copy">例：{word.ex}
-              <div className="db tr">
-                <a
-                  onClick={() => {
-                    speakIt(word.ex);
-                  }}
-                  className="mh1 ph2"
+                <img src={link} alt="link" className="dib w1 h1 v-mid dim mh1 mh2-ns" />
+                <div
+                  className="sourcetip-content"
                 >
-                  <img src={voice} alt="speak" className="dib w1 h1 v-mid dim" />
-                </a>
-                { word.source && word.sourceTitle ?
-                  <div
-                    className="sourcetip"
-                  >
-                    <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
-                    <div
-                      className="sourcetip-content"
-                    >
-                      <a
-                        href={word.source}
-                        className="f7 i near-white link dim"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >{word.sourceTitle}
-                      </a>
-                    </div>
-                  </div>
-                  :
-                  null
-                }
-                { word.author ?
-                  <div
-                    className="sourcetip"
-                  >
-                    <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
-                    <div
-                      className="sourcetip-content"
-                    >
-                      <p
-                        className="f7 i ma0"
-                      >{word.author}</p>
-                    </div>
-                  </div>
-                  :
-                  null
-                }
-              </div>
-            </li>
-            { /* DEFINITION */ }
-            <ol className="pv3">
-              {word.def ? word.def
-                .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
-                (<p className="f6 f5-ns fw3 mid-gray pv2">意味を追加する
                   <a
-                    onClick={this.openModal}
-                    className="mh1 mh2-ns"
-                  >
-                    <img src={add} alt="add definition" className="dib w1 h1 v-mid mr2 mr3-ns dim" />
+                    href={word.source}
+                    className="f7 i near-white link dim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{word.sourceTitle}
                   </a>
-                </p>)}
-            </ol>
-            { /* DELETE WORD */}
+                </div>
+              </div>
+              :
+              null
+            }
+            { word.author ?
+              <div
+                className="sourcetip"
+              >
+                <img src={link} alt="link" className="dib w1 h1 v-mid dim" />
+                <div
+                  className="sourcetip-content"
+                >
+                  <p
+                    className="f7 i ma0"
+                  >{word.author}</p>
+                </div>
+              </div>
+              :
+              null
+            }
+          </div>
+          { /* DEFINITION */ }
+          <ol className="pv3 flex flex-column overflow-y-scroll">
+            {word.def ? word.def
+              .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
+              (<p className="f6 f5-ns fw3 mid-gray pv2">意味を追加する
+                <a
+                  onClick={this.openModal}
+                  className="mh1 mh2-ns"
+                >
+                  <img src={add} alt="add definition" className="dib w1 h1 v-mid mr2 dim" />
+                </a>
+              </p>)}
+          </ol>
+          { /* DELETE WORD */}
+          <div className="db tr mt2 mb4">
             <a
               onClick={() => deleteWord(word._id)}
             >
-              <img src={trash} alt="trash" className="dib w1 h1 v-mid  mr2 mr3-ns dim fr" />
+              <img src={trash} alt="trash" className="dib w1 h1 v-mid mr2 dim" />
             </a>
             { /* EDIT WORD */ }
             <a
@@ -136,31 +135,29 @@ class Word extends React.Component {
               }}
               className="mh1 mh2-ns"
             >
-              <img src={edit} alt="edit" className="dib w1 h1 v-mid mr2 mr3-ns dim fr" />
+              <img src={edit} alt="edit" className="dib w1 h1 v-mid dim" />
             </a>
-            <EditModal />
-            <div>
-              <Modal
-                className="modal mid-gray georgia w-30-ns center ba br2 b--black-50 pa2 tc ma4 bg-white"
-                isOpen={this.state.open}
-                onRequestClose={this.closeModal}
-                contentLabel="definition adding"
-              >
-                <textarea
-                  className="w-90 mt3 input-reset h3 ba br2 b--light-silver hover-bg-moon-gray f6 outline-0"
-                  placeholder="意味"
-                  onChange={this.handleDefinition}
-                />
-                <button
-                  className="ma2 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
-                  type="submit"
-                  onClick={this.handleSubmit}
-                >追加
-                </button>
-              </Modal>
-            </div>
-          </ul>
-        </div>
+          </div>
+          <EditModal />
+          <Modal
+            className="modal mid-gray georgia w-30-ns center ba br2 b--black-50 pa2 tc ma4 bg-white"
+            isOpen={this.state.open}
+            onRequestClose={this.closeModal}
+            contentLabel="definition adding"
+          >
+            <textarea
+              className="w-90 mt3 input-reset h3 ba br2 b--light-silver hover-bg-moon-gray f6 outline-0"
+              placeholder="意味"
+              onChange={this.handleDefinition}
+            />
+            <button
+              className="ma2 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+              type="submit"
+              onClick={this.handleSubmit}
+            >追加
+            </button>
+          </Modal>
+        </ul>
       </div>
     );
   }

@@ -33,7 +33,7 @@ class SideMenu extends React.Component {
             <img src={closeIcon} alt="close" className="w1 h1 ph4 pt4 pb0" />
           </a>
           {!login.isAuth ? (
-            <ul className="list ma0 ml2-ns pl0 pa4">
+            <ul className="list ma0 ml2-ns pa4 flex flex-column justify-center items-center">
               <li className="db pa2 ml4-ns"><Link onClick={this.toggleMenu} to="/signin" className="link f6 dim underline-hover">ログイン</Link></li>
               <li className="db pa2 ml4-ns">
                 <Link

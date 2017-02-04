@@ -4,7 +4,6 @@
   overflow-x: hidden;
 }
 
-
 @media (--breakpoint-not-small){
   .word-list-ns {
     height: calc(100vh - 46px);

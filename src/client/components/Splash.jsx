@@ -13,7 +13,7 @@ const Splash = () => (
     <div className="flex justify-center justify-start-ns">
       <a href="/" className="pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns">
         <img src={logo} alt="wordzuki" className="db wz-icon mr2 mr3-ns" />
-        <span className="db fw4">wordzuki</span></a>
+        <span className="db fw5">wordzuki</span></a>
     </div>
     <div className="pa4 flex items-center wall-bg">
       <h1 className="f4 lh-copy-ns fw4 center br3 pa3 shadow-1" style={bgtrans}>調べた単語を自動でリストに保存し、復習しやすくするツールです。</h1>

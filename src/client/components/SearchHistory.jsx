@@ -58,8 +58,8 @@ class SearchHistory extends React.Component {
         </li>);
     };
     return (
-      <div>
-        <div className="w-100 center">
+      <div className="h-100">
+        <div className="w-100 center h-100">
           <div
             className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top"
           >

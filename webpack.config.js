@@ -43,9 +43,12 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
+        loaders: devMode ? [
           'url-loader?limit=5000',
           'image-webpack-loader',
+        ] : [
+          'url-loader?limit=5000',
+          'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
         ],
       },
     ],
