@@ -123,6 +123,12 @@ class Word extends React.Component {
                   </a>
                 </p>)}
             </ol>
+            { /* DELETE WORD */}
+            <a
+              onClick={() => deleteWord(word._id)}
+            >
+              <img src={trash} alt="trash" className="dib w1 h1 v-mid  mr2 mr3-ns dim fr" />
+            </a>
             { /* EDIT WORD */ }
             <a
               onClick={() => {
@@ -153,11 +159,6 @@ class Word extends React.Component {
                 </button>
               </Modal>
             </div>
-            {/* {<a
-              onClick={() => deleteWord(word._id)}
-            >
-              <img src={trash} alt="trash" className="dib wz-icon bottom-2 right-2 fixed dim" />
-            </a> } */}
           </ul>
         </div>
       </div>

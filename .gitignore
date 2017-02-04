@@ -5,6 +5,7 @@ ideas/
 npm-debug.log
 /src/chrome/lib/
 /src/chrome/dict/
+/src/client/assets/images/
 /src/server/uploads/
 yarn-error.log
 config/
