@@ -20,6 +20,7 @@ class Visualizer extends React.Component {
     this.state = {
       filteredResults: [],
       total: 0,
+      count: 0,
     };
   }
 
@@ -38,42 +39,56 @@ class Visualizer extends React.Component {
       });
   }
 
+  componentDidMount() {
+    const start = (e) => {
+      const count = Number(e.target.classList[1]);
+      this.setState({ count });
+    };
+    const elements = Array.from(document.querySelectorAll('rect'));
+    elements.forEach((el) => {
+      el.addEventListener('touchstart', start);
+      el.addEventListener('mouseover', start);
+    });
+  }
+
   render() {
     return (
-      <div className="f6 wall-bg flex items-center justify-center">
-        <div>
-          <div className="wz-dc">
+      <div>
+        <div className="f6 wall-bg flex flex-column items-center justify-center">
+          <div className="near-white br3 bg-mid-gray pa3 center ma3">{`${this.state.count}個`}</div>
+          <div className="w5 ml5">
             <CalendarHeatmap
-              numDays={365}
+              numDays={90}
+              horizontal={false}
               values={this.state.filteredResults}
               gutterSize={1.5}
               classForValue={(value) => {
                 if (!value) {
-                  return 'color-empty';
+                  return 'color-empty 0';
                 }
                 if (value.count < 2) {
-                  return 'color-scale-1';
+                  return `color-scale-1 ${value.count}`;
                 }
                 if (value.count < 7) {
-                  return 'color-scale-2';
+                  return `color-scale-2 ${value.count}`;
                 }
                 if (value.count < 15) {
-                  return 'color-scale-3';
+                  return `color-scale-3 ${value.count}`;
                 }
-                return 'color-scale-4';
+                return `color-scale-4 ${value.count}`;
               }}
             />
           </div>
-          <div className="flex items-center fr ma2">
+          <div className="flex items-center fr mv3">
             <p className="dib f7 ma1">Less</p>
-            <div className="w0 h0 ma1 dib react-calendar-heatmap color-empty" />
-            <div className="w0 h0 ma1 dib react-calendar-heatmap color-scale-1" />
-            <div className="w0 h0 ma1 dib react-calendar-heatmap color-scale-2" />
-            <div className="w0 h0 ma1 dib react-calendar-heatmap color-scale-3" />
-            <div className="w0 h0 ma1 dib react-calendar-heatmap color-scale-4" />
+            <div className="w1 h1 ma1 dib react-calendar-heatmap color-empty" />
+            <div className="w1 h1 ma1 dib react-calendar-heatmap color-scale-1" />
+            <div className="w1 h1 ma1 dib react-calendar-heatmap color-scale-2" />
+            <div className="w1 h1 ma1 dib react-calendar-heatmap color-scale-3" />
+            <div className="w1 h1 ma1 dib react-calendar-heatmap color-scale-4" />
             <p className="dib f7 ma1">More</p>
           </div>
-          <p className="tc db cr mt5">今までは<span className="b">{this.state.total}</span>個の単語をを保存してきました。&#x1F4D2;</p>
+          <p className="tc db cr mt2">今までは<span className="b">{this.state.total}</span>個の単語をを保存してきました。&#x1F4D2;</p>
         </div>
       </div>
     );

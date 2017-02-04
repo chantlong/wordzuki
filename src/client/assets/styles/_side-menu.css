@@ -1,0 +1,12 @@
+.side-menu {
+  visibility: hidden;
+  opacity: 0;
+  margin-right: -16rem;
+  transition: 0.5s;
+}
+
+.side-menu-shift {
+  visibility: visible;
+  margin-right: 0;
+  opacity: 1;
+}

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { receiveLogout } from '../actions/actions';
-import TestMenu from '../components/TestMenu';
+import SideMenu from '../components/SideMenu';
 
 const mapStateToProps = ({ login }) => ({ login });
 const mapDispatchToProps = dispatch => ({
@@ -9,4 +9,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);

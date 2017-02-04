@@ -2,19 +2,23 @@
   height: calc(100vh - 56px);
 }
 
+.menu-height {
+  height: calc(100vh - 128px);
+}
+
+.nav-grad {
+  background: linear-gradient(to right, rgba(244,244,244,0) 0%, rgba(244,244,244,1) 11%, rgba(244,244,244,1) 100%);
+}
+
 .wz-icon {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.wz-dc {
-  min-width: 38rem;
-}
-
 /* Heat Map Settings */
 .react-calendar-heatmap {
   font-family: 'avenir';
-  font-size: .875rem;
+  font-size: 7px;
   font-weight: 400;
   color: #555;
 }

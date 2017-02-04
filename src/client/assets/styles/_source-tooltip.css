@@ -67,17 +67,3 @@
     transform: translateY(0%);
     transition-delay: 0s, 0s, 0.3s;
 }
-
-
-.testslide {
-  visibility: hidden;
-  opacity: 0;
-  margin-right: -16rem;
-  transition: 0.5s;
-}
-
-.testslideshift {
-  visibility: visible;
-  margin-right: 0;
-  opacity: 1;
-}

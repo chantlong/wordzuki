@@ -3,6 +3,7 @@
   "globals": {
     "SpeechSynthesisUtterance",
     "window",
+    "document",
     "FormData": true,
   },
   "rules": {
