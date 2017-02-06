@@ -17,6 +17,7 @@ import {
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
   REFRESH_TO_DEFAULT,
+  TOGGLE_COMPONENT,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -101,6 +102,15 @@ const word = (state = null, action) => {
   }
 };
 
+const newWord = (state = false, action) => {
+  switch (action.type) {
+    case TOGGLE_COMPONENT:
+      return !state;
+    default:
+      return state;
+  }
+};
+
 const errorHandle = (state, action) => {
   switch (action.type) {
     case ERR_FAILED_REQUEST: {
@@ -147,6 +157,7 @@ const reducers = combineReducers({
   word,
   fetcher,
   errorHandle,
+  newWord,
   login,
   editModal,
   routing,

@@ -22,6 +22,7 @@ import {
   UPDATE_WORD_LIST,
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
+  TOGGLE_COMPONENT,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -247,4 +248,28 @@ export const searchWord = (search, list) =>
       dispatch(selectWord(result[0]));
     }
     return dispatch(searchExecute(result));
+  });
+
+export const toggleAddWord = bool => ({ type: TOGGLE_COMPONENT, payload: bool });
+
+export const saveNewWord = info =>
+  ((dispatch) => {
+    fetch('/api/word/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(info),
+    })
+    .then(res => res.json())
+    .then((data) => {
+      const word = data.SUCCESS;
+      dispatch(toggleAddWord(false));
+      dispatch(updateList(word));
+      dispatch(selectWord(word));
+    })
+    .catch((err) => {
+      dispatch(failedRequest(err));
+    });
   });

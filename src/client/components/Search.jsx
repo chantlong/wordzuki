@@ -24,7 +24,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="pa2 bb b--black-10">
+      <div className="dib pa2 flex flex-auto">
         <input
           id="s-icon"
           className="search-icon-input tr collapse pt2 pr3 pb1 ba br4 b--black-10 f6 w-100 outline-0 bg-transparent grow hover-bg-dark-gray hover-white"
