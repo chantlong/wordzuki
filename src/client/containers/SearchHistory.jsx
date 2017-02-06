@@ -3,13 +3,14 @@ import { selectWord, deleteWord, fetchWords } from '../actions/actions';
 import SearchHistory from '../components/SearchHistory';
 
 // const mapStateToProps = ({ words, word }) => ({ words, word });
-const mapStateToProps = ({ words, word }) => {
+const mapStateToProps = ({ words, word, newWord }) => {
   const { list, isFetching, results } = words;
   return {
     word,
     list,
     isFetching,
     results,
+    newWord,
   };
 };
 const mapDispatchToProps = dispatch => ({

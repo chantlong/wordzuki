@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import Word from '../containers/Word';
 import Search from '../containers/Search';
+import AddWordBtn from '../containers/AddWordBtn';
+import CreateWord from '../containers/CreateWord';
 import Preloader from './Preloader';
 // import debounce from 'debounce';
 
@@ -43,7 +45,7 @@ class SearchHistory extends React.Component {
   }
 
   render() {
-    const { list, results, isFetching, onSelect, deleteWord } = this.props;
+    const { list, results, isFetching, onSelect, deleteWord, newWord } = this.props;
     const wordSelectable = (term, i) => {
       const theTerm = term;
       theTerm.index = i;
@@ -63,7 +65,10 @@ class SearchHistory extends React.Component {
           <div
             className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top"
           >
-            <Search />
+            <div className="bb b--black-10 collapse flex items-center">
+              <Search />
+              <AddWordBtn />
+            </div>
             {isFetching && <Preloader />}
             {
               !isFetching && !results && list.length === 0 &&
@@ -103,7 +108,7 @@ class SearchHistory extends React.Component {
               <div className="mt4 f6 f6-ns fw4 tc">該当する単語は見つかりませんでした。</div>
             }
           </div>
-          <Word />
+          { !newWord ? <Word /> : <CreateWord /> }
         </div>
       </div>
 
@@ -118,6 +123,7 @@ SearchHistory.propTypes = {
   results: PropTypes.arrayOf(
     PropTypes.object,
   ),
+  newWord: PropTypes.bool,
   isFetching: PropTypes.bool,
   onSelect: PropTypes.func,
   deleteWord: PropTypes.func,

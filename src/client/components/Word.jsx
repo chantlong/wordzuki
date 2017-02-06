@@ -48,7 +48,7 @@ class Word extends React.Component {
       return null;
     }
     return (
-      <div className="db dib-ns w-100 w-70-m w-60-l border-box mb0-ns mb5">
+      <div className="db dib-ns w-100 w-70-m w-50-l border-box mb0-ns mb5">
         <ul className="list ma0 pl2 pl3-ns pr3 pr5-ns pt2 pt4-ns georgia pl0 pl4-ns vh-100-ns flex flex-column">
           <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
             <a
