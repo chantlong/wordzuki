@@ -6,12 +6,14 @@ class EditModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tags: undefined,
       example: undefined,
       definition: undefined,
     };
     this.loadWord = this.loadWord.bind(this);
     this.handleExample = this.handleExample.bind(this);
     this.handleDefinition = this.handleDefinition.bind(this);
+    this.handleTags = this.handleTags.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
@@ -21,11 +23,16 @@ class EditModal extends React.Component {
     this.setState({
       example: word.ex,
       definition: Array.isArray(word.def) ? word.def.join('||') : '',
+      tags: Array.isArray(word.tags) ? word.tags.join(',') : '',
     });
   }
 
   handleDefinition(e) {
     this.setState({ definition: e.target.value });
+  }
+
+  handleTags(e) {
+    this.setState({ tags: e.target.value });
   }
 
   handleExample(e) {
@@ -37,7 +44,8 @@ class EditModal extends React.Component {
     e.preventDefault();
     const ex = this.state.example;
     const def = this.state.definition === '' ? null : this.state.definition.split('||');
-    addDefinition(word._id, ex, def);
+    const tags = this.state.tags === '' ? null : this.state.tags.split(',');
+    addDefinition(word._id, ex, def, tags);
     this.closeModal();
   }
 
@@ -90,7 +98,12 @@ class EditModal extends React.Component {
             onChange={this.handleDefinition}
             value={this.state.definition === null ? '' : this.state.definition}
           />
-
+          <input
+            className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
+            type="text"
+            onChange={this.handleTags}
+            value={this.state.tags === null ? '' : this.state.tags}
+          />
           <div className="db center">
             <button
               className="mv3 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"

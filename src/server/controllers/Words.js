@@ -32,7 +32,8 @@ module.exports = {
     });
   },
   addWordDefinition: (req, res) => {
-    Word.findOneAndUpdate({ _id: req.params.id }, { ex: req.body.ex, def: req.body.def }, { new: true })
+    console.log('what body', req.body);
+    Word.findOneAndUpdate({ _id: req.params.id }, { ex: req.body.ex, def: req.body.def, tags: req.body.tags }, { new: true })
       .then((word) => {
         res.status(200).json(word);
       })

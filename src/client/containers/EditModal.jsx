@@ -8,8 +8,8 @@ const mapDispatchToProps = dispatch => ({
   toggleEditModal: () => {
     dispatch(toggleEditModal());
   },
-  addDefinition: (id, ex, def) => {
-    dispatch(addDefinition(id, ex, def));
+  addDefinition: (id, ex, def, tags) => {
+    dispatch(addDefinition(id, ex, def, tags));
   },
 });
 

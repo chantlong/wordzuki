@@ -6,7 +6,7 @@
 
 @media (--breakpoint-not-small){
   .word-list-ns {
-    height: calc(100vh - 46px);
+    height: calc(100vh - 79px);
     overflow-x: hidden;
   }
 }

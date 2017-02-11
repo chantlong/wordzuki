@@ -18,11 +18,16 @@ import {
   SEARCH_WORD,
   REFRESH_TO_DEFAULT,
   TOGGLE_COMPONENT,
+  SHOW_FILTER_LIST,
+  HIDE_FILTER_LIST,
+  LOAD_FILTERED_LIST,
+  RECEIVE_FILTERED_WORDS,
 } from '../constants/actionTypes';
 
 const words = (state = {
   isFetching: false,
   list: [],
+  fList: [],
   results: null,
 }, action) => {
   switch (action.type) {
@@ -53,6 +58,10 @@ const words = (state = {
         isFetching: false,
         list: state.list,
         results: action.payload,
+      });
+    case RECEIVE_FILTERED_WORDS:
+      return Object.assign({}, state, {
+        fList: action.payload,
       });
     default:
       return state;
@@ -111,6 +120,26 @@ const newWord = (state = false, action) => {
   }
 };
 
+const filterList = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_FILTER_LIST:
+      return true;
+    case HIDE_FILTER_LIST:
+      return false;
+    default:
+      return false;
+  }
+};
+
+const filterCompleteList = (state = [], action) => {
+  switch (action.type) {
+    case LOAD_FILTERED_LIST:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const errorHandle = (state, action) => {
   switch (action.type) {
     case ERR_FAILED_REQUEST: {
@@ -158,6 +187,8 @@ const reducers = combineReducers({
   fetcher,
   errorHandle,
   newWord,
+  filterList,
+  filterCompleteList,
   login,
   editModal,
   routing,

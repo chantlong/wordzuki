@@ -11,6 +11,7 @@ const WordSchema = new mongoose.Schema({
   sourceTitle: String,
   lang: String,
   author: String,
+  tags: [String],
 },
 { timestamps: true });
 
