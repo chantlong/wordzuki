@@ -21,11 +21,11 @@ class SideMenu extends React.Component {
     return (
       <div className="fw5">
         { !this.state.show ? <a
-          className="near-white link dim overflow-y-auto"
+          className="near-white link dim"
           onClick={this.toggleMenu}
         ><img src={burger} alt="burger" className="absolute right-0 top-0-ns bottom-0 bottom-auto-ns mr3-ns mt3-ns mb3 mr3 br2 wz-icon fixed menu-bg" />
         </a> : null}
-        <nav className={`z-1 absolute right-0 bg-near-white br1 br--left vh-100 h-100 flex flex-column side-menu overflow-y-auto ${this.state.show ? this.state.slide : ''}`}>
+        <nav className={`z-1 absolute right-0 bg-near-white br1 br--left vh-100 h-100 flex flex-column side-menu ${this.state.show ? this.state.slide : ''}`}>
           <a
             className="link dim flex justify-center flex-none-ns justify-end-ns db pa2"
             onClick={this.toggleMenu}

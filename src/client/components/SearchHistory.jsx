@@ -23,6 +23,7 @@ class SearchHistory extends React.Component {
   }
 
   componentDidMount() {
+    // on mobile safari, reshift the page to top after input login
     window.addEventListener('resize', this.selectHeight);
     document.body.scrollTop = 0;
   }
