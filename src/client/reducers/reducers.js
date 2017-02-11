@@ -22,6 +22,7 @@ import {
   HIDE_FILTER_LIST,
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
+  SELECTED_TAGNAME,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -111,6 +112,15 @@ const word = (state = null, action) => {
   }
 };
 
+const currentTag = (state = 'すべて', action) => {
+  switch (action.type) {
+    case SELECTED_TAGNAME:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const newWord = (state = false, action) => {
   switch (action.type) {
     case TOGGLE_COMPONENT:
@@ -188,6 +198,7 @@ const reducers = combineReducers({
   errorHandle,
   newWord,
   filterList,
+  currentTag,
   filterCompleteList,
   login,
   editModal,

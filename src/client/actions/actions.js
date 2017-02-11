@@ -27,6 +27,7 @@ import {
   HIDE_FILTER_LIST,
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
+  SELECTED_TAGNAME,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -318,12 +319,14 @@ export const showFilterList = () => ({ type: SHOW_FILTER_LIST });
 
 export const hideFilterList = () => ({ type: HIDE_FILTER_LIST });
 
+export const selectedTagName = tagname => ({ type: SELECTED_TAGNAME, payload: tagname });
+
 export const selectTag = (tagName, list) => {
   let filteredWords = [];
-  console.log('tagname', tagName);
   if (tagName === 'すべて') {
     filteredWords = filteredWords.concat(list);
     return (dispatch) => {
+      dispatch(selectedTagName(tagName));
       dispatch(hideFilterList);
       dispatch(receiveFilteredWords(filteredWords));
       if (filteredWords.length > 0) {
@@ -344,6 +347,7 @@ export const selectTag = (tagName, list) => {
     }
   });
   return (dispatch) => {
+    dispatch(selectedTagName(tagName));
     dispatch(hideFilterList);
     dispatch(receiveFilteredWords(filteredWords));
     if (filteredWords.length > 0) {

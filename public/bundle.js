@@ -29263,6 +29263,18 @@
 	  }
 	};
 
+	var currentTag = function currentTag() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'すべて';
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actionTypes.SELECTED_TAGNAME:
+	      return action.payload;
+	    default:
+	      return state;
+	  }
+	};
+
 	var newWord = function newWord() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	  var action = arguments[1];
@@ -29359,6 +29371,7 @@
 	  errorHandle: errorHandle,
 	  newWord: newWord,
 	  filterList: filterList,
+	  currentTag: currentTag,
 	  filterCompleteList: filterCompleteList,
 	  login: login,
 	  editModal: editModal,
@@ -29406,6 +29419,7 @@
 	var HIDE_FILTER_LIST = exports.HIDE_FILTER_LIST = 'HIDE_FILTER_LIST';
 	var LOAD_FILTERED_LIST = exports.LOAD_FILTERED_LIST = 'LOAD_FILTERED_LIST';
 	var RECEIVE_FILTERED_WORDS = exports.RECEIVE_FILTERED_WORDS = 'RECEIVE_FILTERED_WORDS';
+	var SELECTED_TAGNAME = exports.SELECTED_TAGNAME = 'SELECTED_TAGNAME';
 
 /***/ },
 /* 282 */
@@ -29488,7 +29502,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.selectTag = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.failedRequest = undefined;
+	exports.selectTag = exports.selectedTagName = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.failedRequest = undefined;
 
 	var _isomorphicFetch = __webpack_require__(285);
 
@@ -29846,12 +29860,16 @@
 	  return { type: _actionTypes.HIDE_FILTER_LIST };
 	};
 
+	var selectedTagName = exports.selectedTagName = function selectedTagName(tagname) {
+	  return { type: _actionTypes.SELECTED_TAGNAME, payload: tagname };
+	};
+
 	var selectTag = exports.selectTag = function selectTag(tagName, list) {
 	  var filteredWords = [];
-	  console.log('tagname', tagName);
 	  if (tagName === 'すべて') {
 	    filteredWords = filteredWords.concat(list);
 	    return function (dispatch) {
+	      dispatch(selectedTagName(tagName));
 	      dispatch(hideFilterList);
 	      dispatch(receiveFilteredWords(filteredWords));
 	      if (filteredWords.length > 0) {
@@ -29872,6 +29890,7 @@
 	    }
 	  });
 	  return function (dispatch) {
+	    dispatch(selectedTagName(tagName));
 	    dispatch(hideFilterList);
 	    dispatch(receiveFilteredWords(filteredWords));
 	    if (filteredWords.length > 0) {
@@ -33962,6 +33981,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var currentTag = _ref.currentTag;
+	  return { currentTag: currentTag };
+	};
+
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    showFilterList: function showFilterList() {
@@ -33970,7 +33994,7 @@
 	  };
 	};
 
-	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(_SortBtn2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_SortBtn2.default);
 
 /***/ },
 /* 322 */
@@ -33993,25 +34017,32 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var SortBtn = function SortBtn(_ref) {
-	  var showFilterList = _ref.showFilterList;
+	  var showFilterList = _ref.showFilterList,
+	      currentTag = _ref.currentTag;
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'dib pa2 pl3 w-100 bb b--black-10' },
+	    { className: 'pa2 pl3 w-100 bb b--black-10' },
 	    _react2.default.createElement(
 	      'a',
 	      {
-	        className: 'flex items-center dim w0 h0',
+	        className: 'dib flex items-center dim w0 h0 mh2',
 	        onClick: function onClick() {
 	          return showFilterList();
 	        }
 	      },
 	      _react2.default.createElement('img', { src: _sort2.default, alt: 'sort word by category' })
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      { className: 'pa0 ma0 f6' },
+	      currentTag
 	    )
 	  );
 	};
 
 	SortBtn.propTypes = {
-	  showFilterList: _react.PropTypes.func
+	  showFilterList: _react.PropTypes.func,
+	  currentTag: _react.PropTypes.string
 	};
 
 	exports.default = SortBtn;
