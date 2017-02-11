@@ -6,6 +6,10 @@
 
 html, body {
   overflow-x: hidden;
+  overflow-y: hidden;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 
 /* LINKS */
@@ -15,6 +19,11 @@ html, body {
 .link:visited {
   color: #555;
   transition: #555 .15s ease-in;
+}
+
+.menu-bg {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px;
 }
 
 /* WIDTHS */

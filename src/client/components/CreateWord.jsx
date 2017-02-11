@@ -55,7 +55,7 @@ class CreateWord extends React.Component {
   render() {
     const { errorHandle } = this.props;
     return (
-      <div className="dib-ns w-100 w-70-m w-70-l mb0-ns mb5 vh-100-ns inline-flex items-center justify-center">
+      <div className="dib-ns w-100 w-70-m w-70-l mb0-ns mb5 vh-100-ns inline-flex items-center justify-center border-box">
         <form
           className="ma0 pa3 georgia f6 dt"
           onSubmit={this.handleSubmit}

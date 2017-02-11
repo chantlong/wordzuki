@@ -47,7 +47,7 @@ render(
         <Route path="/signup" component={SignUp} />
         <Route path="/profile" component={Visualizer} />
         <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
-        <Route path="/kindlevb" component={KVBImport} />
+        <Route path="/kindlevb" component={KVBImport} onEnter={requireAuth} />
       </Route>
       <Route path="/chrome-signin" component={ChromeSignIn} />
     </Router>

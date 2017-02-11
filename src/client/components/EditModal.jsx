@@ -76,7 +76,7 @@ class EditModal extends React.Component {
               <div
                 className="tooltip-content"
               >
-                <p className="tl f7 ma0 pa2">意味が２つ以上あれば &quot;||&quot; でわけてください。
+                <p className="tl f7 ma0 pa2">意味が２つ以上あれば意味ごとに２つの半角のパイプライン（縦線） &quot;||&quot; でわけてください。
                 例：『異常な』|| 普通でない || 規準をはずれた
                 </p>
               </div>
