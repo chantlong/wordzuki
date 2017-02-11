@@ -1,5 +1,4 @@
 const devMode = process.env.NODE_ENV !== 'production';
-
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 

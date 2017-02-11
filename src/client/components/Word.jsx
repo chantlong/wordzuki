@@ -7,9 +7,14 @@ import edit from '../assets/images/edit.png';
 import trash from '../assets/images/trash-can.png';
 import link from '../assets/images/link.png';
 
-const speakIt = (term) => {
+const speakIt = (term, lang) => {
   const synth = window.speechSynthesis;
   const utterThis = new SpeechSynthesisUtterance(term);
+  if (lang === 'ja') {
+    utterThis.lang = 'ja-JP';
+  } else {
+    utterThis.lang = 'en-US';
+  }
   synth.speak(utterThis);
 };
 
@@ -48,66 +53,72 @@ class Word extends React.Component {
       return null;
     }
     return (
-      <div className="db dib-ns w-100 w-70-m w-50-l border-box mb0-ns mb5">
-        <ul className="list ma0 pl2 pl3-ns pr3 pr5-ns pt2 pt4-ns georgia pl0 pl4-ns vh-100-ns flex flex-column">
+      <div className="db dib-ns w-100 w-70-m w-50-l border-box mb0-ns">
+        <ul className="list ma0 pl2 pl3-ns pr2 pr5-ns pt2 pt4-ns georgia pl0 pl4-ns vh-100-ns flex flex-column">
           <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
             <a
               onClick={() => {
-                speakIt(word.word);
+                speakIt(word.word, word.lang);
               }}
-              className="mh1 mh2-ns"
+              className="mh2"
             >
               <img src={voice} alt="speak" className="dib w1 h1 v-mid mr2 dim" />
             </a>
           </li>
           { /* EXAMPLE */ }
-          <li className="ph3 f6 f5-ns fw5 mid-gray pv3 lh-copy">例：{word.ex}
-          </li>
-          <div className="bb b--black-10 db tr pb3">
-            <a
-              onClick={() => {
-                speakIt(word.ex);
-              }}
-            >
-              <img src={voice} alt="speak" className="dib w1 h1 v-mid dim mr2" />
-            </a>
-            { word.source && word.sourceTitle ?
-              <div
-                className="sourcetip"
+          {
+            word.ex ? <li className="ph3 f6 f5-ns fw5 mid-gray pv3 lh-copy">例：{word.ex}
+            </li> : null
+          }
+          {
+          word.ex ?
+            <div className="bb b--black-10 db tr pb3">
+              <a
+                className="mh2"
+                onClick={() => {
+                  speakIt(word.ex, word.lang);
+                }}
               >
-                <img src={link} alt="link" className="dib w1 h1 v-mid dim mh1 mh2-ns" />
+                <img src={voice} alt="speak" className="dib w1 h1 v-mid dim" />
+              </a>
+              { word.source && word.sourceTitle ?
                 <div
-                  className="sourcetip-content"
+                  className="sourcetip"
                 >
-                  <a
-                    href={word.source}
-                    className="f7 i near-white link dim"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >{word.sourceTitle}
-                  </a>
+                  <img src={link} alt="link" className="dib w1 h1 v-mid dim mh2" />
+                  <div
+                    className="sourcetip-content"
+                  >
+                    <a
+                      href={word.source}
+                      className="f7 i near-white link dim"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >{word.sourceTitle}
+                    </a>
+                  </div>
                 </div>
-              </div>
+                :
+                null
+              }
+              { word.author ?
+                <div
+                  className="sourcetip"
+                >
+                  <img src={link} alt="link" className="dib w1 h1 v-mid dim mh2" />
+                  <div
+                    className="sourcetip-content"
+                  >
+                    <p
+                      className="f7 i ma0"
+                    >{word.author}</p>
+                  </div>
+                </div>
               :
               null
             }
-            { word.author ?
-              <div
-                className="sourcetip"
-              >
-                <img src={link} alt="link" className="dib w1 h1 v-mid dim mh1 mh2-ns" />
-                <div
-                  className="sourcetip-content"
-                >
-                  <p
-                    className="f7 i ma0"
-                  >{word.author}</p>
-                </div>
-              </div>
-              :
-              null
-            }
-          </div>
+            </div> : null
+          }
           { /* DEFINITION */ }
           <ol className="pv3 flex flex-column overflow-y-scroll">
             {word.def ? word.def
@@ -115,27 +126,28 @@ class Word extends React.Component {
               (<p className="f6 f5-ns fw3 mid-gray pv2">意味を追加する
                 <a
                   onClick={this.openModal}
-                  className="mh1 mh2-ns"
+                  className="mh2"
                 >
                   <img src={add} alt="add definition" className="dib w1 h1 v-mid mr2 dim" />
                 </a>
               </p>)}
           </ol>
           { /* DELETE WORD */}
-          <div className="db tr mt2 mb4">
+          <div className="db tr mt2">
             <a
+              className="mh2"
               onClick={() => {
                 deleteWord(word._id, list.indexOf(word), list);
               }}
             >
-              <img src={trash} alt="trash" className="dib w1 h1 v-mid mr2 dim" />
+              <img src={trash} alt="trash" className="dib w1 h1 v-mid dim" />
             </a>
             { /* EDIT WORD */ }
             <a
               onClick={() => {
                 this.props.toggleEditModal();
               }}
-              className="mh1 mh2-ns"
+              className="mh2"
             >
               <img src={edit} alt="edit" className="dib w1 h1 v-mid dim" />
             </a>

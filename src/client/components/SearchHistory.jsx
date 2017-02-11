@@ -24,6 +24,7 @@ class SearchHistory extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.selectHeight);
+    document.body.scrollTop = 0;
   }
 
   componentWillUnmount() {
@@ -61,9 +62,9 @@ class SearchHistory extends React.Component {
     };
     return (
       <div className="h-100">
-        <div className="w-100 center h-100">
+        <div className="w-100 center h-100 border-box">
           <div
-            className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top"
+            className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top border-box"
           >
             <div className="bb b--black-10 collapse flex items-center">
               <Search />
