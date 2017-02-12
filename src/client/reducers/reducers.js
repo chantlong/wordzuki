@@ -24,6 +24,7 @@ import {
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
+  UPDATE_TAGS_LIST,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -135,8 +136,6 @@ const newWord = (state = false, action) => {
 
 const filterList = (state = false, action) => {
   switch (action.type) {
-    case SHOW_FILTER_LIST:
-      return true;
     case HIDE_FILTER_LIST:
       return false;
     case TOGGLE_FILTER_LIST:

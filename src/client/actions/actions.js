@@ -29,6 +29,7 @@ import {
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
+  UPDATE_TAGS_LIST,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -42,34 +43,34 @@ export const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
 const loadFilteredList = arr => ({ type: LOAD_FILTERED_LIST, payload: arr });
 
 /* eslint-disable no-param-reassign */
-export const filterWordsByTag = (list) => {
-  const words = list;
-  const tagsList = {};
-  words.reduce((accum, word) => {
-    if (word.author) {
-      const tag = word.author;
-      if (!accum[tag]) {
-        accum[tag] = 1;
-      } else {
-        accum[tag] += 1;
-      }
-    }
-    if (word.tags && word.tags.length > 0) {
-      word.tags.forEach((tag) => {
+export const filterWordsByTag = () =>
+  // const words = list;
+  ((dispatch, getState) => {
+    const { words: { list } } = getState();
+    const tagsList = {};
+    list.reduce((accum, word) => {
+      if (word.author) {
+        const tag = word.author;
         if (!accum[tag]) {
           accum[tag] = 1;
         } else {
           accum[tag] += 1;
         }
-      });
-    }
-    return accum;
-  }, tagsList);
-  const tagsArr = [['すべて', words.length]].concat(Object.entries(tagsList));
-  return (dispatch) => {
+      }
+      if (word.tags && word.tags.length > 0) {
+        word.tags.forEach((tag) => {
+          if (!accum[tag]) {
+            accum[tag] = 1;
+          } else {
+            accum[tag] += 1;
+          }
+        });
+      }
+      return accum;
+    }, tagsList);
+    const tagsArr = [['すべて', list.length]].concat(Object.entries(tagsList));
     dispatch(loadFilteredList(tagsArr));
-  };
-};
+  });
 
 export const selectWord = word => ({ type: SELECT_WORD, payload: word });
 export const fetchWords = () =>
@@ -84,7 +85,7 @@ export const fetchWords = () =>
           dispatch(receiveFilteredWords(words));
           if (words.length > 0) {
             dispatch(selectWord(words[0]));
-            dispatch(filterWordsByTag(words));
+            dispatch(filterWordsByTag());
           }
         })
         .catch(err => dispatch(failedRequest(err)));
@@ -292,6 +293,8 @@ export const searchWord = (search, list) =>
     return dispatch(searchExecute(result));
   });
 
+export const updateTags = tags => ({ type: UPDATE_TAGS_LIST, payload: tags });
+
 export const toggleAddWord = () => ({ type: TOGGLE_COMPONENT });
 
 export const saveNewWord = info =>
@@ -309,6 +312,7 @@ export const saveNewWord = info =>
       const word = data.SUCCESS;
       dispatch(toggleAddWord(false));
       dispatch(updateList(word));
+      dispatch(filterWordsByTag());
       dispatch(selectWord(word));
     })
     .catch((err) => {
