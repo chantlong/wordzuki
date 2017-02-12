@@ -3,6 +3,7 @@ import Word from '../containers/Word';
 import Search from '../containers/Search';
 import AddWordBtn from '../containers/AddWordBtn';
 import SortBtn from '../containers/SortBtn';
+import tagIcon from '../assets/images/tag.png';
 import CreateWord from '../containers/CreateWord';
 import Preloader from './Preloader';
 // import debounce from 'debounce';
@@ -69,9 +70,9 @@ class SearchHistory extends React.Component {
           key={i}
           onClick={() => { selectTag(tagName, list); }}
           className="ph3 pv2 f6 f6-ns fw4 link
-        bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal"
-        >
-          {tagName}
+        bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
+        ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
+          <p className="ma0 pa0 truncate">{tagName}</p>
         </li>
       );
     };
