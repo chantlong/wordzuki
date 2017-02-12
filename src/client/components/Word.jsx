@@ -53,7 +53,7 @@ class Word extends React.Component {
       return null;
     }
     return (
-      <div className="db dib-ns w-100 w-70-m w-50-l border-box mb0-ns mb4">
+      <div className="db dib-ns w-100 w-70-m w-50-l border-box">
         <ul className="list ma0 pl3 pl3-ns pr3 pr5-ns pt2 pt4-ns georgia pl0 pl4-ns vh-100-ns flex flex-column">
           <li className="ph3 pv3 f4 f3-ns fw7 mid-gray bb b--black-10 georgia">{word.word}
             <a
@@ -120,9 +120,9 @@ class Word extends React.Component {
             </div> : null
           }
           { /* DEFINITION */ }
-          <ol className="ml3 pa3 flex flex-column overflow-y-auto">
+          <ol className="ml1 pa3 flex flex-column overflow-y-auto">
             {word.def ? word.def
-              .map((item, i) => (<li key={i} className="f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
+              .map((item, i) => (<li key={i} className="ml3 pl2 f6 f5-ns fw3 mid-gray pv2">{item}</li>)) :
               (<p className="f6 f5-ns fw3 ma0 mid-gray pv2">意味を追加する
                 <a
                   onClick={this.openModal}
@@ -133,7 +133,7 @@ class Word extends React.Component {
               </p>)}
           </ol>
           { /* DELETE WORD */}
-          <div className="db tr mt2">
+          <div className="db tr mt2 mb5 mb4-ns">
             <a
               className="mh2"
               onClick={() => {

@@ -23,13 +23,11 @@ import {
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
   TOGGLE_COMPONENT,
-  SHOW_FILTER_LIST,
   HIDE_FILTER_LIST,
   TOGGLE_FILTER_LIST,
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
-  UPDATE_TAGS_LIST,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
@@ -252,6 +250,7 @@ export const addDefinition = (id, ex = null, def, tags) =>
     .then((word) => {
       dispatch(updateWord(word));
       dispatch(updateList(word));
+      dispatch(filterWordsByTag());
     })
     .catch((err) => {
       dispatch(failedRequest(err));
@@ -292,8 +291,6 @@ export const searchWord = (search, list) =>
     }
     return dispatch(searchExecute(result));
   });
-
-export const updateTags = tags => ({ type: UPDATE_TAGS_LIST, payload: tags });
 
 export const toggleAddWord = () => ({ type: TOGGLE_COMPONENT });
 
