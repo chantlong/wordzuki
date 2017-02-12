@@ -124,7 +124,7 @@ class SearchHistory extends React.Component {
           }
             { /* SHOW FILTER TAG LIST */ }
             {
-              !isFetching && list.length > 0 && filterList && filterCompleteList &&
+              !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 &&
               <ul
                 className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
                 onChange={(e) => {
