@@ -146,10 +146,10 @@ function getWordInfo() {
     .then((values) => {
       const [word, definition, example, info] = values;
       const { source, sourceTitle } = info;
-      // console.log('values', values);
+      console.log('values', values);
       const data = {
         word,
-        definition: JSON.stringify(definition),
+        definition,
         example,
         source,
         sourceTitle,

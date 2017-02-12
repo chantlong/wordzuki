@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import Word from '../containers/Word';
 import Search from '../containers/Search';
 import AddWordBtn from '../containers/AddWordBtn';
+import SortBtn from '../containers/SortBtn';
+import tagIcon from '../assets/images/tag.png';
 import CreateWord from '../containers/CreateWord';
 import Preloader from './Preloader';
 // import debounce from 'debounce';
@@ -23,6 +25,7 @@ class SearchHistory extends React.Component {
   }
 
   componentDidMount() {
+    // on mobile safari, reshift the page to top after input login
     window.addEventListener('resize', this.selectHeight);
     document.body.scrollTop = 0;
   }
@@ -46,7 +49,7 @@ class SearchHistory extends React.Component {
   }
 
   render() {
-    const { list, results, isFetching, onSelect, deleteWord, newWord } = this.props;
+    const { list, results, isFetching, onSelect, deleteWord, newWord, filterList, filterCompleteList, selectTag, fList } = this.props;
     const wordSelectable = (term, i) => {
       const theTerm = term;
       theTerm.index = i;
@@ -60,6 +63,19 @@ class SearchHistory extends React.Component {
         >{theTerm.word}
         </li>);
     };
+    const listSelectable = (item, i) => {
+      const tagName = item[0];
+      return (
+        <li
+          key={i}
+          onClick={() => { selectTag(tagName, list); }}
+          className="ph3 pv2 f6 f6-ns fw4 link
+        bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
+        ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
+          <p className="ma0 pa0 truncate">{tagName}</p>
+        </li>
+      );
+    };
     return (
       <div className="h-100">
         <div className="w-100 center h-100 border-box">
@@ -70,13 +86,15 @@ class SearchHistory extends React.Component {
               <Search />
               <AddWordBtn />
             </div>
+            <SortBtn />
             {isFetching && <Preloader />}
             {
               !isFetching && !results && list.length === 0 &&
               <div className="word-list word-list-ns pt4 f6 f6-ns fw4 tc">単語は保存していません。</div>
             }
+            { /* SHOW FILTERED / NONFILTERED LIST OF WORDS*/ }
             {
-              !isFetching && list.length > 0 &&
+              !isFetching && list.length > 0 && !filterList &&
               <ul
                 className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
                 onChange={(e) => {
@@ -100,10 +118,33 @@ class SearchHistory extends React.Component {
                 {
                 results && results.length > 0 ?
                 results.map(wordSelectable) :
-                list.map(wordSelectable)
+                fList.map(wordSelectable)
               }
               </ul>
           }
+            { /* SHOW FILTER TAG LIST */ }
+            {
+              !isFetching && list.length > 0 && filterList && filterCompleteList &&
+              <ul
+                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
+                onChange={(e) => {
+                  if (e.target.value === null) {
+                    return null;
+                  }
+                  const term = JSON.parse(e.target.value);
+                  return onSelect(term);
+                }}
+                onKeyDown={(e) => {
+                  if (e.target.value === '') {
+                    return null;
+                  }
+                  return null;
+                }}
+              >
+                {filterCompleteList.map(listSelectable)}
+              </ul>
+          }
+            { /* SHOW EMPTY LIST */ }
             {
               !isFetching && results && results.length < 1 && list.length > 0 &&
               <div className="mt4 f6 f6-ns fw4 tc">該当する単語は見つかりませんでした。</div>
@@ -129,6 +170,14 @@ SearchHistory.propTypes = {
   onSelect: PropTypes.func,
   deleteWord: PropTypes.func,
   fetchWords: PropTypes.func,
+  filterList: PropTypes.bool,
+  filterCompleteList: PropTypes.arrayOf(
+    PropTypes.array,
+  ),
+  selectTag: PropTypes.func,
+  fList: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
 };
 
 export default SearchHistory;

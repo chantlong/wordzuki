@@ -23,7 +23,6 @@ import './assets/styles/_app.css';
 
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(thunk)));
-
 const history = syncHistoryWithStore(browserHistory, store);
 
 const requireAuth = (nextState, replace, next) => {

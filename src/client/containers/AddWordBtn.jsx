@@ -4,8 +4,8 @@ import AddWordBtn from '../components/AddWordBtn';
 
 // const mapStateToProps = ({ newWord }) => ({ newWord });
 const mapDispatchToProps = dispatch => ({
-  toggleAddWord: (bool) => {
-    dispatch(toggleAddWord(bool));
+  toggleAddWord: () => {
+    dispatch(toggleAddWord());
   },
 });
 

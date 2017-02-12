@@ -18,11 +18,19 @@ import {
   SEARCH_WORD,
   REFRESH_TO_DEFAULT,
   TOGGLE_COMPONENT,
+  SHOW_FILTER_LIST,
+  HIDE_FILTER_LIST,
+  TOGGLE_FILTER_LIST,
+  LOAD_FILTERED_LIST,
+  RECEIVE_FILTERED_WORDS,
+  SELECTED_TAGNAME,
+  UPDATE_TAGS_LIST,
 } from '../constants/actionTypes';
 
 const words = (state = {
   isFetching: false,
   list: [],
+  fList: [],
   results: null,
 }, action) => {
   switch (action.type) {
@@ -40,12 +48,14 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
+        fList: state.fList.filter(word => (word._id !== action.id)),
         results: !state.results ? null : state.results.filter(word => (word._id !== action.id)),
       });
     case UPDATE_WORD_LIST:
       return Object.assign({}, state, {
         isFetching: false,
         list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
+        fList: [action.payload, ...state.fList.filter(word => (word._id !== action.payload._id))],
         results: !state.results ? null : [action.payload, ...state.results.filter(word => (word._id !== action.payload._id))],
       });
     case SEARCH_WORD:
@@ -53,6 +63,10 @@ const words = (state = {
         isFetching: false,
         list: state.list,
         results: action.payload,
+      });
+    case RECEIVE_FILTERED_WORDS:
+      return Object.assign({}, state, {
+        fList: action.payload,
       });
     default:
       return state;
@@ -102,10 +116,39 @@ const word = (state = null, action) => {
   }
 };
 
+const currentTag = (state = 'すべて', action) => {
+  switch (action.type) {
+    case SELECTED_TAGNAME:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const newWord = (state = false, action) => {
   switch (action.type) {
     case TOGGLE_COMPONENT:
       return !state;
+    default:
+      return state;
+  }
+};
+
+const filterList = (state = false, action) => {
+  switch (action.type) {
+    case HIDE_FILTER_LIST:
+      return false;
+    case TOGGLE_FILTER_LIST:
+      return !state;
+    default:
+      return false;
+  }
+};
+
+const filterCompleteList = (state = [], action) => {
+  switch (action.type) {
+    case LOAD_FILTERED_LIST:
+      return action.payload;
     default:
       return state;
   }
@@ -158,6 +201,9 @@ const reducers = combineReducers({
   fetcher,
   errorHandle,
   newWord,
+  filterList,
+  currentTag,
+  filterCompleteList,
   login,
   editModal,
   routing,

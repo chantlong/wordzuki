@@ -1,16 +1,19 @@
 import { connect } from 'react-redux';
-import { selectWord, deleteWord, fetchWords } from '../actions/actions';
+import { selectWord, deleteWord, fetchWords, selectTag } from '../actions/actions';
 import SearchHistory from '../components/SearchHistory';
 
 // const mapStateToProps = ({ words, word }) => ({ words, word });
-const mapStateToProps = ({ words, word, newWord }) => {
-  const { list, isFetching, results } = words;
+const mapStateToProps = ({ words, word, newWord, filterList, filterCompleteList }) => {
+  const { list, isFetching, results, fList } = words;
   return {
     word,
     list,
+    fList,
     isFetching,
     results,
     newWord,
+    filterList,
+    filterCompleteList,
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -22,6 +25,9 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteWord: (id) => {
     dispatch(deleteWord(id));
+  },
+  selectTag: (tagName, list) => {
+    dispatch(selectTag(tagName, list));
   },
 });
 

@@ -14,6 +14,7 @@ test('setup word', (assert) => {
     userSession = request.agent(app);
     userSession
       .post('/api/auth/sign-up')
+      .set('Accept', 'application/json')
       .send({
         username: 'test@test.com',
         password: 'test123',
@@ -39,10 +40,12 @@ test('fetch a created word', (assert) => {
       userSession
       .get('/api/word')
       .expect(200)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
       .end((err2, res2) => {
         const actual = {
           word: res2.body[0].word,
-          def: res2.body[0].def,
+          def: JSON.parse(res2.body[0].def),
         };
         const expected = {
           word: 'isolate',

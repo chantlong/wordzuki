@@ -23,13 +23,54 @@ import {
   TOGGLE_EDIT_MODAL,
   SEARCH_WORD,
   TOGGLE_COMPONENT,
+  SHOW_FILTER_LIST,
+  HIDE_FILTER_LIST,
+  TOGGLE_FILTER_LIST,
+  LOAD_FILTERED_LIST,
+  RECEIVE_FILTERED_WORDS,
+  SELECTED_TAGNAME,
+  UPDATE_TAGS_LIST,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
 
 const requestWords = () => ({ type: REQUEST_WORDS });
 
+const receiveFilteredWords = words => ({ type: RECEIVE_FILTERED_WORDS, payload: words });
+
 export const receiveWords = words => ({ type: RETRIEVE_WORDS, payload: words });
+
+const loadFilteredList = arr => ({ type: LOAD_FILTERED_LIST, payload: arr });
+
+/* eslint-disable no-param-reassign */
+export const filterWordsByTag = () =>
+  // const words = list;
+  ((dispatch, getState) => {
+    const { words: { list } } = getState();
+    const tagsList = {};
+    list.reduce((accum, word) => {
+      if (word.author) {
+        const tag = word.author;
+        if (!accum[tag]) {
+          accum[tag] = 1;
+        } else {
+          accum[tag] += 1;
+        }
+      }
+      if (word.tags && word.tags.length > 0) {
+        word.tags.forEach((tag) => {
+          if (!accum[tag]) {
+            accum[tag] = 1;
+          } else {
+            accum[tag] += 1;
+          }
+        });
+      }
+      return accum;
+    }, tagsList);
+    const tagsArr = [['すべて', list.length]].concat(Object.entries(tagsList));
+    dispatch(loadFilteredList(tagsArr));
+  });
 
 export const selectWord = word => ({ type: SELECT_WORD, payload: word });
 export const fetchWords = () =>
@@ -41,8 +82,10 @@ export const fetchWords = () =>
         .then(res => res.json())
         .then((words) => {
           dispatch(receiveWords(words));
+          dispatch(receiveFilteredWords(words));
           if (words.length > 0) {
             dispatch(selectWord(words[0]));
+            dispatch(filterWordsByTag());
           }
         })
         .catch(err => dispatch(failedRequest(err)));
@@ -195,7 +238,7 @@ export const KVBDone = () =>
 const updateWord = word => ({ type: UPDATE_WORD, payload: word });
 const updateList = word => ({ type: UPDATE_WORD_LIST, payload: word });
 
-export const addDefinition = (id, ex = null, def) =>
+export const addDefinition = (id, ex = null, def, tags) =>
   ((dispatch) => {
     fetch(`/api/word/${id}`, {
       method: 'PUT',
@@ -203,7 +246,7 @@ export const addDefinition = (id, ex = null, def) =>
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ ex, def }),
+      body: JSON.stringify({ ex, def, tags }),
     })
     .then(res => res.json())
     .then((word) => {
@@ -250,7 +293,9 @@ export const searchWord = (search, list) =>
     return dispatch(searchExecute(result));
   });
 
-export const toggleAddWord = bool => ({ type: TOGGLE_COMPONENT, payload: bool });
+export const updateTags = tags => ({ type: UPDATE_TAGS_LIST, payload: tags });
+
+export const toggleAddWord = () => ({ type: TOGGLE_COMPONENT });
 
 export const saveNewWord = info =>
   ((dispatch) => {
@@ -267,9 +312,51 @@ export const saveNewWord = info =>
       const word = data.SUCCESS;
       dispatch(toggleAddWord(false));
       dispatch(updateList(word));
+      dispatch(filterWordsByTag());
       dispatch(selectWord(word));
     })
     .catch((err) => {
       dispatch(failedRequest(err));
     });
   });
+
+export const showFilterList = () => ({ type: TOGGLE_FILTER_LIST });
+
+export const hideFilterList = () => ({ type: HIDE_FILTER_LIST });
+
+export const selectedTagName = tagname => ({ type: SELECTED_TAGNAME, payload: tagname });
+
+export const selectTag = (tagName, list) => {
+  let filteredWords = [];
+  if (tagName === 'すべて') {
+    filteredWords = filteredWords.concat(list);
+    return (dispatch) => {
+      dispatch(selectedTagName(tagName));
+      dispatch(hideFilterList);
+      dispatch(receiveFilteredWords(filteredWords));
+      if (filteredWords.length > 0) {
+        dispatch(selectWord(filteredWords[0]));
+      }
+    };
+  }
+  list.forEach((word) => {
+    if (word.author) {
+      if (word.author === tagName) {
+        filteredWords.push(word);
+      }
+    }
+    if (word.tags && word.tags.length > 0) {
+      if (word.tags.indexOf(tagName) > -1) {
+        filteredWords.push(word);
+      }
+    }
+  });
+  return (dispatch) => {
+    dispatch(selectedTagName(tagName));
+    dispatch(hideFilterList);
+    dispatch(receiveFilteredWords(filteredWords));
+    if (filteredWords.length > 0) {
+      dispatch(selectWord(filteredWords[0]));
+    }
+  };
+};

@@ -1,4 +1,5 @@
 // background.js
+
 window.wordzuki = {
   enable: false,
   dictLoad: false,
@@ -9,10 +10,18 @@ window.wordzuki = {
 function saveWord({ word, definition, example, source, sourceTitle }) {
   const url = 'http://www.wordzuki.xyz/api/word';
   const testUrl = 'http://localhost:3000/api/word';
-  $.post(url,
-        { word, definition, example, source, sourceTitle },
-        (data2, status2) => { console.log('posted!'); }, 'json')
-  .fail(err => console.log('save error', err));
+  const info = { word, definition, example, source, sourceTitle };
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(info),
+  })
+  .then(res => res.json())
+  .then(data => console.log('ueeaaa', data))
+  .catch(err => console.log('errrr', err));
 }
 
 function enable(tab) {

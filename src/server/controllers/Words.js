@@ -12,27 +12,33 @@ module.exports = {
   },
   saveWord: (req, res) => {
     const word = req.body.word;
-    const lang = word.match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ? 'ja' : 'en';
-    const newWord = new Word({
-      _id: objectid(),
-      userId: req.user._id,
-      word: req.body.word,
-      def: JSON.parse(req.body.definition),
-      ex: req.body.example,
-      source: req.body.source,
-      sourceTitle: req.body.sourceTitle,
-      lang,
-    });
-    newWord.save((err) => {
-      if (err) {
-        res.status(400).json({ ERROR: err });
-      } else {
-        res.status(200).json({ SUCCESS: newWord });
-      }
-    });
+    Word.findOne({ userId: req.user._id, word })
+      .then((exists) => {
+        if (!exists) {
+          const lang = word.match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ? 'ja' : 'en';
+          const newWord = new Word({
+            _id: objectid(),
+            userId: req.user._id,
+            word: req.body.word,
+            def: req.body.definition,
+            ex: req.body.example,
+            source: req.body.source,
+            sourceTitle: req.body.sourceTitle,
+            lang,
+            tags: req.body.tags,
+          });
+          newWord.save((err) => {
+            if (err) {
+              res.status(400).json({ ERROR: err });
+            } else {
+              res.status(200).json({ SUCCESS: newWord });
+            }
+          });
+        }
+      });
   },
   addWordDefinition: (req, res) => {
-    Word.findOneAndUpdate({ _id: req.params.id }, { ex: req.body.ex, def: req.body.def }, { new: true })
+    Word.findOneAndUpdate({ _id: req.params.id }, { ex: req.body.ex, def: req.body.def, tags: req.body.tags }, { new: true })
       .then((word) => {
         res.status(200).json(word);
       })
