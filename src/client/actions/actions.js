@@ -25,6 +25,7 @@ import {
   TOGGLE_COMPONENT,
   SHOW_FILTER_LIST,
   HIDE_FILTER_LIST,
+  TOGGLE_FILTER_LIST,
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
@@ -315,7 +316,7 @@ export const saveNewWord = info =>
     });
   });
 
-export const showFilterList = () => ({ type: SHOW_FILTER_LIST });
+export const showFilterList = () => ({ type: TOGGLE_FILTER_LIST });
 
 export const hideFilterList = () => ({ type: HIDE_FILTER_LIST });
 

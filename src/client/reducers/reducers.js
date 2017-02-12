@@ -20,6 +20,7 @@ import {
   TOGGLE_COMPONENT,
   SHOW_FILTER_LIST,
   HIDE_FILTER_LIST,
+  TOGGLE_FILTER_LIST,
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
@@ -136,6 +137,8 @@ const filterList = (state = false, action) => {
       return true;
     case HIDE_FILTER_LIST:
       return false;
+    case TOGGLE_FILTER_LIST:
+      return !state;
     default:
       return false;
   }
