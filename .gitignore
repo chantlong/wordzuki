@@ -2,6 +2,7 @@ node_modules/
 dump.rdb
 ideas/
 .DS_Store
+.vscode/
 npm-debug.log
 /src/chrome/lib/
 /src/chrome/dict/

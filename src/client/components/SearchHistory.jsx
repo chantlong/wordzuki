@@ -121,11 +121,11 @@ class SearchHistory extends React.Component {
               }
               </ul>
           }
-            { /* SHOW FILTER LIST */ }
+            { /* SHOW FILTER TAG LIST */ }
             {
               !isFetching && list.length > 0 && filterList && filterCompleteList &&
               <ul
-                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
+                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
                 onChange={(e) => {
                   if (e.target.value === null) {
                     return null;

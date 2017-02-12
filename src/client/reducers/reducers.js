@@ -47,12 +47,14 @@ const words = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         list: state.list.filter(word => (word._id !== action.id)),
+        fList: state.fList.filter(word => (word._id !== action.id)),
         results: !state.results ? null : state.results.filter(word => (word._id !== action.id)),
       });
     case UPDATE_WORD_LIST:
       return Object.assign({}, state, {
         isFetching: false,
         list: [action.payload, ...state.list.filter(word => (word._id !== action.payload._id))],
+        fList: [action.payload, ...state.fList.filter(word => (word._id !== action.payload._id))],
         results: !state.results ? null : [action.payload, ...state.results.filter(word => (word._id !== action.payload._id))],
       });
     case SEARCH_WORD:

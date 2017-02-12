@@ -20,11 +20,12 @@ module.exports = {
             _id: objectid(),
             userId: req.user._id,
             word: req.body.word,
-            def: JSON.parse(req.body.definition),
+            def: req.body.definition,
             ex: req.body.example,
             source: req.body.source,
             sourceTitle: req.body.sourceTitle,
             lang,
+            tags: req.body.tags,
           });
           newWord.save((err) => {
             if (err) {

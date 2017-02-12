@@ -7,10 +7,12 @@ class CreateWord extends React.Component {
       word: '',
       ex: '',
       def: '',
+      tag: '',
     };
     this.handleWord = this.handleWord.bind(this);
     this.handleEx = this.handleEx.bind(this);
     this.handleDef = this.handleDef.bind(this);
+    this.handleTag = this.handleTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
     this.checkWordExist = this.checkWordExist.bind(this);
@@ -21,6 +23,8 @@ class CreateWord extends React.Component {
   handleEx(e) { this.setState({ ex: e.target.value }); }
 
   handleDef(e) { this.setState({ def: e.target.value }); }
+
+  handleTag(e) { this.setState({ tag: e.target.value }); }
 
   checkWordExist() {
     const { errorMsg } = this.props;
@@ -41,13 +45,15 @@ class CreateWord extends React.Component {
     e.preventDefault();
     const word = this.state.word === '' ? null : this.state.word;
     const example = this.state.ex === '' ? null : this.state.ex;
-    const definition = this.state.def === '' ? null : JSON.stringify(this.state.def.split('||'));
+    const definition = this.state.def === '' ? null : this.state.def.split('||');
+    const tags = this.state.tag === '' ? null :
+    this.state.tag.split(',');
     Promise.all([
       this.checkWordExist(),
     ]).then(() => {
       const { errorHandle } = this.props;
       if (!errorHandle.message) {
-        saveNewWord({ word, definition, example });
+        saveNewWord({ word, definition, example, tags });
       }
     });
   }
@@ -80,6 +86,13 @@ class CreateWord extends React.Component {
               type="text"
               rows="8"
               onChange={this.handleDef}
+            />
+          </div>
+          <div className="dtr">
+            <input
+              placeholder="「タグ」例：哲学,英語"
+              className="pa2 mv2 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white f6 dtr w-100 border-box"
+              onChange={this.handleTag}
             />
           </div>
           { errorHandle.message ? <div className="f7 pt3 dark-red dtr tc avenir">{errorHandle.message}<span className="f5">&#x1f914;</span></div> : null}

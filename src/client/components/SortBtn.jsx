@@ -7,7 +7,7 @@ const SortBtn = ({ showFilterList, currentTag }) => (
       className="flex items-center dim pointer w-100"
       onClick={() => showFilterList()}
     >
-      <p className="pl1 dib pa0 ma0 f7 truncate w-100 tc">{currentTag}</p>
+      <p className="pl1 dib pa0 ma0 f7 truncate w-100 tl">{currentTag}</p>
       <img className="dib w1 h1 ph2" src={sortIcon} alt="sort word by category" />
     </a>
   </div>

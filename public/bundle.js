@@ -29184,6 +29184,9 @@
 	        list: state.list.filter(function (word) {
 	          return word._id !== action.id;
 	        }),
+	        fList: state.fList.filter(function (word) {
+	          return word._id !== action.id;
+	        }),
 	        results: !state.results ? null : state.results.filter(function (word) {
 	          return word._id !== action.id;
 	        })
@@ -29192,6 +29195,9 @@
 	      return Object.assign({}, state, {
 	        isFetching: false,
 	        list: [action.payload].concat(_toConsumableArray(state.list.filter(function (word) {
+	          return word._id !== action.payload._id;
+	        }))),
+	        fList: [action.payload].concat(_toConsumableArray(state.fList.filter(function (word) {
 	          return word._id !== action.payload._id;
 	        }))),
 	        results: !state.results ? null : [action.payload].concat(_toConsumableArray(state.results.filter(function (word) {
@@ -31684,7 +31690,7 @@
 	            !isFetching && list.length > 0 && filterList && filterCompleteList && _react2.default.createElement(
 	              'ul',
 	              {
-	                className: 'word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10',
+	                className: 'word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto',
 	                onChange: function onChange(e) {
 	                  if (e.target.value === null) {
 	                    return null;
@@ -34034,7 +34040,7 @@
 	      },
 	      _react2.default.createElement(
 	        'p',
-	        { className: 'pl1 dib pa0 ma0 f7 truncate w-100 tc' },
+	        { className: 'pl1 dib pa0 ma0 f7 truncate w-100 tl' },
 	        currentTag
 	      ),
 	      _react2.default.createElement('img', { className: 'dib w1 h1 ph2', src: _sort2.default, alt: 'sort word by category' })
@@ -34131,11 +34137,13 @@
 	    _this.state = {
 	      word: '',
 	      ex: '',
-	      def: ''
+	      def: '',
+	      tag: ''
 	    };
 	    _this.handleWord = _this.handleWord.bind(_this);
 	    _this.handleEx = _this.handleEx.bind(_this);
 	    _this.handleDef = _this.handleDef.bind(_this);
+	    _this.handleTag = _this.handleTag.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.closeWindow = _this.closeWindow.bind(_this);
 	    _this.checkWordExist = _this.checkWordExist.bind(_this);
@@ -34156,6 +34164,11 @@
 	    key: 'handleDef',
 	    value: function handleDef(e) {
 	      this.setState({ def: e.target.value });
+	    }
+	  }, {
+	    key: 'handleTag',
+	    value: function handleTag(e) {
+	      this.setState({ tag: e.target.value });
 	    }
 	  }, {
 	    key: 'checkWordExist',
@@ -34185,12 +34198,13 @@
 	      e.preventDefault();
 	      var word = this.state.word === '' ? null : this.state.word;
 	      var example = this.state.ex === '' ? null : this.state.ex;
-	      var definition = this.state.def === '' ? null : JSON.stringify(this.state.def.split('||'));
+	      var definition = this.state.def === '' ? null : this.state.def.split('||');
+	      var tags = this.state.tag === '' ? null : this.state.tag.split(',');
 	      Promise.all([this.checkWordExist()]).then(function () {
 	        var errorHandle = _this2.props.errorHandle;
 
 	        if (!errorHandle.message) {
-	          saveNewWord({ word: word, definition: definition, example: example });
+	          saveNewWord({ word: word, definition: definition, example: example, tags: tags });
 	        }
 	      });
 	    }
@@ -34229,6 +34243,15 @@
 	              type: 'text',
 	              rows: '8',
 	              onChange: this.handleDef
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'dtr' },
+	            _react2.default.createElement('input', {
+	              placeholder: '\u300C\u30BF\u30B0\u300D\u4F8B\uFF1A\u54F2\u5B66,\u82F1\u8A9E',
+	              className: 'pa2 mv2 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white f6 dtr w-100 border-box',
+	              onChange: this.handleTag
 	            })
 	          ),
 	          errorHandle.message ? _react2.default.createElement(

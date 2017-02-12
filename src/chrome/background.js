@@ -1,4 +1,5 @@
 // background.js
+
 window.wordzuki = {
   enable: false,
   dictLoad: false,
@@ -9,10 +10,18 @@ window.wordzuki = {
 function saveWord({ word, definition, example, source, sourceTitle }) {
   const url = 'http://www.wordzuki.xyz/api/word';
   const testUrl = 'http://localhost:3000/api/word';
-  $.post(testUrl,
-        { word, definition, example, source, sourceTitle },
-        (data2, status2) => { console.log('posted!'); }, 'json')
-  .fail(err => console.log('save error', err));
+  const info = { word, definition, example, source, sourceTitle };
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(info),
+  })
+  .then(res => res.json())
+  .then(data => console.log('ueeaaa', data))
+  .catch(err => console.log('errrr', err));
 }
 
 function enable(tab) {
@@ -73,7 +82,7 @@ function checkAuth(tab) {
   return new Promise((resolve, reject) => {
     const url = 'http://www.wordzuki.xyz/api/auth/is-authorized';
     const testUrl = 'http://localhost:3000/api/auth/is-authorized';
-    $.get(testUrl)
+    $.get(url)
     .then((data) => {
       const user = data.user;
       if (!window.wordzuki.dictLoad) {
@@ -90,7 +99,7 @@ function checkAuth(tab) {
         window.wordzuki.loginAttempt += 1;
         const signInURL = 'http://www.wordzuki.xyz/chrome-signin';
         const testSignInURL = 'http://localhost:3000/chrome-signin';
-        chrome.tabs.create({ url: testSignInURL });
+        chrome.tabs.create({ url: signInURL });
         chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
           chrome.tabs.onRemoved.addListener(checkAuth);
         });
