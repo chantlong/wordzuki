@@ -92,6 +92,8 @@ class CreateWord extends React.Component {
             <input
               placeholder="「タグ」例：哲学,英語"
               className="pa2 mv2 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white f6 dtr w-100 border-box"
+              autoCorrect="off"
+              autoCapitalize="none"
               onChange={this.handleTag}
             />
           </div>

@@ -71,7 +71,7 @@ class SignIn extends React.Component {
             <div className="mt3">
               <input
                 className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
-                type="text"
+                type="email"
                 placeholder="メールアドレス"
                 onChange={this.handleUsername}
               />

@@ -57,8 +57,7 @@ class SearchHistory extends React.Component {
         <li
           key={i}
           onClick={() => { onSelect(theTerm); }}
-          className="pr3 pv2 f6 f6-ns fw4 link
-          bb b--black-10 tr hover-bg-dark-gray hover-white"
+          className="pr3 pv2 f6 f6-ns fw4 link bb b--black-10 tr hover-bg-dark-gray hover-white"
           value={JSON.stringify(theTerm)}
         >{theTerm.word}
         </li>);
@@ -69,8 +68,7 @@ class SearchHistory extends React.Component {
         <li
           key={i}
           onClick={() => { selectTag(tagName, list); }}
-          className="ph3 pv2 f6 f6-ns fw4 link
-        bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
+          className="ph3 pv2 f6 f6-ns fw4 link bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
         ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
           <p className="ma0 pa0 truncate">{tagName}</p>
         </li>
@@ -82,11 +80,17 @@ class SearchHistory extends React.Component {
           <div
             className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top border-box"
           >
-            <div className="bb b--black-10 collapse flex items-center">
-              <Search />
-              <AddWordBtn />
-            </div>
-            <SortBtn />
+            { 
+              !isFetching &&
+              <div>
+                <div className="bb b--black-10 collapse flex items-center">
+                  <Search />
+                  <AddWordBtn />
+                </div>
+                <SortBtn />
+              </div>
+            }
+            
             {isFetching && <Preloader />}
             {
               !isFetching && !results && list.length === 0 &&

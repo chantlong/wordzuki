@@ -101,6 +101,8 @@ class EditModal extends React.Component {
           <input
             className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
+            autoCorrect="off"
+            autoCapitalize="none"
             onChange={this.handleTags}
             value={this.state.tags === null ? '' : this.state.tags}
           />
