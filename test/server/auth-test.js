@@ -21,7 +21,7 @@ test('creating an account', (assert) => {
         throw err;
       }
       const actual = res.body;
-      const expected = 'test@test.com';
+      const expected = 'wordzukitest@wordzukitest.com';
       assert.equal(actual, expected, 'username should be returned from account creation');
       assert.end();
     });
@@ -42,7 +42,7 @@ test('sign in an account with bad credentials', (assert) => {
   request(app)
     .post('/api/auth/sign-in')
     .send({
-      username: 'test@test.com',
+      username: 'wordzukitest@wordzukitest.com',
       password: 'test1234',
     })
     .expect(401)
@@ -59,13 +59,13 @@ test('sign in an account with correct credentials', (assert) => {
   request(app)
     .post('/api/auth/sign-in')
     .send({
-      username: 'test@test.com',
+      username: 'wordzukitest@wordzukitest.com',
       password: 'test123',
     })
     .expect(200)
     .end((err, res) => {
       const actual = res.body;
-      const expected = 'test@test.com';
+      const expected = 'wordzukitest@wordzukitest.com';
       assert.equal(actual, expected, 'username should be returned from signin');
       assert.end();
     });
@@ -89,7 +89,7 @@ test('verify if user is logged when logged in', (assert) => {
   testSession
     .post('/api/auth/sign-in')
     .send({
-      username: 'test@test.com',
+      username: 'wordzukitest@wordzukitest.com',
       password: 'test123',
     })
     .expect('set-cookie', /connect.sid/)
@@ -102,7 +102,7 @@ test('verify if user is logged when logged in', (assert) => {
         .expect(200)
         .end((err2, res2) => {
           const actual = res2.body;
-          const expected = { isLoggedIn: true, user: 'test@test.com' };
+          const expected = { isLoggedIn: true, user: 'wordzukitest@wordzukitest.com' };
           assert.deepEqual(actual, expected, 'should return verified user');
           assert.end(err);
         });

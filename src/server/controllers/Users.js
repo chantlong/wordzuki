@@ -18,8 +18,8 @@ module.exports = {
           if (err2) {
             return res.status(400).json(err2);
           }
-          welcomeMail(req.user.username);
-          return res.status(201).json(req.user.username);
+          res.status(201).json(req.user.username);
+          return welcomeMail(req.user.username);
         });
       });
     })

@@ -47,7 +47,7 @@ class CreateWord extends React.Component {
     const example = this.state.ex === '' ? null : this.state.ex;
     const definition = this.state.def === '' ? null : this.state.def.split('||');
     const tags = this.state.tag === '' ? null :
-    this.state.tag.split(',');
+    this.state.tag.split(',').map(item => item.trim());
     Promise.all([
       this.checkWordExist(),
     ]).then(() => {

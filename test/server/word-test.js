@@ -16,7 +16,7 @@ test('setup word', (assert) => {
       .post('/api/auth/sign-up')
       .set('Accept', 'application/json')
       .send({
-        username: 'test@test.com',
+        username: 'wordzukitest@wordzukitest.com',
         password: 'test123',
       })
       .expect('set-cookie', /connect.sid/)

@@ -44,7 +44,7 @@ class EditModal extends React.Component {
     e.preventDefault();
     const ex = this.state.example;
     const def = this.state.definition === '' ? null : this.state.definition.split('||');
-    const tags = this.state.tags === '' ? null : this.state.tags.split(',');
+    const tags = this.state.tags === '' ? null : this.state.tags.split(',').map(item => item.trim());
     addDefinition(word._id, ex, def, tags);
     this.closeModal();
   }
@@ -98,12 +98,14 @@ class EditModal extends React.Component {
             onChange={this.handleDefinition}
             value={this.state.definition === null ? '' : this.state.definition}
           />
+          <div className="f5 ma0 mt2 pa0">- タグ -</div>
           <input
             className="mv2 ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-moon-gray w6 f6 outline-0 w-90 center"
             type="text"
             autoCorrect="off"
             autoCapitalize="none"
             onChange={this.handleTags}
+            placeholder="「タグ」例：哲学,英語"
             value={this.state.tags === null ? '' : this.state.tags}
           />
           <div className="db center">

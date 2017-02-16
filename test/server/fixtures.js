@@ -3,7 +3,7 @@ import request from 'supertest';
 const createUserSetup = server => (request(server)
   .post('/api/auth/sign-up')
   .send({
-    username: 'test@test.com',
+    username: 'wordzukitest@wordzukitest.com',
     password: 'test123',
   }));
 
