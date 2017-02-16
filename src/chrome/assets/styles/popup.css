@@ -12,10 +12,11 @@
   opacity: 0.95;
 }
 
-.wz-content {
+#wz-popup .wz-content {
   text-align: left;
   text-decoration: none;
   background: #fff5ee;
+  color: black;
   -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
@@ -35,12 +36,12 @@
 }
 
 #wz-popup .wz-content::-webkit-scrollbar {
-    width: 7px;
+  width: 7px;
 
 }
 #wz-popup .wz-content::-webkit-scrollbar-track {
-    background-color: transparent;
-    margin: 40px 0;
+  background-color: transparent;
+  margin: 40px 0;
 }
 
 #wz-popup .wz-content::-webkit-scrollbar-thumb {

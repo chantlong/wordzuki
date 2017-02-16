@@ -80,7 +80,7 @@ class SearchHistory extends React.Component {
           <div
             className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top border-box"
           >
-            { 
+            {
               !isFetching &&
               <div>
                 <div className="bb b--black-10 collapse flex items-center">
@@ -90,7 +90,6 @@ class SearchHistory extends React.Component {
                 <SortBtn />
               </div>
             }
-            
             {isFetching && <Preloader />}
             {
               !isFetching && !results && list.length === 0 &&
