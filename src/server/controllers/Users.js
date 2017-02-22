@@ -52,7 +52,7 @@ module.exports = {
     if (req.user) {
       res.status(200).json({ isLoggedIn: true, user: req.user.username });
     } else {
-      res.status(401).json({ isLoggedIn: false });
+      res.json({ isLoggedIn: false });
     }
   },
   checkAuthorized: (req, res, next) => {

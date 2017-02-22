@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const Users = require('./controllers/Users');
 const Words = require('./controllers/Words');
-const Mail = require('./controllers/Mail');
+// const Mail = require('./controllers/Mail');
 const KVBImporter = require('./controllers/KVBImporter');
 
 const upload = multer({ dest: path.resolve('./src/server/uploads/') });
@@ -28,7 +28,7 @@ router.get('/api/auth/sign-out', Users.signOut);
 router.get('/api/auth/is-authorized', Users.isAuthorized);
 
 // emails
-router.get('/api/testmail', Mail.welcomeMail);
+// router.get('/api/testmail', Mail.welcomeMail);
 
 // home
 router.get('*', (req, res) => {
