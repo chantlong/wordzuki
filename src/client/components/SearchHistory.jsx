@@ -91,18 +91,6 @@ class SearchHistory extends React.Component {
         >{theTerm.word}
         </option>);
     };
-    const chromeListSelectable = (item, i) => {
-      const tagName = item[0];
-      return (
-        <option
-          key={i}
-          onClick={() => { selectTag(tagName, list); }}
-          className="ph3 pv2 f6 f6-ns fw4 link bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
-        ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
-          <p className="ma0 pa0 truncate">{tagName}</p>
-        </option>
-      );
-    };
     const listSelectable = (item, i) => {
       const tagName = item[0];
       return (
@@ -111,7 +99,7 @@ class SearchHistory extends React.Component {
           onClick={() => { selectTag(tagName, list); }}
           className="ph3 pv2 f6 f6-ns fw4 link bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
         ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
-          <p className="ma0 pa0 truncate">{tagName}</p>
+          <p className="ma0 pa0 truncate" title={tagName}>{tagName}</p>
         </li>
       );
     };
@@ -185,7 +173,7 @@ class SearchHistory extends React.Component {
             }
             { /* SHOW FILTER TAG LIST */ }
             {
-              !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 && (browser.name !== 'chrome' ?
+              !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 &&
                 <ul
                   className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
                   onChange={(e) => {
@@ -197,26 +185,7 @@ class SearchHistory extends React.Component {
                   }}
                 >
                   {filterCompleteList.map(listSelectable)}
-                </ul> :
-                <select
-                  className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
-                  onChange={(e) => {
-                    if (e.target.value === null) {
-                      return null;
-                    }
-                    const term = JSON.parse(e.target.value);
-                    return onSelect(term);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.target.value === '') {
-                      return null;
-                    }
-                    return null;
-                  }}
-                  size={this.state.height}
-                >
-                  {filterCompleteList.map(chromeListSelectable)}
-                </select>)
+                </ul>
           }
             { /* SHOW EMPTY LIST */ }
             {

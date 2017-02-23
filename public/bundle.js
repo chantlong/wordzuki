@@ -39651,25 +39651,6 @@
 	          theTerm.word
 	        );
 	      };
-	      var chromeListSelectable = function chromeListSelectable(item, i) {
-	        var tagName = item[0];
-	        return _react2.default.createElement(
-	          'option',
-	          {
-	            key: i,
-	            onClick: function onClick() {
-	              selectTag(tagName, list);
-	            },
-	            className: 'ph3 pv2 f6 f6-ns fw4 link bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center'
-	          },
-	          _react2.default.createElement('img', { className: 'dib w1 h1 pr2', src: _tag2.default, alt: 'tag' }),
-	          _react2.default.createElement(
-	            'p',
-	            { className: 'ma0 pa0 truncate' },
-	            tagName
-	          )
-	        );
-	      };
 	      var listSelectable = function listSelectable(item, i) {
 	        var tagName = item[0];
 	        return _react2.default.createElement(
@@ -39684,7 +39665,7 @@
 	          _react2.default.createElement('img', { className: 'dib w1 h1 pr2', src: _tag2.default, alt: 'tag' }),
 	          _react2.default.createElement(
 	            'p',
-	            { className: 'ma0 pa0 truncate' },
+	            { className: 'ma0 pa0 truncate', title: tagName },
 	            tagName
 	          )
 	        );
@@ -39755,7 +39736,7 @@
 	              },
 	              results && results.length > 0 ? results.map(chromeWordSelectable) : fList.map(chromeWordSelectable)
 	            )),
-	            !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 && (browser.name !== 'chrome' ? _react2.default.createElement(
+	            !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 && _react2.default.createElement(
 	              'ul',
 	              {
 	                className: 'word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto',
@@ -39768,27 +39749,7 @@
 	                }
 	              },
 	              filterCompleteList.map(listSelectable)
-	            ) : _react2.default.createElement(
-	              'select',
-	              {
-	                className: 'word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto',
-	                onChange: function onChange(e) {
-	                  if (e.target.value === null) {
-	                    return null;
-	                  }
-	                  var term = JSON.parse(e.target.value);
-	                  return onSelect(term);
-	                },
-	                onKeyDown: function onKeyDown(e) {
-	                  if (e.target.value === '') {
-	                    return null;
-	                  }
-	                  return null;
-	                },
-	                size: this.state.height
-	              },
-	              filterCompleteList.map(chromeListSelectable)
-	            )),
+	            ),
 	            !isFetching && results && results.length < 1 && list.length > 0 && _react2.default.createElement(
 	              'div',
 	              { className: 'mt4 f6 f6-ns fw4 tc' },
