@@ -134,6 +134,13 @@ export const signUp = (info) => {
         dispatch(failedRequest(user));
       } else {
         dispatch(receiveLogin(user));
+        const mailInfo = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          credentials: 'include',
+          body: `user=${user}`,
+        };
+        fetch('/api/mail/sign-up', mailInfo);
         browserHistory.push('/searchhistory');
       }
     });

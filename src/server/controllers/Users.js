@@ -18,8 +18,7 @@ module.exports = {
           if (err2) {
             return res.status(400).json(err2);
           }
-          res.status(201).json(req.user.username);
-          return welcomeMail(req.user.username);
+          return res.status(201).json(req.user.username);
         });
       });
     })
@@ -52,7 +51,7 @@ module.exports = {
     if (req.user) {
       res.status(200).json({ isLoggedIn: true, user: req.user.username });
     } else {
-      res.json({ isLoggedIn: false });
+      res.status(401).json({ isLoggedIn: false });
     }
   },
   checkAuthorized: (req, res, next) => {
