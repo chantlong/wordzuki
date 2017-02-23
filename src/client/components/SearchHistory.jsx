@@ -18,6 +18,7 @@ class SearchHistory extends React.Component {
       remainHeight: undefined,
     };
     this.selectHeight = this.selectHeight.bind(this);
+    this.keyboardShortcuts = this.keyboardShortcuts.bind(this);
   }
 
   componentWillMount() {
@@ -29,11 +30,25 @@ class SearchHistory extends React.Component {
   componentDidMount() {
     // on mobile safari, reshift the page to top after input login
     window.addEventListener('resize', this.selectHeight);
+    window.addEventListener('keydown', this.keyboardShortcuts);
     document.body.scrollTop = 0;
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.selectHeight);
+    window.removeEventListener('keydown', this.keyboardShortcuts);
+  }
+
+  keyboardShortcuts(e) {
+    const { toggleAddWord, newWord } = this.props;
+    // ESC --> ESCAPE NEW WORD
+    if (e.keyCode === 27 && newWord === true) {
+      toggleAddWord();
+    }
+    // 1 --> NEW WORD
+    if (e.keyCode === 49) {
+      toggleAddWord();
+    }
   }
 
   selectHeight() {
@@ -229,6 +244,7 @@ SearchHistory.propTypes = {
   onSelect: PropTypes.func,
   deleteWord: PropTypes.func,
   fetchWords: PropTypes.func,
+  toggleAddWord: PropTypes.func,
   filterList: PropTypes.bool,
   filterCompleteList: PropTypes.arrayOf(
     PropTypes.array,

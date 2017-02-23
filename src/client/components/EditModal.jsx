@@ -16,6 +16,23 @@ class EditModal extends React.Component {
     this.handleTags = this.handleTags.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener('keypress', this.toggleModal);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.toggleModal);
+  }
+
+  toggleModal(e) {
+    const { toggleEditModal } = this.props;
+    // 2 --> EDIT MODAL
+    if (e.keyCode === 50) {
+      toggleEditModal();
+    }
   }
 
   loadWord() {

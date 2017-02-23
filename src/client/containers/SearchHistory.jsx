@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { selectWord, deleteWord, fetchWords, selectTag } from '../actions/actions';
+import { toggleAddWord, selectWord, deleteWord, fetchWords, selectTag } from '../actions/actions';
 import SearchHistory from '../components/SearchHistory';
 
 // const mapStateToProps = ({ words, word }) => ({ words, word });
@@ -28,6 +28,9 @@ const mapDispatchToProps = dispatch => ({
   },
   selectTag: (tagName, list) => {
     dispatch(selectTag(tagName, list));
+  },
+  toggleAddWord: () => {
+    dispatch(toggleAddWord());
   },
 });
 
