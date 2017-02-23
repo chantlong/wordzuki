@@ -80,8 +80,7 @@ class CreateWord extends React.Component {
           />
           <div className="dtr">
             <textarea
-              placeholder="「意味」意味が２つ以上あれば意味ごとに２つの半角のパイプライン（縦線） &quot;||&quot; でわけてください。
-              例：『異常な』|| 普通でない || 規準をはずれた"
+              placeholder="「意味」意味が２つ以上あれば意味ごとに２つの半角のパイプライン（縦線） &quot;||&quot; でわけてください。例：『異常な』|| 普通でない || 規準をはずれた"
               className="pa2 mv2 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-100 f6 dtr v-mid"
               type="text"
               rows="8"

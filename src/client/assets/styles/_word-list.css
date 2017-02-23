@@ -6,7 +6,7 @@
 
 @media (--breakpoint-not-small){
   .word-list-ns {
-    height: calc(100vh - 79px);
+    height: calc(100vh - 82px);
     overflow-x: hidden;
   }
 }
@@ -18,13 +18,10 @@
 }
 
 
-/*select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+select {
   outline: none;
-  border: 2px inherit #c1c2c3;
-}*/
+  border: inherit;
+}
 
 select:focus {
   outline: none;

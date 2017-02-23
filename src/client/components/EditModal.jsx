@@ -6,9 +6,9 @@ class EditModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: undefined,
-      example: undefined,
-      definition: undefined,
+      tags: '',
+      example: '',
+      definition: '',
     };
     this.loadWord = this.loadWord.bind(this);
     this.handleExample = this.handleExample.bind(this);
@@ -65,7 +65,7 @@ class EditModal extends React.Component {
           onRequestClose={this.closeModal}
           contentLabel="edit word"
         >
-          <p className="f5 f3-ns fw7 center f4 fw5">{word.word}</p>
+          <p className="f5 f3-ns fw7 center f4 fw5 pa3">{word.word}</p>
           <p className="f5 ma0 pa0">- 例 -</p>
           <textarea
             id="ex"
@@ -76,7 +76,7 @@ class EditModal extends React.Component {
             value={this.state.example}
           />
           <div className="">
-            <div className="f5 ma0 mt2 pa0">- 意味 -&nbsp;</div>
+            <div className="f5 ma0 mt2 pa1">- 意味 -&nbsp;</div>
             <div
               className="tooltip"
             >
@@ -96,7 +96,7 @@ class EditModal extends React.Component {
             type="text"
             rows="8"
             onChange={this.handleDefinition}
-            value={this.state.definition === null ? '' : this.state.definition}
+            value={this.state.definition === '' ? '' : this.state.definition}
           />
           <div className="f5 ma0 mt2 pa0">- タグ -</div>
           <input
@@ -106,14 +106,19 @@ class EditModal extends React.Component {
             autoCapitalize="none"
             onChange={this.handleTags}
             placeholder="「タグ」例：哲学,英語"
-            value={this.state.tags === null ? '' : this.state.tags}
+            value={this.state.tags === '' ? '' : this.state.tags}
           />
-          <div className="db center">
+          <div className="center dtr tc avenir">
             <button
               className="mv3 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
               type="submit"
               onClick={this.handleSubmit}
             >変更
+            </button>
+            <button
+              className="mv3 mh2 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+              onClick={this.closeModal}
+            >キャンセル
             </button>
           </div>
         </Modal>

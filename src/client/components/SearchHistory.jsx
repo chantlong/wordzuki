@@ -6,6 +6,8 @@ import SortBtn from '../containers/SortBtn';
 import tagIcon from '../assets/images/tag.png';
 import CreateWord from '../containers/CreateWord';
 import Preloader from './Preloader';
+
+const browser = require('detect-browser');
 // import debounce from 'debounce';
 
 class SearchHistory extends React.Component {
@@ -62,6 +64,30 @@ class SearchHistory extends React.Component {
         >{theTerm.word}
         </li>);
     };
+    const chromeWordSelectable = (term, i) => {
+      const theTerm = term;
+      theTerm.index = i;
+      return (
+        <option
+          key={i}
+          onClick={() => { onSelect(theTerm); }}
+          className="pr3 pv2 f6 f6-ns fw4 link bb b--black-10 tr hover-bg-dark-gray hover-white"
+          value={JSON.stringify(theTerm)}
+        >{theTerm.word}
+        </option>);
+    };
+    const chromeListSelectable = (item, i) => {
+      const tagName = item[0];
+      return (
+        <option
+          key={i}
+          onClick={() => { selectTag(tagName, list); }}
+          className="ph3 pv2 f6 f6-ns fw4 link bb b--black-10 tl hover-bg-dark-gray hover-white w-100 ws-normal flex items-center"
+        ><img className="dib w1 h1 pr2" src={tagIcon} alt="tag" />
+          <p className="ma0 pa0 truncate">{tagName}</p>
+        </option>
+      );
+    };
     const listSelectable = (item, i) => {
       const tagName = item[0];
       return (
@@ -97,55 +123,85 @@ class SearchHistory extends React.Component {
             }
             { /* SHOW FILTERED / NONFILTERED LIST OF WORDS*/ }
             {
-              !isFetching && list.length > 0 && !filterList &&
-              <ul
-                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
-                onChange={(e) => {
-                  if (e.target.value === null) {
-                    return null;
-                  }
-                  const term = JSON.parse(e.target.value);
-                  return onSelect(term);
-                }}
-                onKeyDown={(e) => {
-                  if (e.target.value === '') {
-                    return null;
-                  }
-                  if (e.keyCode === 8) {
+              !isFetching && list.length > 0 && !filterList && (browser.name !== 'chrome' ?
+                <ul
+                  className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
+                  onChange={(e) => {
+                    if (e.target.value === null) {
+                      return null;
+                    }
                     const term = JSON.parse(e.target.value);
-                    deleteWord(term._id);
-                  }
-                  return null;
-                }}
-              >
-                {
-                results && results.length > 0 ?
-                results.map(wordSelectable) :
-                fList.map(wordSelectable)
-              }
-              </ul>
-          }
+                    return onSelect(term);
+                  }}
+                >
+                  {
+                  results && results.length > 0 ?
+                  results.map(wordSelectable) :
+                  fList.map(wordSelectable)
+                }
+                </ul> :
+                <select
+                  className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10"
+                  onChange={(e) => {
+                    if (e.target.value === null) {
+                      return null;
+                    }
+                    const term = JSON.parse(e.target.value);
+                    return onSelect(term);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.target.value === '') {
+                      return null;
+                    }
+                    if (e.keyCode === 8) {
+                      const term = JSON.parse(e.target.value);
+                      deleteWord(term._id);
+                    }
+                    return null;
+                  }}
+                  size={this.state.height}
+                >
+                  {
+                  results && results.length > 0 ?
+                  results.map(chromeWordSelectable) :
+                  fList.map(chromeWordSelectable)
+                }
+                </select>)
+            }
             { /* SHOW FILTER TAG LIST */ }
             {
-              !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 &&
-              <ul
-                className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
-                onChange={(e) => {
-                  if (e.target.value === null) {
+              !isFetching && list.length > 0 && filterList && filterCompleteList.length > 0 && (browser.name !== 'chrome' ?
+                <ul
+                  className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
+                  onChange={(e) => {
+                    if (e.target.value === null) {
+                      return null;
+                    }
+                    const term = JSON.parse(e.target.value);
+                    return onSelect(term);
+                  }}
+                >
+                  {filterCompleteList.map(listSelectable)}
+                </ul> :
+                <select
+                  className="word-list word-list-ns pre list pl0 ma0 justify-right w-100 bb b--black-10 overflow-y-auto"
+                  onChange={(e) => {
+                    if (e.target.value === null) {
+                      return null;
+                    }
+                    const term = JSON.parse(e.target.value);
+                    return onSelect(term);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.target.value === '') {
+                      return null;
+                    }
                     return null;
-                  }
-                  const term = JSON.parse(e.target.value);
-                  return onSelect(term);
-                }}
-                onKeyDown={(e) => {
-                  if (e.target.value === '') {
-                    return null;
-                  }
-                  return null;
-                }}
-              >
-                {filterCompleteList.map(listSelectable)}
-              </ul>
+                  }}
+                  size={this.state.height}
+                >
+                  {filterCompleteList.map(chromeListSelectable)}
+                </select>)
           }
             { /* SHOW EMPTY LIST */ }
             {
