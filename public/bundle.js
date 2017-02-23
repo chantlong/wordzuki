@@ -39910,10 +39910,34 @@
 	    _this.closeModal = _this.closeModal.bind(_this);
 	    _this.handleDefinition = _this.handleDefinition.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.keyboardShortcuts = _this.keyboardShortcuts.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(Word, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      window.addEventListener('keypress', this.keyboardShortcuts);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      window.removeEventListener('keypress', this.keyboardShortcuts);
+	    }
+	  }, {
+	    key: 'keyboardShortcuts',
+	    value: function keyboardShortcuts(e) {
+	      var word = this.props.word;
+
+	      console.log('the key code', e.keyCode);
+	      if (e.keyCode === 91) {
+	        speakIt(word.word, word.lang);
+	      }
+	      if (e.keyCode === 93) {
+	        speakIt(word.ex, word.lang);
+	      }
+	    }
+	  }, {
 	    key: 'handleDefinition',
 	    value: function handleDefinition(e) {
 	      this.setState({ definition: e.target.value });

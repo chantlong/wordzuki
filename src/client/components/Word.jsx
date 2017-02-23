@@ -29,6 +29,26 @@ class Word extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleDefinition = this.handleDefinition.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.keyboardShortcuts = this.keyboardShortcuts.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('keypress', this.keyboardShortcuts);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.keyboardShortcuts);
+  }
+
+  keyboardShortcuts(e) {
+    const { word } = this.props;
+    console.log('the key code', e.keyCode)
+    if (e.keyCode === 91) {
+      speakIt(word.word, word.lang);
+    }
+    if (e.keyCode === 93) {
+      speakIt(word.ex, word.lang);
+    }
   }
 
   handleDefinition(e) {
