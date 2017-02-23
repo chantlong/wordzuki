@@ -67,7 +67,7 @@ class SignIn extends React.Component {
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
-            <p className="center f4 fw5 pb3 bb w-75 b--light-silver">ログイン</p>
+            <p className="center f4 fw5 pa3 ma3 bb w-75 b--light-silver">ログイン</p>
             <div className="mt3">
               <input
                 className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"

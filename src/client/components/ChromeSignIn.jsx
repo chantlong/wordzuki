@@ -45,7 +45,7 @@ class ChromeSignIn extends React.Component {
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
-            <p className="center f4 fw5 pb3 bb w-75 b--light-silver">ログイン</p>
+            <p className="center f4 fw5 pa3 ma3 bb w-75 b--light-silver">ログイン</p>
             <div className="mt3">
               <input
                 className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
@@ -67,10 +67,10 @@ class ChromeSignIn extends React.Component {
                 className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
                 type="submit"
               >ログイン</button>
-              <div className="w-75 db center mv3">
-                <span><hr className="w-36 dib v-mid" /></span>
-                <span className="f6 dib ph2">または</span>
-                <span><hr className="w-36 dib v-mid" /></span>
+              <div className="w-75 db center mv3 flex justify-between">
+                <span className="w-100 bb b--light-silver mb2" />
+                <span className="f6 dib mt1 ph2 w-50">または</span>
+                <span className="w-100 bb b--light-silver mb2" />
               </div>
               <a
                 className="fw-4 f6 db link dim black-60 underline"
