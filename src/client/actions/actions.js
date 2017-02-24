@@ -276,7 +276,6 @@ export const searchWord = (search, list) =>
       dispatch(receiveWords(list));
       return dispatch(searchExecute(null));
     }
-    dispatch(requestWords());
     const options = {
       shouldSort: true,
       tokenize: true,

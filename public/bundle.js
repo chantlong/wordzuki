@@ -37801,7 +37801,6 @@
 	      dispatch(receiveWords(list));
 	      return dispatch(searchExecute(null));
 	    }
-	    dispatch(requestWords());
 	    var options = {
 	      shouldSort: true,
 	      tokenize: true,
