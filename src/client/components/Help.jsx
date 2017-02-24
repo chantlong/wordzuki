@@ -2,17 +2,17 @@ import React from 'react';
 
 const Help = () => (
   <div className="w-100 h-100 mid-gray">
-    <nav className="dib w-100 w-30-m w-20-l v-top border-box bg-near-white vh-100-ns h-30">
+    <nav className="dib w-100 w-30-m w-20-l v-top border-box bg-near-white h-100-ns h-auto fixed-ns">
       <ul className="list ma3 ma4-ns ph2 tr fw3 f6 pointer">
         <li className="mv3 fw5 red">ヘルプ</li>
         <li className="pv2">
-          <a className="link hover-red">キーボード ショートカット</a>
+          <a className="link hover-red" href="#keyboardshortcuts">キーボード ショートカット</a>
         </li>
       </ul>
     </nav>
-    <div className="dib w-100 w-70-m w-50-l border-box pa5-ns pa3">
-      <section>
-        <p className="f4 fw3 ma0 pl3 pb3 mb4 bb b--light-silver">キーボード ショートカット</p>
+    <div className="w-100 w-70-m w-50-l border-box pa5-ns pa3 h-100-ns h-auto center relative-ns db">
+      <section className="border-box" id="keyboardshortcuts">
+        <p className="f4 fw5 ma0 pl3 pb3 mb4 bb b--light-silver">キーボード ショートカット</p>
         <table className="w-100">
           <tbody className="f6 fw4">
             <tr>
@@ -20,7 +20,7 @@ const Help = () => (
               <th className="ba b--black-10 pa3 tl f5 fw5 bg-near-white">操作</th>
             </tr>
             <tr>
-              <td className="ba b--black-10 pa3">Option + `</td>
+              <td className="ba b--black-10 pa3">Option +  &nbsp;&nbsp;`</td>
               <td className="ba b--black-10 pa3">検索</td>
             </tr>
             <tr>

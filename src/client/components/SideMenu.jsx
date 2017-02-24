@@ -34,12 +34,12 @@ class SideMenu extends React.Component {
           </a>
           {!login.isAuth ? (
             <ul className="list ma0 ml2-ns pa4 flex flex-column justify-center items-center">
-              <li className="db pa2 ml4-ns"><Link onClick={this.toggleMenu} to="/signin" className="link f6 dim underline-hover">ログイン</Link></li>
+              <li className="db pa2 ml4-ns"><Link onClick={this.toggleMenu} to="/signin" className="link f6">ログイン</Link></li>
               <li className="db pa2 ml4-ns">
                 <Link
                   to="/signup"
                   onClick={this.toggleMenu}
-                  className="link f6 dim underline-hover"
+                  className="link f6"
                 >新規登録
               </Link>
               </li>
@@ -49,7 +49,7 @@ class SideMenu extends React.Component {
               <Link
                 to="/searchhistory"
                 onClick={this.toggleMenu}
-                className="link f6 dim underline-hover"
+                className="link f6"
               >
               単語リスト
               </Link>
@@ -58,7 +58,7 @@ class SideMenu extends React.Component {
               <Link
                 to="/profile"
                 onClick={this.toggleMenu}
-                className="link f6 dim underline-hover"
+                className="link f6"
               >
               プロファイル
               </Link>
@@ -67,7 +67,7 @@ class SideMenu extends React.Component {
               <Link
                 to="/kindlevb"
                 onClick={this.toggleMenu}
-                className="link f6 dim underline-hover"
+                className="link f6"
               >
               Kindle単語帳
               </Link>
@@ -76,7 +76,7 @@ class SideMenu extends React.Component {
               <Link
                 to="/help"
                 onClick={this.toggleMenu}
-                className="link f6 dim underline-hover"
+                className="link f6"
               >
               ヘルプ
               </Link>
@@ -87,7 +87,7 @@ class SideMenu extends React.Component {
               <a
                 href="/api/auth/sign-out"
                 onClick={() => signOut}
-                className="link f6 dim underline-hover"
+                className="link f6"
               >ログアウト
               </a>
             </li>
