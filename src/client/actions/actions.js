@@ -271,6 +271,7 @@ const searchExecute = search => ({ type: SEARCH_WORD, payload: search });
 export const searchWord = (search, list) =>
 
   ((dispatch) => {
+    console.log('that search', search);
     if (!search.length) {
       dispatch(receiveWords(list));
       return dispatch(searchExecute(null));

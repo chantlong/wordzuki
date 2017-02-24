@@ -5,8 +5,8 @@ import question from '../assets/images/question.png';
 const styles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  }
-}
+  },
+};
 
 class EditModal extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class EditModal extends React.Component {
       tags: '',
       example: '',
       definition: '',
+      map: [],
     };
     this.loadWord = this.loadWord.bind(this);
     this.handleExample = this.handleExample.bind(this);
@@ -23,22 +24,30 @@ class EditModal extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.keyboardReset = this.keyboardReset.bind(this);
   }
 
   componentWillMount() {
-    window.addEventListener('keypress', this.toggleModal);
+    window.addEventListener('keydown', this.toggleModal);
+    window.addEventListener('keyup', this.keyboardReset);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keypress', this.toggleModal);
+    window.removeEventListener('keydown', this.toggleModal);
+    window.removeEventListener('keyup', this.keyboardReset);
   }
+
+  keyboardReset() { this.setState({ map: [] }); }
 
   toggleModal(e) {
     const { toggleEditModal } = this.props;
-    // 2 --> EDIT MODAL
-    if (e.keyCode === 50) {
-      toggleEditModal();
-    }
+    const theKey = e.keyCode;
+    this.setState({ map: this.state.map.concat(theKey) }, () => {
+      // OPTION + 2 --> EDIT MODAL
+      if (this.state.map.toString() === [18, 50].toString()) {
+        toggleEditModal();
+      }
+    });
   }
 
   loadWord() {

@@ -16,9 +16,11 @@ class SearchHistory extends React.Component {
     this.state = {
       height: undefined,
       remainHeight: undefined,
+      map: [],
     };
     this.selectHeight = this.selectHeight.bind(this);
     this.keyboardShortcuts = this.keyboardShortcuts.bind(this);
+    this.keyboardReset = this.keyboardReset.bind(this);
   }
 
   componentWillMount() {
@@ -30,27 +32,34 @@ class SearchHistory extends React.Component {
   componentDidMount() {
     // on mobile safari, reshift the page to top after input login
     window.addEventListener('resize', this.selectHeight);
+    window.addEventListener('keyup', this.keyboardReset);
     window.addEventListener('keydown', this.keyboardShortcuts);
     document.body.scrollTop = 0;
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.selectHeight);
+    window.removeEventListener('keyup', this.keyboardReset);
     window.removeEventListener('keydown', this.keyboardShortcuts);
   }
 
+  keyboardReset() { this.setState({ map: [] }); }
+
   keyboardShortcuts(e) {
     const { toggleAddWord, newWord } = this.props;
-    // if (e.keyCode === 192) {
-    //   console.log(document.getElementById('s-icon'));
-    //   // setTimeout(function() { document.getElementById('s-icon').focus(); }, 20);
-    // }
+    const theKey = e.keyCode;
+    this.setState({ map: this.state.map.concat(theKey) }, () => {
+      // OPTION + 1 --> NEW WORD
+      if (this.state.map.toString() === [18, 49].toString()) {
+        toggleAddWord();
+      }
+      // OPTION + ` --> SEARCH
+      if (this.state.map.toString() === [18, 192].toString()) {
+        setTimeout(() => { document.getElementById('s-icon').focus(); }, 100);
+      }
+    });
     // ESC --> ESCAPE NEW WORD
     if (e.keyCode === 27 && newWord === true) {
-      toggleAddWord();
-    }
-    // 1 --> NEW WORD
-    if (e.keyCode === 49) {
       toggleAddWord();
     }
   }

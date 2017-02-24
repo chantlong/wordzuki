@@ -20,11 +20,15 @@ const Help = () => (
               <th className="ba b--black-10 pa3 tl f5 fw5 bg-near-white">操作</th>
             </tr>
             <tr>
-              <td className="ba b--black-10 pa3">0</td>
+              <td className="ba b--black-10 pa3">Option + `</td>
+              <td className="ba b--black-10 pa3">検索</td>
+            </tr>
+            <tr>
+              <td className="ba b--black-10 pa3">Option + 0</td>
               <td className="ba b--black-10 pa3">新規単語を作成</td>
             </tr>
             <tr>
-              <td className="ba b--black-10 pa3">1</td>
+              <td className="ba b--black-10 pa3">Option + 1</td>
               <td className="ba b--black-10 pa3">単語を編集する</td>
             </tr>
             <tr>

@@ -37796,6 +37796,7 @@
 
 	var searchWord = exports.searchWord = function searchWord(search, list) {
 	  return function (dispatch) {
+	    console.log('that search', search);
 	    if (!search.length) {
 	      dispatch(receiveWords(list));
 	      return dispatch(searchExecute(null));
@@ -39563,10 +39564,12 @@
 
 	    _this.state = {
 	      height: undefined,
-	      remainHeight: undefined
+	      remainHeight: undefined,
+	      map: []
 	    };
 	    _this.selectHeight = _this.selectHeight.bind(_this);
 	    _this.keyboardShortcuts = _this.keyboardShortcuts.bind(_this);
+	    _this.keyboardReset = _this.keyboardReset.bind(_this);
 	    return _this;
 	  }
 
@@ -39583,6 +39586,7 @@
 	    value: function componentDidMount() {
 	      // on mobile safari, reshift the page to top after input login
 	      window.addEventListener('resize', this.selectHeight);
+	      window.addEventListener('keyup', this.keyboardReset);
 	      window.addEventListener('keydown', this.keyboardShortcuts);
 	      document.body.scrollTop = 0;
 	    }
@@ -39590,25 +39594,38 @@
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      window.removeEventListener('resize', this.selectHeight);
+	      window.removeEventListener('keyup', this.keyboardReset);
 	      window.removeEventListener('keydown', this.keyboardShortcuts);
+	    }
+	  }, {
+	    key: 'keyboardReset',
+	    value: function keyboardReset() {
+	      this.setState({ map: [] });
 	    }
 	  }, {
 	    key: 'keyboardShortcuts',
 	    value: function keyboardShortcuts(e) {
+	      var _this2 = this;
+
 	      var _props = this.props,
 	          toggleAddWord = _props.toggleAddWord,
 	          newWord = _props.newWord;
-	      // if (e.keyCode === 192) {
-	      //   console.log(document.getElementById('s-icon'));
-	      //   // setTimeout(function() { document.getElementById('s-icon').focus(); }, 20);
-	      // }
-	      // ESC --> ESCAPE NEW WORD
 
+	      var theKey = e.keyCode;
+	      this.setState({ map: this.state.map.concat(theKey) }, function () {
+	        // OPTION + 1 --> NEW WORD
+	        if (_this2.state.map.toString() === [18, 49].toString()) {
+	          toggleAddWord();
+	        }
+	        // OPTION + ` --> SEARCH
+	        if (_this2.state.map.toString() === [18, 192].toString()) {
+	          setTimeout(function () {
+	            document.getElementById('s-icon').focus();
+	          }, 100);
+	        }
+	      });
+	      // ESC --> ESCAPE NEW WORD
 	      if (e.keyCode === 27 && newWord === true) {
-	        toggleAddWord();
-	      }
-	      // 1 --> NEW WORD
-	      if (e.keyCode === 49) {
 	        toggleAddWord();
 	      }
 	    }
@@ -41583,7 +41600,8 @@
 	    _this.state = {
 	      tags: '',
 	      example: '',
-	      definition: ''
+	      definition: '',
+	      map: []
 	    };
 	    _this.loadWord = _this.loadWord.bind(_this);
 	    _this.handleExample = _this.handleExample.bind(_this);
@@ -41592,28 +41610,41 @@
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.closeModal = _this.closeModal.bind(_this);
 	    _this.toggleModal = _this.toggleModal.bind(_this);
+	    _this.keyboardReset = _this.keyboardReset.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(EditModal, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      window.addEventListener('keypress', this.toggleModal);
+	      window.addEventListener('keydown', this.toggleModal);
+	      window.addEventListener('keyup', this.keyboardReset);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      window.removeEventListener('keypress', this.toggleModal);
+	      window.removeEventListener('keydown', this.toggleModal);
+	      window.removeEventListener('keyup', this.keyboardReset);
+	    }
+	  }, {
+	    key: 'keyboardReset',
+	    value: function keyboardReset() {
+	      this.setState({ map: [] });
 	    }
 	  }, {
 	    key: 'toggleModal',
 	    value: function toggleModal(e) {
-	      var toggleEditModal = this.props.toggleEditModal;
-	      // 2 --> EDIT MODAL
+	      var _this2 = this;
 
-	      if (e.keyCode === 50) {
-	        toggleEditModal();
-	      }
+	      var toggleEditModal = this.props.toggleEditModal;
+
+	      var theKey = e.keyCode;
+	      this.setState({ map: this.state.map.concat(theKey) }, function () {
+	        // OPTION + 2 --> EDIT MODAL
+	        if (_this2.state.map.toString() === [18, 50].toString()) {
+	          toggleEditModal();
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'loadWord',
@@ -43945,7 +43976,21 @@
 	              _react2.default.createElement(
 	                "td",
 	                { className: "ba b--black-10 pa3" },
-	                "0"
+	                "Option + `"
+	              ),
+	              _react2.default.createElement(
+	                "td",
+	                { className: "ba b--black-10 pa3" },
+	                "\u691C\u7D22"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "tr",
+	              null,
+	              _react2.default.createElement(
+	                "td",
+	                { className: "ba b--black-10 pa3" },
+	                "Option + 0"
 	              ),
 	              _react2.default.createElement(
 	                "td",
@@ -43959,7 +44004,7 @@
 	              _react2.default.createElement(
 	                "td",
 	                { className: "ba b--black-10 pa3" },
-	                "1"
+	                "Option + 1"
 	              ),
 	              _react2.default.createElement(
 	                "td",
