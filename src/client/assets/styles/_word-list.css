@@ -20,7 +20,7 @@
 
 select {
   outline: none;
-  border: inherit;
+  border: none;
 }
 
 select:focus {

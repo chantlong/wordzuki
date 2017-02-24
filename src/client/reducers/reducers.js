@@ -23,6 +23,7 @@ import {
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
+  SEARCH_INPUT,
 } from '../constants/actionTypes';
 
 const words = (state = {

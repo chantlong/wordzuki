@@ -42,7 +42,6 @@ class Word extends React.Component {
 
   keyboardShortcuts(e) {
     const { word } = this.props;
-    console.log('the key code', e.keyCode)
     if (e.keyCode === 91) {
       speakIt(word.word, word.lang);
     }

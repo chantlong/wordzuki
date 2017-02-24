@@ -2,6 +2,12 @@ import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
 import question from '../assets/images/question.png';
 
+const styles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+  }
+}
+
 class EditModal extends React.Component {
   constructor(props) {
     super(props);
@@ -76,13 +82,14 @@ class EditModal extends React.Component {
     return (
       <div>
         <Modal
-          className="modal modal-ns mid-gray georgia w-90 w-40-m w-30-l center ba br2 b--black-50 pa2 tc ma4 bg-white"
+          className="modal modal-ns mid-gray georgia w-90 w-40-m w-30-l center br2 pa2 tc ma4 bg-near-white"
           isOpen={editModal}
           onAfterOpen={this.loadWord}
           onRequestClose={this.closeModal}
           contentLabel="edit word"
+          style={styles}
         >
-          <p className="f5 f3-ns fw7 center f4 fw5 pa3">{word.word}</p>
+          <p className="f5 f3-ns fw7 center f4 fw5">{word.word}</p>
           <p className="f5 ma0 pa0">- 例 -</p>
           <textarea
             id="ex"

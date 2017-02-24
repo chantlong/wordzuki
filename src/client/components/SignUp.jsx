@@ -100,7 +100,7 @@ class SignUp extends React.Component {
             <p className="center pa3 ma3 f4 fw5 bb w-75 b--light-silver">アカウントの作成</p>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="email"
                 placeholder="メールアドレス"
                 onChange={this.handleUsername}
@@ -108,7 +108,7 @@ class SignUp extends React.Component {
             </div>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="password"
                 placeholder="パスワードを作成"
                 onChange={this.handlePassword}
@@ -116,7 +116,7 @@ class SignUp extends React.Component {
             </div>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="password"
                 placeholder="パスワードの再入力"
                 onChange={this.handleConfirmPassword}
@@ -125,7 +125,7 @@ class SignUp extends React.Component {
             </div>
             <div className="mt3">
               <button
-                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0"
                 type="submit"
               >アカウントを作成</button>
             </div>

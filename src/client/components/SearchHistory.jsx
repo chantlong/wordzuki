@@ -41,6 +41,10 @@ class SearchHistory extends React.Component {
 
   keyboardShortcuts(e) {
     const { toggleAddWord, newWord } = this.props;
+    // if (e.keyCode === 192) {
+    //   console.log(document.getElementById('s-icon'));
+    //   // setTimeout(function() { document.getElementById('s-icon').focus(); }, 20);
+    // }
     // ESC --> ESCAPE NEW WORD
     if (e.keyCode === 27 && newWord === true) {
       toggleAddWord();
@@ -107,7 +111,7 @@ class SearchHistory extends React.Component {
       <div className="h-100">
         <div className="w-100 center h-100 border-box">
           <div
-            className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top border-box"
+            className="db dib-ns w-100 w-30-m w-20-l br b--black-10 v-top border-box collapse"
           >
             {
               !isFetching &&

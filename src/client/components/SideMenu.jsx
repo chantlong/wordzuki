@@ -72,6 +72,15 @@ class SideMenu extends React.Component {
               Kindle単語帳
               </Link>
             </li>
+            <li className="db pa2">
+              <Link
+                to="/help"
+                onClick={this.toggleMenu}
+                className="link f6 dim underline-hover"
+              >
+              ヘルプ
+              </Link>
+            </li>
             <li className="flex-auto" />
             <li className="db pa2 f6 mid-gray" >{login.user}</li>
             <li className="db pa2">

@@ -11,6 +11,10 @@ html, body {
   padding: 0px;
 }
 
+.jfont {
+  font-family: "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
 /* LINKS */
 .link {
   color: #555;

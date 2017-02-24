@@ -46,10 +46,10 @@ class KVBImport extends React.Component {
           <section className="pa2 f6 tc">
             <h1 className="measure center f4 fw3 pb3 bb b--light-silver">Kindle単語帳の導入</h1>
             <p className="pa2">Kindleで調べた単語をwordzukiに導入する。</p>
-            <h2 className="f5 fw5">＜説明＞</h2>
+            <h2 className="f5 fw5 pv2">＜説明＞</h2>
             <ul className="list">
-              <li className="pv1">1. Kindleの端末をパソコンに接続する。</li>
-              <li className="pv1">2. &#39;Kindle\system\vocabulary&#39; のフォルダーを開く。</li>
+              <li className="pv2">1. Kindleの端末をパソコンに接続する。</li>
+              <li className="pv2">2. &#39;Kindle\system\vocabulary&#39; のフォルダーを開く。</li>
               <p className="f6">＊これは隠れフォルダーなので、表示させる必要がある。</p>
               <li>3. &#39;vocab.db&#39;をこちらにアップしてください。</li>
             </ul>
@@ -77,19 +77,19 @@ class KVBImport extends React.Component {
             { message && message.ERROR ? <div className="f7 pt3 dark-red">{message.ERROR}</div> : null}
           </form>
           <section className="pa2 f6 tc">
-            <h2 className="f5 fw5">＜Macで隠れフォルダーを表示する方法＞</h2>
+            <h2 className="f5 fw5 pv2">＜Macで隠れフォルダーを表示する方法＞</h2>
             <ul className="list mb4">
-              <li className="pv1">ターミナルを開き、下記の二行を別々に入力する。</li>
-              <li className="pv1">defaults write com.apple.finder AppleShowAllFiles YES</li>
-              <li className="pv1">killall Finder</li>
-              <li className="pv1">これではMacの隠れフォルダーがすべて表示される。</li>
+              <li className="pv2">ターミナルを開き、下記の二行を別々に入力する。</li>
+              <li className="pv2">defaults write com.apple.finder AppleShowAllFiles YES</li>
+              <li className="pv2">killall Finder</li>
+              <li className="pv2">これではMacの隠れフォルダーがすべて表示される。</li>
               <br />
-              <li className="pv1">非表示にするには、下記の二行を別々に入力する。</li>
-              <li className="pv1">defaults write com.apple.finder AppleShowAllFiles NO</li>
-              <li className="pv1">killall Finder</li>
+              <li className="pv2">非表示にするには、下記の二行を別々に入力する。</li>
+              <li className="pv2">defaults write com.apple.finder AppleShowAllFiles NO</li>
+              <li className="pv2">killall Finder</li>
             </ul>
-            <h2 className="f5 fw5">＜Windowsの場合＞</h2>
-            <span className="pv1"><a
+            <h2 className="f5 fw5 pv2">＜Windowsの場合＞</h2>
+            <span className="pv2"><a
               href="https://helpx.adobe.com/jp/x-productkb/global/cpsid_87117.html"
               className="near-black dim"
               target="_blank"

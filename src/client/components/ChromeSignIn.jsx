@@ -35,20 +35,20 @@ class ChromeSignIn extends React.Component {
     }
     if (!login.isAuth) {
       return (
-        <div className="avenir pa3 bg-near-white tc vh-100">
+        <div className="avenir pa3 tc vh-100">
           <a href="/" className="near-black v-mid link dim tracked f5 fw4">
             <img src={logo} alt="wordzuki" className="w2 h2 v-mid mr1 mr2-ns" />
             <span className="dn dib-ns fw5">wordzuki</span>
           </a>
           <form
-            className="measure-narrow center ba br2 b--black-50 pa2 pb4 tc ma4 bg-white"
+            className="measure-narrow center ba br2 b--black-50 bg-near-white pa2 pb4 tc ma4"
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
             <p className="center f4 fw5 pa3 ma3 bb w-75 b--light-silver">ログイン</p>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="email"
                 placeholder="メールアドレス"
                 onChange={this.handleUsername}
@@ -56,7 +56,7 @@ class ChromeSignIn extends React.Component {
             </div>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="password"
                 placeholder="パスワード"
                 onChange={this.handlePassword}
@@ -64,7 +64,7 @@ class ChromeSignIn extends React.Component {
             </div>
             <div className="mt3">
               <button
-                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0"
                 type="submit"
               >ログイン</button>
               <div className="w-75 db center mv3 flex justify-between">

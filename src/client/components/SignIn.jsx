@@ -70,7 +70,7 @@ class SignIn extends React.Component {
             <p className="center f4 fw5 pa3 ma3 bb w-75 b--light-silver">ログイン</p>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="email"
                 placeholder="メールアドレス"
                 onChange={this.handleUsername}
@@ -78,16 +78,16 @@ class SignIn extends React.Component {
             </div>
             <div className="mt3">
               <input
-                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6"
+                className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
                 type="password"
                 placeholder="パスワード"
                 onChange={this.handlePassword}
               />
-            { errorHandle.message ? <div className="f7 pt3 dark-red">{errorHandle.message}</div> : null}
+              { errorHandle.message ? <div className="f7 pt3 dark-red">{errorHandle.message}</div> : null }
             </div>
             <div className="mt3">
               <button
-                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer"
+                className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0"
                 type="submit"
               >ログイン</button>
             </div>
