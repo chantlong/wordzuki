@@ -1,6 +1,7 @@
 const passport = require('passport');
 const User = require('../models/User');
-const welcomeMail = require('./Mail').welcomeMail;
+const crypto = require('crypto');
+const resetPasswordMail = require('./Mail').resetPasswordMail;
 
 module.exports = {
   createAccount: (req, res) => {
@@ -61,4 +62,48 @@ module.exports = {
       res.status(401).json({ isLoggedIn: false });
     }
   },
+  forgotPassword: (req, res) => {
+    const generateToken = () => new Promise((resolve, reject) => {
+      crypto.randomBytes(17, (err, buf) => {
+        if (err) {
+          reject(err);
+        }
+        const token = buf.toString('hex');
+        resolve(token);
+      });
+    });
+    const setToken = token => new Promise((resolve, reject) => {
+      console.log('that token', token);
+      User.findOneAndUpdate({ username: req.body.username }, { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 })
+        .then((updated) => {
+          if (!updated) {
+            reject('The user does not exist.');
+          } else {
+            // send reset password mail
+            const info = {
+              hostname: req.headers.host,
+              user: req.body.username,
+              token,
+            };
+            resolve(info);
+          }
+        });
+    });
+    generateToken()
+      .then(token => setToken(token))
+      .then(info => resetPasswordMail(info))
+      .then(result => console.log('the result', result))
+      .catch(err => res.status(400).send(err));
+  },
+  resetPassword: (req, res) => {
+    console.log('the req params', req.params);
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
+      .then((match) => {
+        if (!match) {
+          res.status(400).send({ message: 'Password reset token is invalid or has expired.' });
+        } else {
+          res.redirect()
+        }
+      })
+  }
 };

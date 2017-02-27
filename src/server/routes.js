@@ -26,6 +26,8 @@ router.post('/api/auth/sign-up', Users.createAccount);
 router.post('/api/auth/sign-in', Users.signIn);
 router.get('/api/auth/sign-out', Users.signOut);
 router.get('/api/auth/is-authorized', Users.isAuthorized);
+router.post('/api/auth/forgot', Users.forgotPassword);
+router.get('/reset/:token', Users.resetPassword);
 
 // emails
 router.post('/api/mail/sign-up', Mail.welcomeMail);

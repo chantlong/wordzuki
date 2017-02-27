@@ -1,5 +1,6 @@
 const path = require('path');
 const nodemailer = require('nodemailer');
+const resetPasswordMail = require('./Mail').resetPasswordMail;
 
 module.exports = {
   welcomeMail: (req, res) => {
@@ -35,4 +36,39 @@ module.exports = {
       return res.status(200).json({ sent: 'SUCCESS' });
     });
   },
+  resetPasswordMail: (rInfo) => new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.WZ_EMAIL,
+        pass: process.env.WZ_PASS,
+      },
+    });
+    // // setup email data with unicode symbols
+    const mailOptions = {
+      from: '"wordzuki" <wordzukijp@gmail.com>', // sender address
+      to: rInfo.user, // list of receivers
+      subject: 'パスワードのリセット', // Subject line
+      html: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + rInfo.hostname + '/reset/' + rInfo.token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n', // html body
+      attachments: [{
+        filename: 'wordzuki-logo128.png',
+        path: path.resolve(__dirname, '../../client/assets/images/wordzuki-logo128.png'),
+        cid: 'logo', //same cid value as in the html img src
+      }],
+    };
+
+    // // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      console.log('that info', info);
+      if (error) {
+        process.stdout.write(error);
+        reject({ sent: 'FAIL' });
+      }
+      process.stdout.write('Message %s sent: %s', info.messageId, info.response);
+      resolve({ sent: 'SUCCESS' });
+    });
+  }),
 };
