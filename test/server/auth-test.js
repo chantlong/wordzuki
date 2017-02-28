@@ -74,7 +74,6 @@ test('sign in an account with correct credentials', (assert) => {
 test('verify if user is logged when not logged in', (assert) => {
   request(app)
     .get('/api/auth/is-authorized')
-    .expect(401)
     .end((err, res) => {
       const actual = res.body;
       const expected = { isLoggedIn: false };
