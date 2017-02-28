@@ -11,6 +11,11 @@ module.exports = {
   plugins: devMode ? [
     new ExtractTextPlugin('style.min.css'),
   ] : [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
     new ExtractTextPlugin('style.min.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
