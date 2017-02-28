@@ -2,6 +2,7 @@ const passport = require('passport');
 const User = require('../models/User');
 const crypto = require('crypto');
 const resetPasswordMail = require('./Mail').resetPasswordMail;
+const passwordResetCompleteMail = require('./Mail').passwordResetCompleteMail;
 
 module.exports = {
   createAccount: (req, res) => {
@@ -73,7 +74,6 @@ module.exports = {
       });
     });
     const setToken = token => new Promise((resolve, reject) => {
-      console.log('that token', token);
       User.findOneAndUpdate({ username: req.body.username }, { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 })
         .then((updated) => {
           if (!updated) {
@@ -94,14 +94,30 @@ module.exports = {
       .then(info => resetPasswordMail(info, res))
       .catch(err => res.status(400).json(err));
   },
-  resetPassword: (req, res) => {
-    console.log('the req params', req.params);
+  canResetPassword: (req, res) => {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
       .then((match) => {
         if (!match) {
-          return res.status(400).send({ message: 'Password reset token is invalid or has expired.' });
+          return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
         }
-        return res.status(200).send({ username: match.username, message: 'SUCCESS' });
+        return res.status(200).json({ username: match.username, message: 'SUCCESS' });
+      });
+  },
+  resetPassword: (req, res) => {
+    User.findOneAndUpdate({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, { resetPasswordToken: undefined, resetPasswordExpires: undefined })
+      .then((match) => {
+        if (!match) {
+          return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+        }
+        const foundUser = match;
+        return foundUser.setPassword(req.body.password, () => {
+          foundUser.save((err) => {
+            if (err) {
+              return res.status(400).json({ message: err });
+            }
+            return passwordResetCompleteMail(foundUser.username, res);
+          });
+        });
       });
   },
 };

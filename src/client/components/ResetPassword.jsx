@@ -14,6 +14,7 @@ class ResetPassword extends Component {
     this.setState = this.setState.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.validatePassword = debounce(this.validatePassword, 1000);
     this.validateSamePassword = debounce(this.validateSamePassword, 1000);
   }
@@ -60,12 +61,17 @@ class ResetPassword extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // const { signUp } = this.props;
-    // return signUp(this.state);
+    const { resetPassword, legitToken } = this.props;
+    const userInfo = {
+      username: legitToken.username,
+      password: this.state.confirmPassword,
+    };
+    const params = window.location.pathname.split('/')[2];
+    resetPassword(userInfo, params);
   }
 
   render() {
-    const { errorHandle, legitToken, inRequest } = this.props;
+    const { errorHandle, legitToken, inRequest, successHandle } = this.props;
     return (
       <div>
         <div className="flex justify-center justify-start-ns">
@@ -105,6 +111,7 @@ class ResetPassword extends Component {
                 type="submit"
               >確認</button>
             </div>
+            { successHandle.message ? <div className="f7 pt3 green">{successHandle.message}</div> : null}
           </form>}
         </div>
       </div>
@@ -114,6 +121,7 @@ class ResetPassword extends Component {
 
 ResetPassword.propTypes = {
   checkValidToken: PropTypes.func,
+  resetPassword: PropTypes.func,
   errorHandle: PropTypes.objectOf(
     PropTypes.any,
   ),
@@ -124,7 +132,7 @@ ResetPassword.propTypes = {
   legitToken: PropTypes.objectOf(
     PropTypes.any,
   ),
-  // inRequest: PropTypes.bool,
+  inRequest: PropTypes.bool,
 };
 
 export default ResetPassword;

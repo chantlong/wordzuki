@@ -416,7 +416,7 @@ export const checkValidToken = params => (
       .catch(err => dispatch(failedRequest(err)));
   });
 
-export const resetPasswordCheckValidToken = (info, params) => {
+export const resetPassword = (info, params) => {
   const userInfo = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -427,8 +427,14 @@ export const resetPasswordCheckValidToken = (info, params) => {
     dispatch(createRequest());
     fetch(`/api/auth/reset/${params}`, userInfo)
     .then(res => res.json())
-    .then((result) => {
-      console.log('uhhh result----', result);
+    .then((res) => {
+      dispatch(importRefreshDefault());
+      if (res.message !== 'SUCCESS') {
+        dispatch(failedRequest(res));
+      } else {
+        dispatch(successRequest({ message: 'パスワードを無事に再設定がきました' }));
+        setTimeout(() => browserHistory.push('/signin'), 2000);
+      }
     })
     .catch((err) => {
       dispatch(failedRequest(err));

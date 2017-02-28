@@ -37542,7 +37542,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.resetPasswordCheckValidToken = exports.checkValidToken = exports.checkForgetEmail = exports.selectTag = exports.selectedTagName = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.createRequest = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.successRequest = exports.failedRequest = undefined;
+	exports.resetPassword = exports.checkValidToken = exports.checkForgetEmail = exports.selectTag = exports.selectedTagName = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.createRequest = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.successRequest = exports.failedRequest = undefined;
 
 	var _isomorphicFetch = __webpack_require__(582);
 
@@ -38007,7 +38007,7 @@
 	  };
 	};
 
-	var resetPasswordCheckValidToken = exports.resetPasswordCheckValidToken = function resetPasswordCheckValidToken(info, params) {
+	var resetPassword = exports.resetPassword = function resetPassword(info, params) {
 	  var userInfo = {
 	    method: 'POST',
 	    headers: { 'Content-Type': 'application/json' },
@@ -38018,8 +38018,16 @@
 	    dispatch(createRequest());
 	    (0, _isomorphicFetch2.default)('/api/auth/reset/' + params, userInfo).then(function (res) {
 	      return res.json();
-	    }).then(function (result) {
-	      console.log('uhhh result----', result);
+	    }).then(function (res) {
+	      dispatch(importRefreshDefault());
+	      if (res.message !== 'SUCCESS') {
+	        dispatch(failedRequest(res));
+	      } else {
+	        dispatch(successRequest({ message: 'パスワードを無事に再設定がきました' }));
+	        setTimeout(function () {
+	          return _reactRouter.browserHistory.push('/signin');
+	        }, 2000);
+	      }
 	    }).catch(function (err) {
 	      dispatch(failedRequest(err));
 	    });
@@ -44203,10 +44211,12 @@
 	var mapStateToProps = function mapStateToProps(_ref) {
 	  var errorHandle = _ref.errorHandle,
 	      legitToken = _ref.legitToken,
-	      fetcher = _ref.fetcher;
+	      fetcher = _ref.fetcher,
+	      successHandle = _ref.successHandle;
 	  var inRequest = fetcher.inRequest;
 
 	  return {
+	    successHandle: successHandle,
 	    errorHandle: errorHandle,
 	    legitToken: legitToken,
 	    inRequest: inRequest
@@ -44215,10 +44225,13 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    errorMsg: function errorMsg(err) {
-	      dispatch((0, _actions.failedRequest)(err));
+	      return dispatch((0, _actions.failedRequest)(err));
 	    },
 	    checkValidToken: function checkValidToken(params) {
-	      dispatch((0, _actions.checkValidToken)(params));
+	      return dispatch((0, _actions.checkValidToken)(params));
+	    },
+	    resetPassword: function resetPassword(info, params) {
+	      return dispatch((0, _actions.resetPassword)(info, params));
 	    }
 	  };
 	};
@@ -44278,6 +44291,7 @@
 	    _this.setState = _this.setState.bind(_this);
 	    _this.handlePassword = _this.handlePassword.bind(_this);
 	    _this.handleConfirmPassword = _this.handleConfirmPassword.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.validatePassword = (0, _debounce2.default)(_this.validatePassword, 1000);
 	    _this.validateSamePassword = (0, _debounce2.default)(_this.validateSamePassword, 1000);
 	    return _this;
@@ -44342,16 +44356,25 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
-	      // const { signUp } = this.props;
-	      // return signUp(this.state);
+	      var _props = this.props,
+	          resetPassword = _props.resetPassword,
+	          legitToken = _props.legitToken;
+
+	      var userInfo = {
+	        username: legitToken.username,
+	        password: this.state.confirmPassword
+	      };
+	      var params = window.location.pathname.split('/')[2];
+	      resetPassword(userInfo, params);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props,
-	          errorHandle = _props.errorHandle,
-	          legitToken = _props.legitToken,
-	          inRequest = _props.inRequest;
+	      var _props2 = this.props,
+	          errorHandle = _props2.errorHandle,
+	          legitToken = _props2.legitToken,
+	          inRequest = _props2.inRequest,
+	          successHandle = _props2.successHandle;
 
 	      return _react2.default.createElement(
 	        'div',
@@ -44427,7 +44450,12 @@
 	                },
 	                '\u78BA\u8A8D'
 	              )
-	            )
+	            ),
+	            successHandle.message ? _react2.default.createElement(
+	              'div',
+	              { className: 'f7 pt3 green' },
+	              successHandle.message
+	            ) : null
 	          )
 	        )
 	      );
@@ -44439,12 +44467,14 @@
 
 	ResetPassword.propTypes = {
 	  checkValidToken: _react.PropTypes.func,
+	  resetPassword: _react.PropTypes.func,
 	  errorHandle: _react.PropTypes.objectOf(_react.PropTypes.any),
 	  // successHandle: PropTypes.objectOf(
 	  //   PropTypes.any,
 	  // ),
 	  errorMsg: _react.PropTypes.func,
-	  legitToken: _react.PropTypes.objectOf(_react.PropTypes.any)
+	  legitToken: _react.PropTypes.objectOf(_react.PropTypes.any),
+	  inRequest: _react.PropTypes.bool
 	};
 
 	exports.default = ResetPassword;
