@@ -15,6 +15,9 @@ html, body {
   font-family: "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 }
 
+.lh2 {
+  line-height: 2;
+}
 /* LINKS */
 .link {
   color: #555;

@@ -387,7 +387,7 @@ export const checkForgetEmail = (info) => {
       if (result.message !== 'SUCCESS') {
         dispatch(failedRequest(result));
       } else {
-        dispatch(successRequest({ message: 'メールを送信しましたのでご確認ください' }));
+        dispatch(successRequest({ message: 'パスワードリセットのメールを送信しました' }));
       }
     })
     .catch((err) => {

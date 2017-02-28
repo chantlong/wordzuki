@@ -50,8 +50,8 @@ class ForgetPassword extends Component {
             <span className="db fw5">wordzuki</span></a>
         </div>
         <div>
-          <form
-            className="measure-narrow center ba br2 b--black-50 bg-near-white pa2 pb4 tc ma4"
+          {!successHandle.message && <form
+            className="measure-narrow center br2 bg-near-white pa2 pb4 tc ma4"
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
@@ -66,14 +66,17 @@ class ForgetPassword extends Component {
             </div>
             { !!inRequest && <Preloader /> }
             { errorHandle.message ? <div className="f7 pt3 dark-red">{errorHandle.message}</div> : null}
-            { successHandle.message ? <div className="f7 pt3 green">{successHandle.message}</div> : null}
             <div className="mt3">
               <button
                 className="mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0"
                 type="submit"
               >リマインド</button>
             </div>
-          </form>
+          </form>}
+          { successHandle.message ? <div className="measure center br2 bg-near-white lh2 ph4 pv3 tc f7 blue">
+            {successHandle.message}
+          </div>
+          : null}
         </div>
       </div>
     );

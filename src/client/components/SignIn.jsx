@@ -91,6 +91,9 @@ class SignIn extends React.Component {
                 type="submit"
               >ログイン</button>
             </div>
+            <div className="mt3">
+              <a href="/forgot" className="link no-underline underline-hover f7">パスワードを忘れた？</a>
+            </div>
           </form>
         </div>
       </div>

@@ -77,7 +77,7 @@ module.exports = {
       User.findOneAndUpdate({ username: req.body.username }, { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 })
         .then((updated) => {
           if (!updated) {
-            reject({ message: 'The user does not exist.' });
+            reject({ message: 'ユーザーは既存していません' });
           } else {
             // send reset password mail
             const info = {
@@ -98,7 +98,7 @@ module.exports = {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
       .then((match) => {
         if (!match) {
-          return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+          return res.status(400).json({ message: 'パスワードリセットトークンが無効です' });
         }
         return res.status(200).json({ username: match.username, message: 'SUCCESS' });
       });
@@ -107,7 +107,7 @@ module.exports = {
     User.findOneAndUpdate({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, { resetPasswordToken: undefined, resetPasswordExpires: undefined })
       .then((match) => {
         if (!match) {
-          return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+          return res.status(400).json({ message: 'パスワードリセットトークンが無効です' });
         }
         const foundUser = match;
         return foundUser.setPassword(req.body.password, () => {
