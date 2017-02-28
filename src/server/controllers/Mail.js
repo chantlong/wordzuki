@@ -1,6 +1,5 @@
 const path = require('path');
 const nodemailer = require('nodemailer');
-const resetPasswordMail = require('./Mail').resetPasswordMail;
 
 module.exports = {
   welcomeMail: (req, res) => {
@@ -27,16 +26,14 @@ module.exports = {
     };
 
     // // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
       if (error) {
-        process.stdout.write(error);
         return res.status(401).json({ sent: 'FAIL' });
       }
-      process.stdout.write('Message %s sent: %s', info.messageId, info.response);
       return res.status(200).json({ sent: 'SUCCESS' });
     });
   },
-  resetPasswordMail: (rInfo) => new Promise((resolve, reject) => {
+  resetPasswordMail: (rInfo, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -61,14 +58,11 @@ module.exports = {
     };
 
     // // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-      console.log('that info', info);
+    transporter.sendMail(mailOptions, (error) => {
       if (error) {
-        process.stdout.write(error);
-        reject({ sent: 'FAIL' });
+        return res.status(401).json({ message: 'メールの送信は不可能' });
       }
-      process.stdout.write('Message %s sent: %s', info.messageId, info.response);
-      resolve({ sent: 'SUCCESS' });
+      return res.status(200).json({ message: 'SUCCESS' });
     });
-  }),
+  },
 };

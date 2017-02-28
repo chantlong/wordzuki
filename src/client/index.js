@@ -15,6 +15,8 @@ import Visualizer from './components/Visualizer';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import ChromeSignIn from './containers/ChromeSignIn';
+import ForgetPassword from './containers/ForgetPassword';
+import ResetPassword from './containers/ResetPassword';
 import Help from './components/Help';
 import Splash from './components/Splash';
 import KVBImport from './containers/KVBImport';
@@ -59,6 +61,8 @@ render(
         <Route path="/searchhistory" component={SearchHistory} onEnter={requireAuth} />
         <Route path="/kindlevb" component={KVBImport} onEnter={requireAuth} />
         <Route path="/help" component={Help} />
+        <Route path="/forgot" component={ForgetPassword} />
+        <Route path="/reset/:token" component={ResetPassword} />
         <Route path="/chrome-signin" component={ChromeSignIn} />
         <Route path="*" component={Splash} />
       </Route>

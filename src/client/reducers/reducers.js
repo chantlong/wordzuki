@@ -7,8 +7,10 @@ import {
   DELETE_WORD_FROM_WORDS,
   DELETE_WORD,
   ERR_FAILED_REQUEST,
+  SUCCESS_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
+  CREATE_REQUEST,
   REQUEST_IMPORT_WORDS,
   SUCCESS_IMPORT_WORDS,
   FAIL_IMPORT_WORDS,
@@ -23,7 +25,8 @@ import {
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
-  SEARCH_INPUT,
+  TOKEN_IS_LEGIT,
+  TOKEN_NOT_LEGIT,
 } from '../constants/actionTypes';
 
 const words = (state = {
@@ -77,6 +80,11 @@ const fetcher = (state = {
   message: undefined,
 }, action) => {
   switch (action.type) {
+    case CREATE_REQUEST:
+      return Object.assign({}, state, {
+        inRequest: true,
+        message: undefined,
+      });
     case REQUEST_IMPORT_WORDS:
       return Object.assign({}, state, {
         inRequest: true,
@@ -89,7 +97,7 @@ const fetcher = (state = {
       });
     case REFRESH_TO_DEFAULT:
       return Object.assign({}, state, {
-        inRequest: undefined,
+        inRequest: false,
         message: undefined,
       });
     case FAIL_IMPORT_WORDS:
@@ -163,6 +171,16 @@ const errorHandle = (state, action) => {
   }
 };
 
+const successHandle = (state, action) => {
+  switch (action.type) {
+    case SUCCESS_REQUEST: {
+      return action.payload || state;
+    }
+    default:
+      return state || {};
+  }
+};
+
 const login = (state = { isAuth: false, user: null }, action) => {
   switch (action.type) {
     case USER_LOGIN: {
@@ -192,6 +210,25 @@ const editModal = (state = false, action) => {
   }
 };
 
+const legitToken = (state = { status: false, username: undefined }, action) => {
+  switch (action.type) {
+    case TOKEN_IS_LEGIT: {
+      return Object.assign({}, state, {
+        status: true,
+        username: action.payload,
+      });
+    }
+    case TOKEN_NOT_LEGIT: {
+      return Object.assign({}, state, {
+        status: false,
+        username: undefined,
+      });
+    }
+    default:
+      return state;
+  }
+};
+
 const routing = routerReducer;
 
 const reducers = combineReducers({
@@ -199,12 +236,14 @@ const reducers = combineReducers({
   word,
   fetcher,
   errorHandle,
+  successHandle,
   newWord,
   filterList,
   currentTag,
   filterCompleteList,
   login,
   editModal,
+  legitToken,
   routing,
 });
 

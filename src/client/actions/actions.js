@@ -12,8 +12,10 @@ import {
   DELETE_WORD_FROM_WORDS,
   DELETE_WORD,
   ERR_FAILED_REQUEST,
+  SUCCESS_REQUEST,
   USER_LOGIN,
   USER_LOGOUT,
+  CREATE_REQUEST,
   REQUEST_IMPORT_WORDS,
   SUCCESS_IMPORT_WORDS,
   REFRESH_TO_DEFAULT,
@@ -28,9 +30,13 @@ import {
   LOAD_FILTERED_LIST,
   RECEIVE_FILTERED_WORDS,
   SELECTED_TAGNAME,
+  TOKEN_IS_LEGIT,
+  TOKEN_NOT_LEGIT,
 } from '../constants/actionTypes';
 
 export const failedRequest = error => ({ type: ERR_FAILED_REQUEST, payload: error });
+
+export const successRequest = success => ({ type: SUCCESS_REQUEST, payload: success });
 
 const requestWords = () => ({ type: REQUEST_WORDS });
 
@@ -209,6 +215,7 @@ export const deleteWord = (id, index, list) => (
   }
 );
 
+export const createRequest = () => ({ type: CREATE_REQUEST });
 const importLoading = () => ({ type: REQUEST_IMPORT_WORDS });
 const importSuccess = success => ({ type: SUCCESS_IMPORT_WORDS, message: success });
 const importRefreshDefault = () => ({ type: REFRESH_TO_DEFAULT });
@@ -271,7 +278,6 @@ const searchExecute = search => ({ type: SEARCH_WORD, payload: search });
 export const searchWord = (search, list) =>
 
   ((dispatch) => {
-    console.log('that search', search);
     if (!search.length) {
       dispatch(receiveWords(list));
       return dispatch(searchExecute(null));
@@ -365,3 +371,67 @@ export const selectTag = (tagName, list) => {
   };
 };
 
+export const checkForgetEmail = (info) => {
+  const userInfo = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(info),
+  };
+  return (dispatch) => {
+    dispatch(createRequest());
+    fetch('/api/auth/forgot', userInfo)
+    .then(res => res.json())
+    .then((result) => {
+      dispatch(importRefreshDefault());
+      if (result.message !== 'SUCCESS') {
+        dispatch(failedRequest(result));
+      } else {
+        dispatch(successRequest({ message: 'メールを送信しましたのでご確認ください' }));
+      }
+    })
+    .catch((err) => {
+      dispatch(failedRequest(err));
+    });
+  };
+};
+
+const tokenIsLegit = user => ({ type: TOKEN_IS_LEGIT, payload: user });
+const tokenNotLegit = () => ({ type: TOKEN_NOT_LEGIT });
+
+export const checkValidToken = params => (
+  (dispatch) => {
+    dispatch(createRequest());
+    fetch(`/api/auth/reset/${params}`)
+      .then(res => res.json())
+      .then((res) => {
+        dispatch(importRefreshDefault());
+        if (res.message !== 'SUCCESS') {
+          dispatch(tokenNotLegit());
+          dispatch(failedRequest(res));
+        } else {
+          dispatch(tokenIsLegit(res.username));
+        }
+      })
+      .catch(err => dispatch(failedRequest(err)));
+  });
+
+export const resetPasswordCheckValidToken = (info, params) => {
+  const userInfo = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(info),
+  };
+  return (dispatch) => {
+    dispatch(createRequest());
+    fetch(`/api/auth/reset/${params}`, userInfo)
+    .then(res => res.json())
+    .then((result) => {
+      console.log('uhhh result----', result);
+    })
+    .catch((err) => {
+      dispatch(failedRequest(err));
+    });
+  };
+};

@@ -77,7 +77,7 @@ module.exports = {
       User.findOneAndUpdate({ username: req.body.username }, { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 })
         .then((updated) => {
           if (!updated) {
-            reject('The user does not exist.');
+            reject({ message: 'The user does not exist.' });
           } else {
             // send reset password mail
             const info = {
@@ -91,19 +91,17 @@ module.exports = {
     });
     generateToken()
       .then(token => setToken(token))
-      .then(info => resetPasswordMail(info))
-      .then(result => console.log('the result', result))
-      .catch(err => res.status(400).send(err));
+      .then(info => resetPasswordMail(info, res))
+      .catch(err => res.status(400).json(err));
   },
   resetPassword: (req, res) => {
     console.log('the req params', req.params);
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } })
       .then((match) => {
         if (!match) {
-          res.status(400).send({ message: 'Password reset token is invalid or has expired.' });
-        } else {
-          res.redirect()
+          return res.status(400).send({ message: 'Password reset token is invalid or has expired.' });
         }
-      })
-  }
+        return res.status(200).send({ username: match.username, message: 'SUCCESS' });
+      });
+  },
 };

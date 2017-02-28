@@ -8242,6 +8242,14 @@
 
 	var _ChromeSignIn2 = _interopRequireDefault(_ChromeSignIn);
 
+	var _ForgetPassword = __webpack_require__(651);
+
+	var _ForgetPassword2 = _interopRequireDefault(_ForgetPassword);
+
+	var _ResetPassword = __webpack_require__(649);
+
+	var _ResetPassword2 = _interopRequireDefault(_ResetPassword);
+
 	var _Help = __webpack_require__(639);
 
 	var _Help2 = _interopRequireDefault(_Help);
@@ -8304,6 +8312,8 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: '/searchhistory', component: _SearchHistory2.default, onEnter: requireAuth }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/kindlevb', component: _KVBImport2.default, onEnter: requireAuth }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/help', component: _Help2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/forgot', component: _ForgetPassword2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/reset/:token', component: _ResetPassword2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/chrome-signin', component: _ChromeSignIn2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _Splash2.default })
 	    )
@@ -37204,6 +37214,11 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
+	    case _actionTypes.CREATE_REQUEST:
+	      return Object.assign({}, state, {
+	        inRequest: true,
+	        message: undefined
+	      });
 	    case _actionTypes.REQUEST_IMPORT_WORDS:
 	      return Object.assign({}, state, {
 	        inRequest: true,
@@ -37216,7 +37231,7 @@
 	      });
 	    case _actionTypes.REFRESH_TO_DEFAULT:
 	      return Object.assign({}, state, {
-	        inRequest: undefined,
+	        inRequest: false,
 	        message: undefined
 	      });
 	    case _actionTypes.FAIL_IMPORT_WORDS:
@@ -37306,6 +37321,17 @@
 	  }
 	};
 
+	var successHandle = function successHandle(state, action) {
+	  switch (action.type) {
+	    case _actionTypes.SUCCESS_REQUEST:
+	      {
+	        return action.payload || state;
+	      }
+	    default:
+	      return state || {};
+	  }
+	};
+
 	var login = function login() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { isAuth: false, user: null };
 	  var action = arguments[1];
@@ -37344,6 +37370,30 @@
 	  }
 	};
 
+	var legitToken = function legitToken() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { status: false, username: undefined };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actionTypes.TOKEN_IS_LEGIT:
+	      {
+	        return Object.assign({}, state, {
+	          status: true,
+	          username: action.payload
+	        });
+	      }
+	    case _actionTypes.TOKEN_NOT_LEGIT:
+	      {
+	        return Object.assign({}, state, {
+	          status: false,
+	          username: undefined
+	        });
+	      }
+	    default:
+	      return state;
+	  }
+	};
+
 	var routing = _reactRouterRedux.routerReducer;
 
 	var reducers = (0, _redux.combineReducers)({
@@ -37351,12 +37401,14 @@
 	  word: word,
 	  fetcher: fetcher,
 	  errorHandle: errorHandle,
+	  successHandle: successHandle,
 	  newWord: newWord,
 	  filterList: filterList,
 	  currentTag: currentTag,
 	  filterCompleteList: filterCompleteList,
 	  login: login,
 	  editModal: editModal,
+	  legitToken: legitToken,
 	  routing: routing
 	});
 
@@ -37378,11 +37430,13 @@
 	var DELETE_WORD = exports.DELETE_WORD = 'DELETE_WORD';
 
 	var ERR_FAILED_REQUEST = exports.ERR_FAILED_REQUEST = 'ERR_FAILED_REQUEST';
+	var SUCCESS_REQUEST = exports.SUCCESS_REQUEST = 'SUCCESS_REQUEST';
 
 	var USER_LOGIN = exports.USER_LOGIN = 'USER_LOGIN';
 	var USER_LOGOUT = exports.USER_LOGOUT = 'USER_LOGOUT';
 	var IS_LOGGED_IN = exports.IS_LOGGED_IN = 'IS_LOGGED_IN';
 
+	var CREATE_REQUEST = exports.CREATE_REQUEST = 'CREATE_REQUEST';
 	var REQUEST_IMPORT_WORDS = exports.REQUEST_IMPORT_WORDS = 'REQUEST_IMPORT_WORDS';
 	var SUCCESS_IMPORT_WORDS = exports.SUCCESS_IMPORT_WORDS = 'SUCCESS_IMPORT_WORDS';
 	var FAIL_IMPORT_WORDS = exports.FAIL_IMPORT_WORDS = 'FAIL_IMPORT_WORDS';
@@ -37402,6 +37456,10 @@
 	var LOAD_FILTERED_LIST = exports.LOAD_FILTERED_LIST = 'LOAD_FILTERED_LIST';
 	var RECEIVE_FILTERED_WORDS = exports.RECEIVE_FILTERED_WORDS = 'RECEIVE_FILTERED_WORDS';
 	var SELECTED_TAGNAME = exports.SELECTED_TAGNAME = 'SELECTED_TAGNAME';
+
+	// TOKEN CHECK
+	var TOKEN_IS_LEGIT = exports.TOKEN_IS_LEGIT = 'TOKEN_IS_LEGIT';
+	var TOKEN_NOT_LEGIT = exports.TOKEN_NOT_LEGIT = 'TOKEN_NOT_LEGIT';
 
 /***/ },
 /* 579 */
@@ -37484,7 +37542,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.selectTag = exports.selectedTagName = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.failedRequest = undefined;
+	exports.resetPasswordCheckValidToken = exports.checkValidToken = exports.checkForgetEmail = exports.selectTag = exports.selectedTagName = exports.hideFilterList = exports.showFilterList = exports.saveNewWord = exports.toggleAddWord = exports.searchWord = exports.toggleEditModal = exports.addDefinition = exports.KVBDone = exports.KVBImporter = exports.createRequest = exports.deleteWord = exports.verify = exports.receiveLogout = exports.chromeSignIn = exports.signUp = exports.signIn = exports.fetchWords = exports.selectWord = exports.filterWordsByTag = exports.receiveWords = exports.successRequest = exports.failedRequest = undefined;
 
 	var _isomorphicFetch = __webpack_require__(582);
 
@@ -37510,7 +37568,9 @@
 
 	// import config from '../config';
 	/* global fetch */
-
+	var successRequest = exports.successRequest = function successRequest(success) {
+	  return { type: _actionTypes.SUCCESS_REQUEST, payload: success };
+	};
 
 	var requestWords = function requestWords() {
 	  return { type: _actionTypes.REQUEST_WORDS };
@@ -37714,6 +37774,9 @@
 	  };
 	};
 
+	var createRequest = exports.createRequest = function createRequest() {
+	  return { type: _actionTypes.CREATE_REQUEST };
+	};
 	var importLoading = function importLoading() {
 	  return { type: _actionTypes.REQUEST_IMPORT_WORDS };
 	};
@@ -37796,7 +37859,6 @@
 
 	var searchWord = exports.searchWord = function searchWord(search, list) {
 	  return function (dispatch) {
-	    console.log('that search', search);
 	    if (!search.length) {
 	      dispatch(receiveWords(list));
 	      return dispatch(searchExecute(null));
@@ -37892,6 +37954,75 @@
 	    if (filteredWords.length > 0) {
 	      dispatch(selectWord(filteredWords[0]));
 	    }
+	  };
+	};
+
+	var checkForgetEmail = exports.checkForgetEmail = function checkForgetEmail(info) {
+	  var userInfo = {
+	    method: 'POST',
+	    headers: { 'Content-Type': 'application/json' },
+	    credentials: 'include',
+	    body: JSON.stringify(info)
+	  };
+	  return function (dispatch) {
+	    dispatch(createRequest());
+	    (0, _isomorphicFetch2.default)('/api/auth/forgot', userInfo).then(function (res) {
+	      return res.json();
+	    }).then(function (result) {
+	      dispatch(importRefreshDefault());
+	      if (result.message !== 'SUCCESS') {
+	        dispatch(failedRequest(result));
+	      } else {
+	        dispatch(successRequest({ message: 'メールを送信しましたのでご確認ください' }));
+	      }
+	    }).catch(function (err) {
+	      dispatch(failedRequest(err));
+	    });
+	  };
+	};
+
+	var tokenIsLegit = function tokenIsLegit(user) {
+	  return { type: _actionTypes.TOKEN_IS_LEGIT, payload: user };
+	};
+	var tokenNotLegit = function tokenNotLegit() {
+	  return { type: _actionTypes.TOKEN_NOT_LEGIT };
+	};
+
+	var checkValidToken = exports.checkValidToken = function checkValidToken(params) {
+	  return function (dispatch) {
+	    dispatch(createRequest());
+	    (0, _isomorphicFetch2.default)('/api/auth/reset/' + params).then(function (res) {
+	      return res.json();
+	    }).then(function (res) {
+	      dispatch(importRefreshDefault());
+	      if (res.message !== 'SUCCESS') {
+	        dispatch(tokenNotLegit());
+	        dispatch(failedRequest(res));
+	      } else {
+	        dispatch(tokenIsLegit(res.username));
+	      }
+	    }).catch(function (err) {
+	      return dispatch(failedRequest(err));
+	    });
+	  };
+	};
+
+	var resetPasswordCheckValidToken = exports.resetPasswordCheckValidToken = function resetPasswordCheckValidToken(info, params) {
+	  var userInfo = {
+	    method: 'POST',
+	    headers: { 'Content-Type': 'application/json' },
+	    credentials: 'include',
+	    body: JSON.stringify(info)
+	  };
+	  return function (dispatch) {
+	    dispatch(createRequest());
+	    (0, _isomorphicFetch2.default)('/api/auth/reset/' + params, userInfo).then(function (res) {
+	      return res.json();
+	    }).then(function (result) {
+	      console.log('uhhh result----', result);
+	    }).catch(function (err) {
+	      dispatch(failedRequest(err));
+	    });
 	  };
 	};
 
@@ -44043,6 +44174,508 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */,
+/* 648 */,
+/* 649 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(497);
+
+	var _actions = __webpack_require__(581);
+
+	var _ResetPassword = __webpack_require__(650);
+
+	var _ResetPassword2 = _interopRequireDefault(_ResetPassword);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var errorHandle = _ref.errorHandle,
+	      legitToken = _ref.legitToken,
+	      fetcher = _ref.fetcher;
+	  var inRequest = fetcher.inRequest;
+
+	  return {
+	    errorHandle: errorHandle,
+	    legitToken: legitToken,
+	    inRequest: inRequest
+	  };
+	};
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    errorMsg: function errorMsg(err) {
+	      dispatch((0, _actions.failedRequest)(err));
+	    },
+	    checkValidToken: function checkValidToken(params) {
+	      dispatch((0, _actions.checkValidToken)(params));
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ResetPassword2.default);
+
+/***/ },
+/* 650 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _debounce = __webpack_require__(613);
+
+	var _debounce2 = _interopRequireDefault(_debounce);
+
+	var _wordzukiLogo = __webpack_require__(634);
+
+	var _wordzukiLogo2 = _interopRequireDefault(_wordzukiLogo);
+
+	var _Preloader = __webpack_require__(624);
+
+	var _Preloader2 = _interopRequireDefault(_Preloader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResetPassword = function (_Component) {
+	  _inherits(ResetPassword, _Component);
+
+	  function ResetPassword() {
+	    _classCallCheck(this, ResetPassword);
+
+	    var _this = _possibleConstructorReturn(this, (ResetPassword.__proto__ || Object.getPrototypeOf(ResetPassword)).call(this));
+
+	    _this.state = {
+	      password: '',
+	      confirmPassword: ''
+	    };
+	    _this.setState = _this.setState.bind(_this);
+	    _this.handlePassword = _this.handlePassword.bind(_this);
+	    _this.handleConfirmPassword = _this.handleConfirmPassword.bind(_this);
+	    _this.validatePassword = (0, _debounce2.default)(_this.validatePassword, 1000);
+	    _this.validateSamePassword = (0, _debounce2.default)(_this.validateSamePassword, 1000);
+	    return _this;
+	  }
+
+	  _createClass(ResetPassword, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var checkValidToken = this.props.checkValidToken;
+
+	      var params = window.location.pathname.split('/')[2];
+	      checkValidToken(params);
+	    }
+	  }, {
+	    key: 'setState',
+	    value: function setState(args) {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve) {
+	        return _get(ResetPassword.prototype.__proto__ || Object.getPrototypeOf(ResetPassword.prototype), 'setState', _this2).call(_this2, args, resolve);
+	      });
+	    }
+	  }, {
+	    key: 'validatePassword',
+	    value: function validatePassword() {
+	      var errorMsg = this.props.errorMsg;
+
+	      if (this.state.password.length < 6) {
+	        return errorMsg({ message: '6文字以上のパスワードを設定してください' });
+	      }
+	      return errorMsg({});
+	    }
+	  }, {
+	    key: 'validateSamePassword',
+	    value: function validateSamePassword() {
+	      var errorMsg = this.props.errorMsg;
+
+	      if (this.state.password !== this.state.confirmPassword) {
+	        return errorMsg({ message: 'パスワードが一致しません' });
+	      }
+	      return errorMsg({});
+	    }
+	  }, {
+	    key: 'handlePassword',
+	    value: function handlePassword(e) {
+	      var _this3 = this;
+
+	      this.setState({ password: e.target.value }).then(function () {
+	        _this3.validatePassword();
+	      });
+	    }
+	  }, {
+	    key: 'handleConfirmPassword',
+	    value: function handleConfirmPassword(e) {
+	      var _this4 = this;
+
+	      this.setState({ confirmPassword: e.target.value }).then(function () {
+	        _this4.validateSamePassword();
+	      });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      // const { signUp } = this.props;
+	      // return signUp(this.state);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          errorHandle = _props.errorHandle,
+	          legitToken = _props.legitToken,
+	          inRequest = _props.inRequest;
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'flex justify-center justify-start-ns' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/', className: 'pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns' },
+	            _react2.default.createElement('img', { src: _wordzukiLogo2.default, alt: 'wordzuki', className: 'db wz-icon mr2 mr3-ns' }),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'db fw5' },
+	              'wordzuki'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          inRequest && _react2.default.createElement(_Preloader2.default, null),
+	          !legitToken.status && _react2.default.createElement(
+	            'div',
+	            null,
+	            errorHandle.message ? errorHandle.message : null
+	          ),
+	          legitToken.status && _react2.default.createElement(
+	            'form',
+	            {
+	              className: 'measure-narrow center br2 pa2 pb4 tc ma4 bg-near-white',
+	              onSubmit: this.handleSubmit,
+	              autoComplete: 'off'
+	            },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'center pa3 ma3 f4 fw5 bb w-75 b--light-silver' },
+	              '\u65B0\u898F\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0',
+	                type: 'password',
+	                placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u4F5C\u6210',
+	                onChange: this.handlePassword
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0',
+	                type: 'password',
+	                placeholder: '\u30D1\u30B9\u30EF\u30FC\u30C9\u306E\u518D\u5165\u529B',
+	                onChange: this.handleConfirmPassword
+	              }),
+	              errorHandle.message ? _react2.default.createElement(
+	                'div',
+	                { className: 'f7 pt3 dark-red' },
+	                errorHandle.message
+	              ) : null
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0',
+	                  type: 'submit'
+	                },
+	                '\u78BA\u8A8D'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ResetPassword;
+	}(_react.Component);
+
+	ResetPassword.propTypes = {
+	  checkValidToken: _react.PropTypes.func,
+	  errorHandle: _react.PropTypes.objectOf(_react.PropTypes.any),
+	  // successHandle: PropTypes.objectOf(
+	  //   PropTypes.any,
+	  // ),
+	  errorMsg: _react.PropTypes.func,
+	  legitToken: _react.PropTypes.objectOf(_react.PropTypes.any)
+	};
+
+	exports.default = ResetPassword;
+
+/***/ },
+/* 651 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(497);
+
+	var _actions = __webpack_require__(581);
+
+	var _ForgetPassword = __webpack_require__(652);
+
+	var _ForgetPassword2 = _interopRequireDefault(_ForgetPassword);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var errorHandle = _ref.errorHandle,
+	      successHandle = _ref.successHandle,
+	      fetcher = _ref.fetcher;
+	  var inRequest = fetcher.inRequest;
+
+	  return { errorHandle: errorHandle, successHandle: successHandle, inRequest: inRequest };
+	};
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    checkForgetEmail: function checkForgetEmail(err) {
+	      dispatch((0, _actions.checkForgetEmail)(err));
+	    },
+	    errorMsg: function errorMsg(err) {
+	      dispatch((0, _actions.failedRequest)(err));
+	    },
+	    successMsg: function successMsg(success) {
+	      dispatch((0, _actions.successRequest)(success));
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ForgetPassword2.default);
+
+/***/ },
+/* 652 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _debounce = __webpack_require__(613);
+
+	var _debounce2 = _interopRequireDefault(_debounce);
+
+	var _wordzukiLogo = __webpack_require__(634);
+
+	var _wordzukiLogo2 = _interopRequireDefault(_wordzukiLogo);
+
+	var _Preloader = __webpack_require__(624);
+
+	var _Preloader2 = _interopRequireDefault(_Preloader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ForgetPassword = function (_Component) {
+	  _inherits(ForgetPassword, _Component);
+
+	  function ForgetPassword() {
+	    _classCallCheck(this, ForgetPassword);
+
+	    var _this = _possibleConstructorReturn(this, (ForgetPassword.__proto__ || Object.getPrototypeOf(ForgetPassword)).call(this));
+
+	    _this.state = {
+	      username: ''
+	    };
+	    _this.setState = _this.setState.bind(_this);
+	    _this.handleUsername = _this.handleUsername.bind(_this);
+	    _this.validateEmail = (0, _debounce2.default)(_this.validateEmail, 200);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(ForgetPassword, [{
+	    key: 'setState',
+	    value: function setState(args) {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve) {
+	        return _get(ForgetPassword.prototype.__proto__ || Object.getPrototypeOf(ForgetPassword.prototype), 'setState', _this2).call(_this2, args, resolve);
+	      });
+	    }
+	  }, {
+	    key: 'handleUsername',
+	    value: function handleUsername(e) {
+	      var _this3 = this;
+
+	      this.setState({ username: e.target.value }).then(function () {
+	        _this3.validateEmail();
+	      });
+	    }
+	  }, {
+	    key: 'validateEmail',
+	    value: function validateEmail() {
+	      var errorMsg = this.props.errorMsg;
+
+	      if (!/\S+@\S+\.\S+/.test(this.state.username)) {
+	        return errorMsg({ message: '不正なメールアドレスです' });
+	      }
+	      return errorMsg({});
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var checkForgetEmail = this.props.checkForgetEmail;
+
+	      checkForgetEmail(this.state);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          errorHandle = _props.errorHandle,
+	          successHandle = _props.successHandle,
+	          inRequest = _props.inRequest;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: '' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'flex justify-center justify-start-ns' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/', className: 'pa3 no-underline dim db tracked f5 fw4 flex items-center justify-center justify-start-ns' },
+	            _react2.default.createElement('img', { src: _wordzukiLogo2.default, alt: 'wordzuki', className: 'db wz-icon mr2 mr3-ns' }),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'db fw5' },
+	              'wordzuki'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            {
+	              className: 'measure-narrow center ba br2 b--black-50 bg-near-white pa2 pb4 tc ma4',
+	              onSubmit: this.handleSubmit,
+	              autoComplete: 'off'
+	            },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'center f4 fw5 pv3 mv3 bb w-75 b--light-silver' },
+	              '\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5FD8\u308C\u305F\uFF1F'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement('input', {
+	                className: 'ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0',
+	                type: 'email',
+	                placeholder: '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9',
+	                onChange: this.handleUsername
+	              })
+	            ),
+	            !!inRequest && _react2.default.createElement(_Preloader2.default, null),
+	            errorHandle.message ? _react2.default.createElement(
+	              'div',
+	              { className: 'f7 pt3 dark-red' },
+	              errorHandle.message
+	            ) : null,
+	            successHandle.message ? _react2.default.createElement(
+	              'div',
+	              { className: 'f7 pt3 green' },
+	              successHandle.message
+	            ) : null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mt3' },
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'mt1 pa2 pb1 fw5 ba b--light-silver br2 bg-transparent grow f6 dib hover-bg-dark-gray hover-white pointer outline-0',
+	                  type: 'submit'
+	                },
+	                '\u30EA\u30DE\u30A4\u30F3\u30C9'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ForgetPassword;
+	}(_react.Component);
+
+	ForgetPassword.propTypes = {
+	  checkForgetEmail: _react.PropTypes.func,
+	  errorHandle: _react.PropTypes.objectOf(_react.PropTypes.any),
+	  successHandle: _react.PropTypes.objectOf(_react.PropTypes.any),
+	  errorMsg: _react.PropTypes.func,
+	  inRequest: _react.PropTypes.bool
+	};
+
+	exports.default = ForgetPassword;
 
 /***/ }
 /******/ ]);
