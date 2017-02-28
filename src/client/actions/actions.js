@@ -433,7 +433,7 @@ export const resetPassword = (info, params) => {
         dispatch(failedRequest(res));
       } else {
         dispatch(successRequest({ message: 'パスワードを無事に再設定がきました' }));
-        setTimeout(() => browserHistory.push('/signin'), 2000);
+        setTimeout(() => browserHistory.push('/signin'), 3500);
       }
     })
     .catch((err) => {

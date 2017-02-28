@@ -45,7 +45,7 @@ class ForgetPassword extends Component {
     return (
       <div className="">
         <div className="flex justify-center justify-start-ns">
-          <a href="/" className="pa3 no-underline dim db tracked f5 fw4 flex items-center justify-center justify-start-ns">
+          <a href="/" className="pa3 no-underline mid-gray dim db tracked f5 fw4 flex items-center justify-center justify-start-ns">
             <img src={logo} alt="wordzuki" className="db wz-icon mr2 mr3-ns" />
             <span className="db fw5">wordzuki</span></a>
         </div>

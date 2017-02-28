@@ -75,19 +75,19 @@ class ResetPassword extends Component {
     return (
       <div>
         <div className="flex justify-center justify-start-ns">
-          <a href="/" className="pa3 no-underline near-white dim db tracked f5 fw4 flex items-center justify-center justify-start-ns">
+          <a href="/" className="pa3 no-underline mid-gray dim db tracked f5 fw4 flex items-center justify-center justify-start-ns">
             <img src={logo} alt="wordzuki" className="db wz-icon mr2 mr3-ns" />
             <span className="db fw5">wordzuki</span></a>
         </div>
         <div>
           { inRequest && <Preloader /> }
-          {!legitToken.status && <div>{errorHandle.message ? errorHandle.message : null}</div>}
+          {!legitToken.status && <div className="measure center br2 bg-near-white lh2 ph4 pv3 tc f7 dark-red">{errorHandle.message ? errorHandle.message : null}</div>}
           {legitToken.status && <form
-            className="measure-narrow center br2 pa2 pb4 tc ma4 bg-near-white"
+            className="measure-narrow center br2 pa2 pb4 tc bg-near-white"
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
-            <p className="center pa3 ma3 f4 fw5 bb w-75 b--light-silver">新規パスワードを入力</p>
+            <p className="center pa3 ma3 f4 fw5 bb w-75 b--light-silver">パスワードを入力</p>
             <div className="mt3">
               <input
                 className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
@@ -125,9 +125,9 @@ ResetPassword.propTypes = {
   errorHandle: PropTypes.objectOf(
     PropTypes.any,
   ),
-  // successHandle: PropTypes.objectOf(
-  //   PropTypes.any,
-  // ),
+  successHandle: PropTypes.objectOf(
+    PropTypes.any,
+  ),
   errorMsg: PropTypes.func,
   legitToken: PropTypes.objectOf(
     PropTypes.any,
