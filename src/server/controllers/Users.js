@@ -51,10 +51,9 @@ module.exports = {
   },
   isAuthorized: (req, res) => {
     if (req.user) {
-      res.status(200).json({ isLoggedIn: true, user: req.user.username });
-    } else {
-      res.status(401).json({ isLoggedIn: false });
-    }
+      return res.status(200).json({ isLoggedIn: true, user: req.user.username });
+    } 
+    return res.json({ isLoggedIn: false });
   },
   checkAuthorized: (req, res, next) => {
     if (req.user) {
