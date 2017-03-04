@@ -55,7 +55,7 @@ class ForgetPassword extends Component {
             onSubmit={this.handleSubmit}
             autoComplete="off"
           >
-            <p className="center f4 fw5 pv3 mv3 bb w-75 b--light-silver">パスワードを忘れた？</p>
+            <p className="center f4 fw5 pv3 mv3 bb w-75 b--light-silver">パスワード忘れた？</p>
             <div className="mt3">
               <input
                 className="ph2 pt2 pb1 input-reset ba br2 b--light-silver hover-bg-dark-gray hover-white w-75 f6 outline-0"
