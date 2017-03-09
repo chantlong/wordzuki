@@ -17,7 +17,6 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin('style.min.css'),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
@@ -25,10 +24,15 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
+  },
+  stats: {
+    colors: true,
+    reasons: true,
+    chunks: true,
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -43,17 +47,32 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader']),
+        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader' }),
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: devMode ? [
           'url-loader?limit=5000',
           'image-webpack-loader',
-        ] : [
-          'url-loader?limit=5000',
-          'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
-        ],
+        ] : ['file-loader', {
+          loader: 'image-webpack-loader',
+          query: {
+            mozjpeg: {
+              progressive: true,
+            },
+            gifsicle: {
+              interlaced: false,
+            },
+            optipng: {
+              optimizationLevel: 4,
+            },
+            pngquant: {
+              quality: '75-90',
+              speed: 3,
+            },
+          },
+        }],
+        exclude: /node_modules/,
       },
     ],
   },
