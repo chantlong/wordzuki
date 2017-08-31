@@ -130,38 +130,43 @@ function getDefinition(term) {
   });
 }
 
-function getWordInfo() {
-  console.log('検索中...');
-  const word = window.getSelection().toString().trim();
-  if (!word) {
+function getWordInfo(e) {
+  if (e.altKey) {
+    console.log('検索中...');
+    const word = window.getSelection().toString().trim();
+    if (!word) {
+      return null;
+    }
+    const selectedArea = window.getSelection();
+    Promise.all([
+      getBaseWord(word),
+      getDefinition(word),
+      getSentence(selectedArea, word),
+      getSource()
+    ])
+      .then((values) => {
+        const [word, definition, example, info] = values;
+        const { source, sourceTitle } = info;
+        // console.log('values', values);
+        const data = {
+          word,
+          definition,
+          example,
+          source,
+          sourceTitle,
+        };
+        createPopup(word, definition, example);
+        chrome.runtime.sendMessage({ message: 'save_word', data });
+        // saveWord({ word, definition: JSON.stringify(definition), example, source, sourceTitle });
+      })
+      .catch((reason) => {
+        noDefPopup();
+      });
     return null;
+  } else {
+    return null
   }
-  const selectedArea = window.getSelection();
-  Promise.all([
-    getBaseWord(word),
-    getDefinition(word),
-    getSentence(selectedArea, word),
-    getSource()
-  ])
-    .then((values) => {
-      const [word, definition, example, info] = values;
-      const { source, sourceTitle } = info;
-      console.log('values', values);
-      const data = {
-        word,
-        definition,
-        example,
-        source,
-        sourceTitle,
-      };
-      createPopup(word, definition, example);
-      chrome.runtime.sendMessage({ message: 'save_word', data });
-      // saveWord({ word, definition: JSON.stringify(definition), example, source, sourceTitle });
-    })
-    .catch((reason) => {
-      noDefPopup();
-    });
-  return null;
+  
 }
 
 chrome.runtime.onMessage.addListener(
